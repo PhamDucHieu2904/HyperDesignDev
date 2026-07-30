@@ -9,9 +9,9 @@ export async function generateMetadata(): Promise<Metadata> {
     requestHeaders.get("x-forwarded-proto") ??
     (host.startsWith("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
-  const title = "Hieu Pham — Caelestia Portfolio Shell";
+  const title = "Hieu Pham — Caelestia Shell Web Replica";
   const description =
-    "An interactive web recreation of Caelestia Shell, ready to become Hieu Pham's CV and portfolio.";
+    "A faithful interactive web translation of the Caelestia Linux shell, rebuilt for Hieu Pham.";
 
   return {
     metadataBase: new URL(origin),
@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: `${origin}/og.png`,
           width: 1680,
           height: 945,
-          alt: "Hieu Pham Caelestia Portfolio",
+          alt: "Hieu Pham Caelestia Shell web replica",
         },
       ],
     },
@@ -44,11 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body>{children}</body>
