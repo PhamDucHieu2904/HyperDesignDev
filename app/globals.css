@@ -1,6 +1,20 @@
 @font-face {
   font-family: "Google Sans Flex";
-  src: url("/GoogleSansFlex.ttf") format("truetype");
+  src: url("../public/GoogleSansFlex.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Designer";
+  src: url("../public/designer-normal.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Designer";
+  src: url("../public/designer-light.otf") format("opentype");
+  font-style: normal;
+  font-weight: 300;
   font-display: swap;
 }
 
@@ -40,6 +54,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
   border-radius: 29px;
   background: #e7e3d7;
   box-shadow: 0 4px 12px rgba(45,37,31,.12), inset 0 0 0 1px rgba(255,255,255,.55);
+  container-type: size;
 }
 
 .wallpaper, .wallpaper img, .paper-light { position: absolute; inset: 0; }
@@ -62,6 +77,67 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
 .desktop-stamp span { width: 9px; height: 9px; border-radius: 2px; background: #f64f9d; box-shadow: 5px -3px #ffcf42, 10px -1px #58c8ff; }
 .desktop-stamp span:nth-child(2) { height: 5px; background: #9b6cff; }
 .desktop-stamp span:nth-child(3) { width: 18px; height: 5px; background: #eee5d7; box-shadow: none; }
+
+/* Portfolio elements measured against the supplied 1920 × 1003 reference. */
+.portfolio-intro {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+}
+.portfolio-logo,
+.portfolio-skills {
+  position: absolute;
+  left: 7.6cqw;
+  display: block;
+  height: auto;
+}
+.portfolio-logo {
+  top: 14.55cqh;
+  width: min(40.32cqw, 79.48cqh);
+}
+.portfolio-intro h1,
+.portfolio-manifesto,
+.portfolio-summary {
+  position: absolute;
+  left: 7.6cqw;
+  margin: 0;
+  font-family: "Designer", "Segoe UI", sans-serif;
+}
+.portfolio-intro h1 {
+  top: 44.8cqh;
+  color: #504c47;
+  font-size: clamp(20px, min(1.95cqw, 3.85cqh), 38px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+}
+.portfolio-manifesto {
+  top: 52.85cqh;
+  color: #504c47;
+  font-size: clamp(11px, min(.93cqw, 1.83cqh), 18px);
+  font-style: normal;
+  font-weight: 300;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.portfolio-summary {
+  top: 55.9cqh;
+  width: 42cqw;
+  color: #79726b;
+  font-family: "Google Sans Flex", "Segoe UI", sans-serif;
+  font-size: clamp(12px, min(1.02cqw, 1.98cqh), 19px);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.27;
+  white-space: pre-line;
+}
+.portfolio-skills {
+  bottom: 3.4cqh;
+  width: min(32.08cqw, 63.24cqh);
+}
 
 .rail {
   position: absolute; z-index: 80; inset: 0 auto 0 0; width: 59px;
@@ -487,6 +563,11 @@ kbd {
   .session-drawer .icon-button, .session-gif { width: 70px; height: 70px; }
   .media-popout { left: 51px; width: min(390px,calc(100vw - 58px)); }
   .files-body { grid-template-columns: repeat(2,1fr); }
+  .portfolio-logo { top: 12cqh; width: min(54cqw,70cqh); }
+  .portfolio-intro h1 { top: 38cqh; font-size: clamp(17px,3.8cqw,26px); }
+  .portfolio-manifesto { top: 44cqh; font-size: clamp(9px,1.75cqw,12px); white-space: normal; width: 58cqw; }
+  .portfolio-summary { top: 48.5cqh; width: 58cqw; font-size: clamp(10px,1.8cqw,13px); white-space: normal; }
+  .portfolio-skills { width: min(48cqw,57cqh); }
 }
 @media (max-height: 760px) {
   .rail-bottom .icon-button { height: 25px; }

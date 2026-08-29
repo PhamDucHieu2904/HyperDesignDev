@@ -1,6 +1,3 @@
-"use client";
-
-import Image from "next/image";
 import {
   Bluetooth, CalendarDays, ChevronLeft, ChevronRight, Command, Download, Eye,
   Folder, Gamepad2, Heart, Home, Image as ImageIcon, ListMusic, LogOut, Menu,
@@ -54,7 +51,7 @@ function AlbumCard({ album }: { album: { title: string; artist: string; tone: st
 }
 
 function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, toggleOverlay }: {
-  now: Date; workspace: number; setWorkspace: (workspace: number) => void; view: View;
+  now: Date | null; workspace: number; setWorkspace: (workspace: number) => void; view: View;
   overlay: Overlay; openView: (view: View) => void; toggleOverlay: (overlay: Exclude<Overlay, null>) => void;
 }) {
   const label = view === "music" ? "(Paused)  (24 / 53)  Reset – Tiger JK"
@@ -80,7 +77,7 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, toggl
       <IconButton label="Open Feishin" icon={Music2} className="spotify" active={view === "music"} onClick={() => openView("music")} />
       <IconButton label="Calendar" icon={CalendarDays} onClick={() => toggleOverlay("dashboard")} />
       <button type="button" className="clock" aria-label="Open dashboard" onClick={() => toggleOverlay("dashboard")}>
-        <span>{String(now.getHours()).padStart(2, "0")}</span><span>{String(now.getMinutes()).padStart(2, "0")}</span>
+        <span>{now ? String(now.getHours()).padStart(2, "0") : "--"}</span><span>{now ? String(now.getMinutes()).padStart(2, "0") : "--"}</span>
       </button>
       <div className="status-stack" aria-label="System status"><Wifi /><Bluetooth /><Rocket /></div>
       <IconButton label="Power menu" icon={Power} className="power" active={overlay === "session"} onClick={() => toggleOverlay("session")} />
@@ -90,16 +87,37 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, toggl
 
 function DesktopWallpaper({ workspace }: { workspace: number }) {
   return <div className={`wallpaper workspace-${workspace}`}>
-    <Image
-      src="/hieu-wallpaper.png"
+    <img
+      src="./public/hieu-wallpaper.png"
       alt="Hieu Pham monochrome ink-wash portrait"
-      fill
-      priority
-      sizes="100vw"
-      unoptimized
+      fetchPriority="high"
     />
     <div className="paper-light" /><div className="desktop-stamp" aria-hidden="true"><span /><span /><span /></div>
   </div>;
+}
+
+function PortfolioIntro() {
+  return <section className="portfolio-intro" aria-labelledby="portfolio-title">
+    <img
+      className="portfolio-logo"
+      src="./public/hyperd-logo.svg"
+      alt="HyperD Squared — HyperDsquared.com"
+      width={743}
+      height={147}
+    />
+    <h1 id="portfolio-title">Hieu Pham - Designer x Developer</h1>
+    <p className="portfolio-manifesto">I don’t just design ideas. I engineer how they work.</p>
+    <p className="portfolio-summary">{`Where a Developer's logic meets a Designer's aesthetic. From high-end
+commercial packaging and realistic 3D environments to automated workflows and
+seamless database systems. Beautiful on the surface, robust under the hood.`}</p>
+    <img
+      className="portfolio-skills"
+      src="./public/portfolio-skills.svg"
+      alt="Design Lab: Photoshop, Illustrator and Blender. Dev Portal: Windows, web and game apps. AI Skilled: GPT Codex, Gemini Antigravity and Claude."
+      width={591}
+      height={247}
+    />
+  </section>;
 }
 
 function MusicApp({ playing, setPlaying, onClose, openMedia }: {
@@ -214,7 +232,7 @@ function SessionDrawer({ close, closing }: { close: () => void; closing: boolean
   return <><button type="button" className={`scrim ${closing ? "closing" : ""}`} aria-label="Close power menu" onClick={close} />
     <section className={`session-drawer ${closing ? "closing" : ""}`} aria-label="Power menu">
       <IconButton label="Log out" icon={LogOut} className="focused" /><IconButton label="Shut down" icon={Power} />
-      <span className="session-gif"><Image src="/bongocat.gif" alt="Animated shell companion" width={66} height={66} unoptimized /></span>
+      <span className="session-gif"><img src="./public/bongocat.gif" alt="Animated shell companion" width={66} height={66} /></span>
       <IconButton label="Hibernate" icon={TimerReset} /><IconButton label="Restart" icon={RefreshCw} />
     </section></>;
 }
@@ -256,14 +274,19 @@ function LauncherDrawer({ close, openView, closing }: { close: () => void; openV
 }
 
 export default function HomePage() {
-  const [now, setNow] = useState(() => new Date());
+  // The initial HTML must match in every timezone; show local time after hydration.
+  const [now, setNow] = useState<Date | null>(null);
   const [workspace, setWorkspace] = useState(1);
   const [view, setView] = useState<View>("desktop");
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [overlayClosing, setOverlayClosing] = useState(false);
   const [playing, setPlaying] = useState(false);
   const closeTimerRef = useRef<number | null>(null);
-  useEffect(() => { const timer = window.setInterval(() => setNow(new Date()), 10_000); return () => window.clearInterval(timer); }, []);
+  useEffect(() => {
+    setNow(new Date());
+    const timer = window.setInterval(() => setNow(new Date()), 10_000);
+    return () => window.clearInterval(timer);
+  }, []);
   useEffect(() => () => {
     if (closeTimerRef.current !== null) window.clearTimeout(closeTimerRef.current);
   }, []);
@@ -317,10 +340,11 @@ export default function HomePage() {
       openView={openView} toggleOverlay={toggleOverlay} />
     <section className="desktop-surface" aria-label="Caelestia desktop">
       <DesktopWallpaper workspace={workspace} />
+      {view === "desktop" && <PortfolioIntro />}
       {view === "music" && <MusicApp playing={playing} setPlaying={setPlaying} onClose={() => openView("desktop")} openMedia={() => showOverlay("media")} />}
       {view === "terminal" && <TerminalApp onClose={() => openView("desktop")} />}
       {view === "files" && <FilesApp onClose={() => openView("desktop")} />}
-      {overlay === "dashboard" && <DashboardDrawer now={now} close={closeOverlay} closing={overlayClosing} />}
+      {overlay === "dashboard" && now && <DashboardDrawer now={now} close={closeOverlay} closing={overlayClosing} />}
       {overlay === "launcher" && <LauncherDrawer close={closeOverlay} openView={openView} closing={overlayClosing} />}
       {overlay === "session" && <SessionDrawer close={closeOverlay} closing={overlayClosing} />}
       {view === "desktop" && !overlay && <button type="button" className="explore-pill" onClick={() => showOverlay("launcher")}>
