@@ -158,7 +158,11 @@ for (const mode of ["file", "github-subpath"]) {
           const portrait = document.querySelector(".android-portrait");
           await access(new URL(portrait.getAttribute("src"), root));
           if (name === "Blueprint") assert.match(portrait.style.maskImage, /^url\(data:image\/png;base64,/);
-          else assert.equal(document.querySelectorAll(".code-panel").length, 4);
+          else {
+            assert.equal(document.querySelectorAll(".code-panel").length, 4);
+            assert.equal(document.querySelectorAll(".binary-matrix").length, 1);
+            assert.match(document.querySelector(".binary-matrix__stream").textContent, /0110/);
+          }
         }
       }
       const paper = document.querySelector('[aria-label="Paper layout"]');

@@ -384,7 +384,9 @@ function LauncherDrawer({ close, openView, closing }: { close: () => void; openV
 export default function HomePage() {
   // The initial HTML must match in every timezone; show local time after hydration.
   const [now, setNow] = useState<Date | null>(null);
-  const [workspace, setWorkspace] = useState(1);
+  // Graphite is the calmer, higher-contrast starting point for the portfolio.
+  // A previously selected workspace still wins when it is present in storage.
+  const [workspace, setWorkspace] = useState(2);
   const [view, setView] = useState<View>("desktop");
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [overlayClosing, setOverlayClosing] = useState(false);

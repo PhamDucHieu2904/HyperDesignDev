@@ -12,6 +12,46 @@
 }
 .technology-scene--developer .android-stage { width: 42cqw; right: 3cqw; bottom: 0; height: 96cqh; }
 .technology-scene--developer .android-portrait { mask-image: linear-gradient(90deg, transparent, #000 12%, #000 93%, transparent); }
+
+/* Gallery's binary field echoes the CV's matrix backdrop, but stays behind the
+   identity copy so the red scan reads as atmosphere rather than decoration over text. */
+.binary-matrix {
+  position: absolute; z-index: 0; left: 7.6cqw; top: 12cqh; width: 42cqw; height: 66cqh;
+  overflow: hidden; pointer-events: none;
+  box-sizing: border-box; padding-inline: 1cqw;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 11%, #000 86%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 11%, #000 86%, transparent 100%);
+}
+.binary-matrix__stream {
+  display: grid; gap: 1.1cqh; width: 100%;
+  color: #ef5366; opacity: 0;
+  font: 700 clamp(12px, 1.3cqw, 25px)/1 Consolas, "SFMono-Regular", monospace;
+  letter-spacing: .04em; white-space: nowrap;
+  transform: translate3d(0, 12%, 0);
+  animation: gallery-binary-cycle 5s cubic-bezier(.22,.7,.32,1) infinite;
+}
+.binary-matrix__stream span { text-align: center; }
+.binary-matrix__stream span:nth-child(2n) { opacity: .52; }
+.binary-matrix__stream span:nth-child(3n) { opacity: .72; }
+.binary-matrix__scan {
+  position: absolute; inset: -20% 0 auto; height: 15%;
+  display: block; opacity: 0;
+  background: linear-gradient(to bottom, transparent, #ff6d7b80 44%, #ff6d7b 50%, transparent);
+  filter: blur(.4px);
+  animation: gallery-binary-scan 5s cubic-bezier(.22,.7,.32,1) infinite;
+}
+@keyframes gallery-binary-cycle {
+  0%, 7% { opacity: 0; transform: translate3d(0, 12%, 0); }
+  14% { opacity: .22; }
+  23%, 73% { opacity: .22; transform: translate3d(0, -8%, 0); }
+  86%, 100% { opacity: 0; transform: translate3d(0, -14%, 0); }
+}
+@keyframes gallery-binary-scan {
+  0%, 10% { opacity: 0; transform: translateY(-10%); }
+  18% { opacity: .68; }
+  72% { opacity: .34; transform: translateY(590%); }
+  88%, 100% { opacity: 0; transform: translateY(720%); }
+}
 .shell[data-layout="gallery"] .portfolio-action { background: #17171e; }
 .shell[data-layout="gallery"] .rail { color: #fff1f2; }
 .shell[data-layout="gallery"] .rail :is(.arch-mark, .clock) { color: #fff1f2; }
@@ -95,6 +135,8 @@
   .shell:is([data-layout="blueprint"], [data-layout="sage"], [data-layout="gallery"]) .portfolio-logo { top: 3.5cqh; left: 6cqw; width: 43cqw; }
   .android-stage { right: 0; bottom: auto; top: 9cqh; width: 100cqw; height: 50cqh; }
   .technology-scene--developer .android-stage { right: 0; top: 8cqh; width: 100cqw; height: 47cqh; }
+  .binary-matrix { left: 7.6cqw; top: 2cqh; width: 84cqw; height: 58cqh; }
+  .binary-matrix__stream { gap: 1.25cqh; font-size: clamp(8px, 2.2cqw, 11px); }
   .shell:is([data-layout="blueprint"], [data-layout="sage"], [data-layout="gallery"]) .portfolio-manifesto { top: 61cqh; width: 86cqw; left: 7cqw; font-size: 10px; }
   .shell:is([data-layout="blueprint"], [data-layout="sage"], [data-layout="gallery"]) .portfolio-summary { top: 65cqh; width: 86cqw; left: 7cqw; font-size: 12px; line-height: 1.35; }
   .shell:is([data-layout="blueprint"], [data-layout="sage"], [data-layout="gallery"]) .portfolio-actions { top: auto; bottom: 16px; left: 7cqw; flex-direction: row; width: 86cqw; gap: 8px; }

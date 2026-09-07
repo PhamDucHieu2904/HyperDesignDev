@@ -30,6 +30,26 @@ const developerPanels = [
   { id: "ai", icon: Cpu, file: "agent.py", title: "AI", lines: [<><b>async def</b> run(task):</>, <>  plan = <b>await</b> agent.<em>plan</em>(task)</>, <>  <b>return await</b> plan.<em>execute</em>()</>], footer: "Agents / Automation" },
 ];
 
+const binaryRows = [
+  "01101000 01101001 01100101 01110101 01110000",
+  "01100100 01100101 01110011 01101001 01100111",
+  "01101110 01100101 01110010 01100001 01110100",
+  "01100101 01100100 01101111 01110010 01100101",
+  "01111000 01100101 01100011 01110101 01110100",
+  "01100101 01101100 01101111 01100111 01101001",
+  "01100011 01100001 01101100 01101100 01111001",
+  "01110011 01110100 01110010 01110101 01100011",
+];
+
+function BinaryMatrix() {
+  return <div className="binary-matrix" aria-hidden="true">
+    <div className="binary-matrix__stream">
+      {binaryRows.concat(binaryRows, binaryRows).map((row, index) => <span key={`${row}-${index}`}>{row}</span>)}
+    </div>
+    <i className="binary-matrix__scan" />
+  </div>;
+}
+
 function DeveloperPanels() {
   return <div className="developer-panels" aria-label="App, web, game and AI development illustrations">
     {developerPanels.map(({ id, icon: Icon, file, title, lines, footer }) => <figure key={id} className={`code-panel code-panel--${id}`}>
@@ -44,9 +64,10 @@ export function PortfolioScene({ workspace }: { workspace: number }) {
   if (workspace === 4) return <DesignShowcase />;
   if (workspace !== 3 && workspace !== 5) return null;
   return <div className={`technology-scene ${workspace === 5 ? "technology-scene--developer" : "technology-scene--android"}`}>
+    {workspace === 5 && <BinaryMatrix />}
     <div className="android-stage">
       <img className="android-portrait" src={workspace === 3 ? "./public/hieu-android-cutout.png" : "./public/hieu-android-red.png"}
-        style={workspace === 3 ? { maskImage: `url(${androidMatte})`, maskMode: "luminance", maskSize: "contain", maskPosition: "bottom center", maskRepeat: "no-repeat" } : undefined}
+        style={{ maskImage: `url(${androidMatte})`, maskMode: "luminance", maskSize: "contain", maskPosition: "bottom center", maskRepeat: "no-repeat" }}
         alt={workspace === 3 ? "Hieu Pham reimagined as a 3D ceramic and titanium android" : "Hieu Pham as a dark 3D android with crimson circuitry"}
         width={1024} height={1536} />
     </div>
