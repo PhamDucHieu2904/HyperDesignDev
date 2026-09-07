@@ -40,7 +40,13 @@ test("ships real HTML, metadata and a classic browser bundle without a runtime s
     assert.match(document.body.textContent, /I don’t just design ideas\. I engineer how they work\./);
     assert.match(document.body.textContent, /Where a Developer's logic meets a Designer's aesthetic/);
     assert.equal(document.querySelector(".portfolio-logo").getAttribute("src"), "./public/hyperd-logo.svg");
-    assert.equal(document.querySelector(".portfolio-skills").getAttribute("src"), "./public/portfolio-skills.svg");
+    assert.ok(document.querySelector(".wallpaper-motion"));
+    assert.equal(document.querySelectorAll(".portfolio-action").length, 2);
+    assert.match(document.querySelector(".portfolio-actions").textContent, /About Hyper D²/);
+    assert.match(document.querySelector(".portfolio-actions").textContent, /Portfolio/);
+    assert.equal(document.querySelector(".portfolio-skills"), null);
+    assert.equal(document.querySelector(".desktop-stamp"), null);
+    assert.equal(document.querySelector(".rainbow-mascot"), null);
     assert.match(document.querySelector('meta[property="og:image"]').content, /\/public\/og\.png$/);
     assert.equal(document.querySelectorAll("script").length, 1);
     assert.equal(document.querySelector("script").type, "");
@@ -55,6 +61,8 @@ test("ships real HTML, metadata and a classic browser bundle without a runtime s
     assert.match(css, /font-family:Designer/);
     assert.match(css, /color:#504c47/);
     assert.match(css, /color:#79726b/);
+    assert.match(css, /logo-ink-reveal/);
+    assert.match(css, /prefers-reduced-motion:reduce/);
   } finally { dom.window.close(); }
 });
 
@@ -137,8 +145,27 @@ for (const mode of ["file", "github-subpath"]) {
       key("Escape");
       await until(() => !document.querySelector(".terminal-window"), "Escape did not close terminal");
 
-      click('[aria-label="Workspace 3"]');
-      await until(() => document.querySelector(".wallpaper.workspace-3"), "Workspace did not change");
+      for (const name of ["Graphite", "Blueprint", "Sage", "Gallery", "Paper"]) {
+        click(`[aria-label="${name} layout"]`);
+        await until(() => document.querySelector(".shell").dataset.layout === name.toLowerCase(), `${name} layout did not apply`);
+        assert.equal(document.querySelectorAll('.layout-option[aria-pressed="true"]').length, 1);
+        if (name === "Sage") {
+          assert.equal(document.querySelectorAll(".design-card").length, 3);
+          for (const image of document.querySelectorAll(".design-card img")) await access(new URL(image.getAttribute("src"), root));
+          assert.equal(document.querySelector('img[src="./public/sage-studio.png"]'), null);
+        }
+        if (name === "Blueprint" || name === "Gallery") {
+          const portrait = document.querySelector(".android-portrait");
+          await access(new URL(portrait.getAttribute("src"), root));
+          if (name === "Blueprint") assert.match(portrait.style.maskImage, /^url\(data:image\/png;base64,/);
+          else assert.equal(document.querySelectorAll(".code-panel").length, 4);
+        }
+      }
+      const paper = document.querySelector('[aria-label="Paper layout"]');
+      paper.dispatchEvent(new window.KeyboardEvent("keydown", { key: "ArrowDown", bubbles: true }));
+      await until(() => document.querySelector('.shell[data-layout="graphite"]'), "Arrow key did not select next layout");
+      assert.equal(document.activeElement.getAttribute("aria-label"), "Graphite layout");
+      if (mode !== "file") assert.equal(window.localStorage.getItem("hyperd-layout"), "2");
       click('[aria-label="Open dashboard"]');
       await until(() => document.querySelector(".dashboard-drawer"), "Dashboard did not open");
       key("Escape");

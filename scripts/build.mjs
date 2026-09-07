@@ -11,7 +11,8 @@ import { renderDocument } from "./html.mjs";
 const projectRoot = fileURLToPath(new URL("../", import.meta.url));
 
 export async function buildSite() {
-  const options = { absWorkingDir: projectRoot, bundle: true, write: false, jsx: "automatic" };
+  // Inline the compositing matte so CSS masking also works when opened via file://.
+  const options = { absWorkingDir: projectRoot, bundle: true, write: false, jsx: "automatic", loader: { ".png": "dataurl" } };
   const [browser, page, css] = await Promise.all([
     build({
       ...options, entryPoints: ["app/main.tsx"], platform: "browser",
@@ -23,8 +24,8 @@ export async function buildSite() {
       ...options, entryPoints: ["app/page.tsx"], platform: "node",
       format: "cjs", packages: "external",
     }),
-    readFile(new URL("../app/globals.css", import.meta.url), "utf8")
-      .then((source) => transform(source, { loader: "css", minify: true, target: "es2020" })),
+    Promise.all(["globals.css", "layouts.css", "portfolio-scenes.css"].map(name => readFile(new URL(`../app/${name}`, import.meta.url), "utf8")))
+      .then((sources) => transform(sources.join("\n"), { loader: "css", minify: true, target: "es2020" })),
   ]);
 
   // Execute only our compiled source, at build time, to put real HTML in index.html.

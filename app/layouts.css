@@ -1,0 +1,185 @@
+/* Collection-wide tokens. Paper inherits the original art direction. */
+.shell {
+  --on-accent: #fff8f0;
+  --panel: var(--surface);
+  --elevated: #eee6df;
+  --border: #cec2b7;
+  --hero-ink: #504c47;
+  --hero-muted: #79726b;
+  --logo-filter: none;
+  --wall-color: #e9e5d8;
+  --wall-filter: none;
+  --wall-opacity: 1;
+  --wall-blend: normal;
+  --wall-veil: none;
+  --frame-radius: 29px;
+  --button-radius: 3px;
+  transition: background-color 350ms ease, color 250ms ease;
+}
+.shell[data-layout="graphite"] {
+  color-scheme: dark;
+  --paper: #151719; --surface: #202426; --panel: #252a2c; --elevated: #32383b;
+  --ink: #f2ede5; --muted: #bdc1bd; --border: #505756; --frame: #6f7876;
+  --rose: #34302d; --rose-strong: #d6a575; --on-accent: #211c16;
+  --hero-ink: #f2ede5; --hero-muted: #d0cbc2;
+  --logo-filter: brightness(0) invert(.93);
+  --wall-color: #202527; --wall-filter: grayscale(1) brightness(.72) contrast(1.12);
+  --wall-veil: linear-gradient(90deg, #161a1dec 0%, #161a1dcc 36%, #161a1d18 76%);
+  --frame-radius: 16px; --button-radius: 2px;
+}
+.shell[data-layout="blueprint"] {
+  color-scheme: dark;
+  --paper: #0b203d; --surface: #102c50; --panel: #153659; --elevated: #234769;
+  --ink: #edf6fa; --muted: #b5cddd; --border: #4b718d; --frame: #6f96ad;
+  --rose: #153453; --rose-strong: #93dce9; --on-accent: #102b42;
+  --hero-ink: #edf6fa; --hero-muted: #c2d9e7;
+  --logo-filter: brightness(0) invert(.97);
+  --wall-color: #143e6b; --wall-filter: none;
+  --wall-blend: normal; --wall-opacity: 1;
+  --wall-veil: none;
+  --frame-radius: 29px; --button-radius: 10px;
+}
+.shell[data-layout="sage"] {
+  color-scheme: light;
+  --paper: #e4e9e1; --surface: #f0f3e9; --panel: #eef2e7; --elevated: #dce4d6;
+  --ink: #283c34; --muted: #52675b; --border: #a4b4a0; --frame: #738b76;
+  --rose: #cddac5; --rose-strong: #486b51; --on-accent: #f4f7ed;
+  --hero-ink: #304e3d; --hero-muted: #4c6553;
+  --logo-filter: sepia(.5) hue-rotate(55deg) saturate(.65);
+  --wall-color: #d3ddc7; --wall-filter: none;
+  --wall-blend: normal; --wall-opacity: 1;
+  --wall-veil: none;
+  --frame-radius: 42px; --button-radius: 22px;
+}
+.shell[data-layout="gallery"] {
+  color-scheme: dark;
+  --paper: #a62835; --surface: #111216; --panel: #191a20; --elevated: #282830;
+  --ink: #f5f3f4; --muted: #bab7c1; --border: #51404b; --frame: #db5364;
+  --rose: #592333; --rose-strong: #ff788a; --on-accent: #240c13;
+  --hero-ink: #fff5f6; --hero-muted: #c6bdc8;
+  --logo-filter: brightness(0) invert(1);
+  --wall-color: #08090b; --wall-filter: none;
+  --wall-veil: none;
+  --frame-radius: 29px; --button-radius: 14px;
+}
+
+/* Constant hit areas: only the visual circle changes, never the rail layout. */
+.layout-picker { display: flex; flex-direction: column; align-items: center; gap: 0; }
+.workspaces { padding: 4px 0 6px; }
+.layout-option {
+  position: relative; display: grid; place-items: center; flex: 0 0 auto;
+  width: 44px; height: 36px; padding: 0; border: 0; background: transparent;
+  color: var(--ink); cursor: pointer; border-radius: 50%;
+}
+.layout-orb {
+  display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; transform: scale(.3125);
+  background: color-mix(in srgb, var(--rose-strong) 24%, transparent);
+  transition: transform 200ms var(--ease), background-color 200ms ease, box-shadow 200ms ease;
+}
+.layout-orb svg { width: 17px; height: 17px; stroke-width: 1.8; opacity: 0; transform: scale(.65); transition: opacity 180ms ease, transform 200ms var(--ease); }
+.layout-option:is(:hover, :focus-visible, [aria-pressed="true"]) .layout-orb {
+  transform: scale(1); background: var(--rose-strong); color: var(--on-accent);
+  box-shadow: 0 3px 9px color-mix(in srgb, var(--rose-strong) 22%, transparent);
+}
+.layout-option:is(:hover, :focus-visible, [aria-pressed="true"]) svg { opacity: 1; transform: scale(1); }
+.layout-option:focus-visible { outline: 2px solid var(--rose-strong); outline-offset: -2px; }
+.layout-tooltip {
+  position: absolute; z-index: 100; left: calc(100% + 8px); top: 50%; min-width: 166px;
+  padding: 11px 14px; text-align: left; white-space: nowrap; border: 1px solid var(--border);
+  color: var(--ink); background: var(--panel); border-radius: 10px; box-shadow: 0 7px 20px #0002;
+  opacity: 0; visibility: hidden; transform: translate(4px, -50%); pointer-events: none;
+  transition: opacity 150ms ease, transform 150ms ease, visibility 150ms ease;
+}
+.layout-tooltip strong { display: block; font-size: 13px; font-weight: 650; }
+.layout-tooltip small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
+.layout-option:is(:hover, :focus-visible) .layout-tooltip { visibility: visible; opacity: 1; transform: translate(0, -50%); }
+
+/* The portrait remains the signature; each background has its own treatment. */
+.wallpaper { background: var(--wall-color); }
+.wallpaper .wallpaper-motion { background: var(--wall-color); }
+.wallpaper .wallpaper-motion img { filter: var(--wall-filter); opacity: var(--wall-opacity); mix-blend-mode: var(--wall-blend); transform: none; }
+.layout-texture { position: absolute; inset: 0; pointer-events: none; }
+.shell:not([data-layout="paper"]) { background: var(--paper); }
+.shell:not([data-layout="paper"]) .desktop-surface { background: var(--wall-color); border-radius: var(--frame-radius); }
+.shell:not([data-layout="paper"]) .paper-light { background: var(--wall-veil); }
+.shell[data-layout="blueprint"] .layout-texture {
+  opacity: .12; background-image: linear-gradient(#bedeee 1px, transparent 1px), linear-gradient(90deg, #bedeee 1px, transparent 1px);
+  background-size: 64px 64px; mask-image: linear-gradient(90deg, #000, transparent 78%);
+}
+.shell[data-layout="graphite"] .layout-texture { inset: 24px; border: 1px solid #d6a57530; border-radius: 4px; }
+.shell[data-layout="gallery"] .layout-texture { display: none; }
+.shell:not([data-layout="paper"]) .portfolio-logo { filter: var(--logo-filter); }
+.shell:not([data-layout="paper"]) :is(.portfolio-intro h1, .portfolio-manifesto) { color: var(--hero-ink); }
+.shell:not([data-layout="paper"]) .portfolio-summary { color: var(--hero-muted); }
+.shell:not([data-layout="paper"]) .portfolio-action {
+  border-color: color-mix(in srgb, var(--hero-ink) 45%, transparent); color: var(--hero-ink);
+  background: color-mix(in srgb, var(--paper) 80%, transparent); border-radius: var(--button-radius);
+  box-shadow: inset 3px 0 0 var(--rose-strong);
+}
+.shell:not([data-layout="paper"]) .portfolio-index { color: var(--hero-muted); }
+.shell:not([data-layout="paper"]) .portfolio-action::after { background: var(--rose-strong); }
+.shell:not([data-layout="paper"]) .portfolio-action:hover { color: var(--on-accent); background: var(--rose-strong); }
+.shell:not([data-layout="paper"]) .portfolio-action:hover .portfolio-index { color: inherit; }
+.shell:not([data-layout="paper"]) .portfolio-action:focus-visible { outline-color: var(--rose-strong); }
+
+/* App chrome follows the selected palette; album artwork keeps its own colors. */
+.shell:not([data-layout="paper"]) :is(.rail, .arch-mark, .clock, kbd, .music-search input, .nav-logo, .music-nav nav button, .track-head, .tracks button, .music-search, .hero-copy, .launcher-drawer input) { color: var(--ink); }
+.shell:not([data-layout="paper"]) :is(.workspaces, .status-stack, .rail-bottom .power, .launcher-apps button span) { background: var(--rose); color: var(--rose-strong); }
+.shell:not([data-layout="paper"]) :is(.workspaces .icon-button.active, .rail-bottom .power:hover, .rail-bottom .power.active, .calendar-card .today, .hero-copy button, .hero-copy > span) { background: var(--rose-strong); color: var(--on-accent); }
+.shell:not([data-layout="paper"]) :is(.music-window, .music-nav, .music-main, .track-list, .player-bar, .terminal-window, .files-window, .media-popout, .dashboard-drawer, .launcher-drawer, .session-drawer, .terminal-window > header, .files-window > header) { background: var(--panel); color: var(--ink); border-color: var(--border); }
+.shell:not([data-layout="paper"]) :is(.explore-pill, kbd, .music-search, .tracks button, .session-gif, .session-drawer .icon-button, .files-body button, .dash-grid article, .launcher-apps button, .launcher-drawer > label, .media-preview, .media-popout header > button:first-child) { background: var(--elevated); color: var(--ink); border-color: var(--border); }
+.shell:not([data-layout="paper"]) :is(.album-card > small, .track-title small, .tracks button > span:first-child, .tracks button > span:nth-last-child(3), .tracks button > span:nth-last-child(2), .now-track small, .now-track em, .rail-bottom > svg.muted) { color: var(--muted); }
+.shell:not([data-layout="paper"]) :is(.explore-pill svg, .files-body svg, .weather-card > svg, .tracks button > svg, .terminal-body pre, .terminal-body p span, .terminal-body p b) { color: var(--rose-strong); }
+.shell:not([data-layout="paper"]) :is(.icon-button:hover, .files-body button:hover, .launcher-apps button:hover, .session-drawer .icon-button:hover, .session-drawer .icon-button.focused, .tracks button:hover, .tracks button.active) { background: var(--rose); color: var(--ink); }
+.shell:not([data-layout="paper"]) :is(.popout-progress span, .system-card i em, .song-progress i b, .volume i b, .music-nav nav button::before) { background: var(--rose-strong); }
+.shell:not([data-layout="paper"]) :is(.song-progress i, .volume i, .system-card i, .popout-progress) { background: var(--border); }
+.shell:not([data-layout="paper"]) .music-hero { background: var(--elevated); }
+.shell:not([data-layout="paper"]) .music-hero::after { background: linear-gradient(transparent, var(--panel)); }
+.shell:not([data-layout="paper"]) :is(.track-list .icon-button, .album-section header .icon-button, .music-nav nav button.selected, .hero-arrows .icon-button) { background: var(--elevated); color: var(--ink); border-color: var(--border); }
+.shell:not([data-layout="paper"]) .music-nav nav button:not(.selected)::before { background: transparent; }
+.shell:not([data-layout="paper"]) .book-cover { color: #242628; }
+.shell:not([data-layout="paper"]) .music-search input::placeholder { color: var(--muted); }
+.shell:not([data-layout="paper"]) .music-search > svg { color: var(--muted); }
+.shell:not([data-layout="paper"]) .track-head { border-color: var(--border); }
+.shell:not([data-layout="paper"]) .hero-copy :is(h1, h2) { color: var(--ink); }
+.shell:not([data-layout="paper"]) .dashboard-drawer::before { box-shadow: 13px -13px 0 13px var(--panel); }
+.shell:not([data-layout="paper"]) .dashboard-drawer::after { box-shadow: -13px -13px 0 13px var(--panel); }
+.shell:not([data-layout="paper"]) .launcher-drawer::before { box-shadow: 13px 13px 0 13px var(--panel); }
+.shell:not([data-layout="paper"]) .launcher-drawer::after { box-shadow: -13px 13px 0 13px var(--panel); }
+.shell:not([data-layout="paper"]) .session-drawer::before { box-shadow: 19px 20px 0 19px var(--panel); }
+.shell:not([data-layout="paper"]) .session-drawer::after { box-shadow: 19px -20px 0 19px var(--panel); }
+
+@media (min-width: 821px) {
+  .shell[data-layout="graphite"] .portfolio-logo { top: 18cqh; width: min(36cqw,70cqh); }
+  .shell[data-layout="blueprint"] .portfolio-logo { top: 16cqh; width: min(36cqw,70cqh); }
+  .shell[data-layout="sage"] .portfolio-actions { gap: 18px; }
+  .shell[data-layout="gallery"] .portfolio-logo { top: 15cqh; width: min(36cqw,70cqh); }
+}
+@media (max-width: 820px) {
+  .layout-option { height: 34px; }
+  .shell:not([data-layout="paper"]) .desktop-surface { border-radius: min(var(--frame-radius),24px); }
+  .shell[data-layout="graphite"] .layout-texture { inset: 12px; }
+  .shell[data-layout="gallery"] .layout-texture { inset: 12px; }
+}
+@media (pointer: coarse) and (min-height: 650px), (max-width: 820px) and (min-height: 650px) {
+  .layout-option { height: 44px; }
+  .active-window { top: calc(50% + 25px); height: 100px; }
+}
+@media (max-height: 600px) {
+  .layout-option { height: 27px; }
+  .layout-option:is(:hover, :focus-visible, [aria-pressed="true"]) .layout-orb { transform: scale(.78); }
+  .active-window, .rail-bottom > :not(.power):not(.spotify) { display: none; }
+}
+@media (max-width: 820px) and (max-height: 500px) {
+  .portfolio-actions { top: auto; bottom: 18px; }
+}
+@media (max-width: 820px) and (max-height: 700px) {
+  .active-window { height: 40px; }
+  .active-window span { display: none; }
+}
+@media (hover: none) {
+  .layout-option:hover:not(:focus-visible) .layout-tooltip { visibility: hidden; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .layout-orb, .layout-orb svg, .layout-tooltip, .shell { transition: none; }
+}

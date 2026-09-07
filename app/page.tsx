@@ -1,15 +1,25 @@
 import {
   Bluetooth, CalendarDays, ChevronLeft, ChevronRight, Command, Download, Eye,
-  Folder, Gamepad2, Heart, Home, Image as ImageIcon, ListMusic, LogOut, Menu,
+  Folder, Gamepad2, Heart, Home, Feather, Leaf, Grid2X2, Frame, Image as ImageIcon, ListMusic, LogOut, Menu,
   Moon, MoreVertical, Music2, Pause, Play, Power, RefreshCw, Repeat2, Rocket,
   Search, Settings2, Shuffle, SkipBack, SkipForward,
   Sparkles, Square, Terminal, TimerReset, Trash2, Upload, UsersRound, Volume2,
   Wifi, X, type LucideIcon,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { PortfolioScene } from "./portfolio-scenes";
 
 type View = "desktop" | "music" | "terminal" | "files";
 type Overlay = "dashboard" | "launcher" | "session" | "media" | null;
+
+const layouts = [
+  { id: 2, name: "Graphite", detail: "Charcoal · copper", icon: Moon },
+  { id: 3, name: "Blueprint", detail: "Android · 3D / AI", icon: Grid2X2 },
+  { id: 4, name: "Sage", detail: "Packaging · image · motion", icon: Leaf },
+  { id: 5, name: "Gallery", detail: "App · web · game · AI", icon: Frame },
+  { id: 1, name: "Paper", detail: "Original · warm parchment", icon: Feather },
+];
+const layoutStorageKey = "hyperd-layout";
 
 const albums = [
   { title: "ONE SPARK", artist: "TWICE", tone: "rose", mark: "ONE\nSPARK" },
@@ -58,13 +68,24 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, toggl
     : view === "terminal" ? "Terminal" : view === "files" ? "Files" : "Desktop";
   return <aside className="rail" aria-label="Caelestia bar">
     <button type="button" className="arch-mark" aria-label="Open launcher" onClick={() => toggleOverlay("launcher")}>A</button>
-    <div className="workspaces" aria-label="Workspaces">
+    <div className="workspaces">
       <IconButton label="Open dashboard" icon={Moon} active={overlay === "dashboard"} onClick={() => toggleOverlay("dashboard")} />
-      <IconButton label="Wallpaper workspace" icon={ImageIcon} active={workspace === 2} onClick={() => setWorkspace(2)} />
-      {[3, 4, 5].map(number => <button type="button" className={`workspace-dot ${workspace === number ? "active" : ""}`}
-        aria-label={`Workspace ${number}`} key={number} onClick={() => setWorkspace(number)} />)}
-      <button type="button" className={`workspace-orb ${workspace === 1 ? "active" : ""}`}
-        aria-label="Workspace 1" onClick={() => setWorkspace(1)}><Moon /></button>
+      <div className="layout-picker" role="group" aria-label="Website layouts">
+        {layouts.map(({ id, name, detail, icon: Icon }) => <button type="button"
+          className="layout-option" key={id} aria-label={`${name} layout`} aria-pressed={workspace === id}
+          onClick={() => setWorkspace(id)} onKeyDown={(event) => {
+            const offset = event.key === "ArrowDown" ? 1 : event.key === "ArrowUp" ? -1 : 0;
+            if (!offset && event.key !== "Home" && event.key !== "End") return;
+            event.preventDefault();
+            const index = event.key === "Home" ? 0 : event.key === "End" ? layouts.length - 1
+              : (layouts.findIndex(layout => layout.id === id) + offset + layouts.length) % layouts.length;
+            setWorkspace(layouts[index].id);
+            (event.currentTarget.parentElement?.children[index] as HTMLButtonElement)?.focus();
+          }}>
+          <span className="layout-orb"><Icon aria-hidden="true" /></span>
+          <span className="layout-tooltip" aria-hidden="true"><strong>{name}</strong><small>{detail}</small></span>
+        </button>)}
+      </div>
     </div>
     <button type="button" className="active-window" onClick={() => openView(view === "desktop" ? "terminal" : "desktop")}
       aria-label={`Active window: ${label}`}>
@@ -86,13 +107,99 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, toggl
 }
 
 function DesktopWallpaper({ workspace }: { workspace: number }) {
-  return <div className={`wallpaper workspace-${workspace}`}>
-    <img
-      src="./public/hieu-wallpaper.png"
-      alt="Hieu Pham monochrome ink-wash portrait"
-      fetchPriority="high"
-    />
-    <div className="paper-light" /><div className="desktop-stamp" aria-hidden="true"><span /><span /><span /></div>
+  const wallpaperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const wallpaper = wallpaperRef.current;
+    const surface = wallpaper?.parentElement;
+    if (!wallpaper || !surface || typeof window.matchMedia !== "function") return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const finePointer = window.matchMedia("(pointer: fine)");
+    let frame = 0;
+    let x = 0;
+    let y = 0;
+    let lightX = 28;
+    let lightY = 42;
+    let targetX = 0;
+    let targetY = 0;
+    let targetLightX = 28;
+    let targetLightY = 42;
+    let bounds = surface.getBoundingClientRect();
+
+    const render = () => {
+      x += (targetX - x) * .14;
+      y += (targetY - y) * .14;
+      lightX += (targetLightX - lightX) * .11;
+      lightY += (targetLightY - lightY) * .11;
+      wallpaper.style.setProperty("--parallax-x", `${x.toFixed(2)}px`);
+      wallpaper.style.setProperty("--parallax-y", `${y.toFixed(2)}px`);
+      wallpaper.style.setProperty("--light-x", `${lightX.toFixed(2)}%`);
+      wallpaper.style.setProperty("--light-y", `${lightY.toFixed(2)}%`);
+
+      const settled = Math.abs(targetX - x) < .02 && Math.abs(targetY - y) < .02
+        && Math.abs(targetLightX - lightX) < .05 && Math.abs(targetLightY - lightY) < .05;
+      if (settled) {
+        frame = 0;
+        wallpaper.classList.remove("is-reactive");
+        return;
+      }
+      frame = window.requestAnimationFrame(render);
+    };
+    const queueRender = () => {
+      wallpaper.classList.add("is-reactive");
+      if (!frame) frame = window.requestAnimationFrame(render);
+    };
+    const resetMotion = () => {
+      targetX = 0;
+      targetY = 0;
+      targetLightX = 28;
+      targetLightY = 42;
+      queueRender();
+    };
+    const onPointerMove = (event: PointerEvent) => {
+      if (reducedMotion.matches || !finePointer.matches) return;
+      const pointerX = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width));
+      const pointerY = Math.min(1, Math.max(0, (event.clientY - bounds.top) / bounds.height));
+      targetX = (0.5 - pointerX) * 8;
+      targetY = (0.5 - pointerY) * 6;
+      targetLightX = Math.min(58, Math.max(12, pointerX * 68));
+      targetLightY = Math.min(88, Math.max(12, pointerY * 100));
+      queueRender();
+    };
+    const updateBounds = () => { bounds = surface.getBoundingClientRect(); };
+    const onPreferenceChange = () => {
+      if (reducedMotion.matches || !finePointer.matches) resetMotion();
+    };
+
+    surface.addEventListener("pointermove", onPointerMove, { passive: true });
+    surface.addEventListener("pointerenter", updateBounds, { passive: true });
+    surface.addEventListener("pointerleave", resetMotion);
+    window.addEventListener("resize", updateBounds, { passive: true });
+    reducedMotion.addEventListener("change", onPreferenceChange);
+    finePointer.addEventListener("change", onPreferenceChange);
+    return () => {
+      surface.removeEventListener("pointermove", onPointerMove);
+      surface.removeEventListener("pointerenter", updateBounds);
+      surface.removeEventListener("pointerleave", resetMotion);
+      window.removeEventListener("resize", updateBounds);
+      reducedMotion.removeEventListener("change", onPreferenceChange);
+      finePointer.removeEventListener("change", onPreferenceChange);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  return <div ref={wallpaperRef} className={`wallpaper workspace-${workspace}`}>
+    <div className="wallpaper-motion">
+      {(workspace === 1 || workspace === 2) && <img
+        src="./public/hieu-wallpaper.png"
+        alt="Hieu Pham monochrome ink-wash portrait"
+        fetchPriority="high"
+      />}
+    </div>
+    <div className="paper-light" />
+    <div className="layout-texture" aria-hidden="true" />
+    <PortfolioScene workspace={workspace} />
   </div>;
 }
 
@@ -110,13 +217,14 @@ function PortfolioIntro() {
     <p className="portfolio-summary">{`Where a Developer's logic meets a Designer's aesthetic. From high-end
 commercial packaging and realistic 3D environments to automated workflows and
 seamless database systems. Beautiful on the surface, robust under the hood.`}</p>
-    <img
-      className="portfolio-skills"
-      src="./public/portfolio-skills.svg"
-      alt="Design Lab: Photoshop, Illustrator and Blender. Dev Portal: Windows, web and game apps. AI Skilled: GPT Codex, Gemini Antigravity and Claude."
-      width={591}
-      height={247}
-    />
+    <nav className="portfolio-actions" aria-label="Portfolio navigation">
+      <button type="button" className="portfolio-action" data-action="about">
+        <span className="portfolio-index" aria-hidden="true">01</span><span className="portfolio-action-label">About Hyper D²</span>
+      </button>
+      <button type="button" className="portfolio-action" data-action="portfolio">
+        <span className="portfolio-index" aria-hidden="true">02</span><span className="portfolio-action-label">Portfolio</span>
+      </button>
+    </nav>
   </section>;
 }
 
@@ -283,6 +391,16 @@ export default function HomePage() {
   const [playing, setPlaying] = useState(false);
   const closeTimerRef = useRef<number | null>(null);
   useEffect(() => {
+    try {
+      const saved = Number(window.localStorage.getItem(layoutStorageKey));
+      if (layouts.some(layout => layout.id === saved)) setWorkspace(saved);
+    } catch { /* Storage may be unavailable for local files or private browsing. */ }
+  }, []);
+  const selectLayout = (id: number) => {
+    setWorkspace(id);
+    try { window.localStorage.setItem(layoutStorageKey, String(id)); } catch { /* The layout still works in memory. */ }
+  };
+  useEffect(() => {
     setNow(new Date());
     const timer = window.setInterval(() => setNow(new Date()), 10_000);
     return () => window.clearInterval(timer);
@@ -335,8 +453,8 @@ export default function HomePage() {
     if (overlay === next) closeOverlay();
     else showOverlay(next);
   };
-  return <main className="shell">
-    <LeftRail now={now} workspace={workspace} setWorkspace={setWorkspace} view={view} overlay={overlay}
+  return <main className="shell" data-layout={layouts.find(layout => layout.id === workspace)?.name.toLowerCase()}>
+    <LeftRail now={now} workspace={workspace} setWorkspace={selectLayout} view={view} overlay={overlay}
       openView={openView} toggleOverlay={toggleOverlay} />
     <section className="desktop-surface" aria-label="Caelestia desktop">
       <DesktopWallpaper workspace={workspace} />
@@ -351,6 +469,5 @@ export default function HomePage() {
         <Sparkles /> Explore the shell <kbd>Ctrl K</kbd></button>}
     </section>
     {overlay === "media" && <MediaPopout playing={playing} setPlaying={setPlaying} close={closeOverlay} closing={overlayClosing} />}
-    <button type="button" className="rainbow-mascot" aria-label="Open Feishin" onClick={() => openView("music")}><span /></button>
   </main>;
 }
