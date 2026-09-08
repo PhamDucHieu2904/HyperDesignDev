@@ -1,0 +1,4310 @@
+{
+  "blend": "D:\\3D model\\Robot Cat\\robot_cat_rebuild.blend",
+  "version": "5.2.1 LTS",
+  "collections": [
+    {
+      "name": "00_REFERENCE",
+      "objects": [],
+      "children": [
+        "00A_IMAGES",
+        "00B_MAQUETTE_ORIGINAL",
+        "00C_MAQUETTE_ALIGNED"
+      ]
+    },
+    {
+      "name": "00A_IMAGES",
+      "objects": [],
+      "children": []
+    },
+    {
+      "name": "00B_MAQUETTE_ORIGINAL",
+      "objects": [
+        "SRC_MAQUETTE_ORIGINAL"
+      ],
+      "children": []
+    },
+    {
+      "name": "00C_MAQUETTE_ALIGNED",
+      "objects": [
+        "SRC_MAQUETTE_ALIGNED"
+      ],
+      "children": []
+    },
+    {
+      "name": "01_BLOCKOUT",
+      "objects": [],
+      "children": []
+    },
+    {
+      "name": "02_HEAD",
+      "objects": [
+        "CAT_HEAD_SHELL",
+        "CAT_HEAD_RECESS",
+        "CAT_VISOR",
+        "CAT_EAR_L",
+        "CAT_EAR_INNER_L",
+        "CAT_EAR_R",
+        "CAT_EAR_INNER_R",
+        "CAT_SIDE_MODULE_L",
+        "CAT_SIDE_RECESS_L",
+        "CAT_SIDE_CENTER_L",
+        "CAT_SIDE_MODULE_R",
+        "CAT_SIDE_RECESS_R",
+        "CAT_SIDE_CENTER_R"
+      ],
+      "children": []
+    },
+    {
+      "name": "03_NECK",
+      "objects": [
+        "CAT_NECK_LOWER",
+        "CAT_NECK_COLLAR"
+      ],
+      "children": []
+    },
+    {
+      "name": "04_BODY",
+      "objects": [
+        "CAT_BODY",
+        "CAT_BODY_CORE"
+      ],
+      "children": []
+    },
+    {
+      "name": "05_FRONT_LEGS",
+      "objects": [
+        "CAT_SHOULDER_SOCKET_L",
+        "CAT_LEG_FL",
+        "CAT_PAW_FL",
+        "CAT_SHOULDER_SOCKET_R",
+        "CAT_LEG_FR",
+        "CAT_PAW_FR"
+      ],
+      "children": []
+    },
+    {
+      "name": "06_REAR_LEGS",
+      "objects": [
+        "CAT_HIP_L",
+        "CAT_HIP_RING_L",
+        "CAT_HIP_CAP_L",
+        "CAT_LEG_RL",
+        "CAT_PAW_RL",
+        "CAT_HIP_R",
+        "CAT_HIP_RING_R",
+        "CAT_HIP_CAP_R",
+        "CAT_LEG_RR",
+        "CAT_PAW_RR"
+      ],
+      "children": []
+    },
+    {
+      "name": "07_TAIL",
+      "objects": [
+        "CAT_TAIL_BASE",
+        "CAT_TAIL_SHELL",
+        "CAT_TAIL_SEG_01",
+        "CAT_TAIL_SEG_02",
+        "CAT_TAIL_SEG_03",
+        "CAT_TAIL_SEG_04",
+        "CAT_TAIL_SEG_05",
+        "CAT_TAIL_TIP",
+        "CAT_TAIL_TIP_DARK"
+      ],
+      "children": []
+    },
+    {
+      "name": "08_CHEST_MODULE",
+      "objects": [
+        "CAT_CHEST_MODULE"
+      ],
+      "children": []
+    },
+    {
+      "name": "09_SEAMS",
+      "objects": [
+        "CAT_BODY_SEAM_FRONT",
+        "CAT_BODY_SEAM_REAR",
+        "CAT_BODY_FLANK_SLOT_L",
+        "CAT_BODY_FLANK_SLOT_R",
+        "CAT_FRONT_LEG_PANEL_L",
+        "CAT_FRONT_VENT_L_1",
+        "CAT_FRONT_VENT_L_2",
+        "CAT_FRONT_LEG_PANEL_R",
+        "CAT_FRONT_VENT_R_1",
+        "CAT_FRONT_VENT_R_2"
+      ],
+      "children": []
+    },
+    {
+      "name": "10_LEDS",
+      "objects": [
+        "CAT_PAW_LED_FL_1",
+        "CAT_PAW_LED_FL_2",
+        "CAT_PAW_LED_FR_1",
+        "CAT_PAW_LED_FR_2",
+        "CAT_PAW_LED_RL_1",
+        "CAT_PAW_LED_RL_2",
+        "CAT_PAW_LED_RR_1",
+        "CAT_PAW_LED_RR_2",
+        "CAT_CHEST_LED",
+        "CAT_FACE_EYE_L",
+        "CAT_FACE_EYE_R",
+        "CAT_FACE_STATUS_1",
+        "CAT_FACE_STATUS_2",
+        "CAT_FACE_STATUS_3",
+        "CAT_EAR_LED_L",
+        "CAT_EAR_LED_R",
+        "CAT_SIDE_LED_L",
+        "CAT_SIDE_LED_R",
+        "CAT_TAIL_LED"
+      ],
+      "children": []
+    },
+    {
+      "name": "11_RIG_HELPERS",
+      "objects": [
+        "ROOT",
+        "BODY_ROOT",
+        "HEAD_YAW",
+        "PIVOT_SHOULDER_L",
+        "PIVOT_SHOULDER_R",
+        "PIVOT_HIP_L",
+        "PIVOT_HIP_R",
+        "PIVOT_EAR_L",
+        "PIVOT_EAR_R",
+        "PIVOT_TAIL_ROOT",
+        "PIVOT_TAIL_01",
+        "PIVOT_TAIL_02",
+        "PIVOT_TAIL_03",
+        "PIVOT_TAIL_04",
+        "PIVOT_TAIL_05"
+      ],
+      "children": []
+    },
+    {
+      "name": "12_MATERIALS",
+      "objects": [],
+      "children": []
+    },
+    {
+      "name": "13_CAMERAS",
+      "objects": [
+        "CAM_FRONT",
+        "CAM_SIDE",
+        "CAM_THREEQUARTER",
+        "CAM_REAR"
+      ],
+      "children": []
+    },
+    {
+      "name": "14_LIGHTS",
+      "objects": [
+        "KEY_SOFTBOX",
+        "FILL_SOFTBOX",
+        "RIM_SOFTBOX",
+        "FRONT_TOP"
+      ],
+      "children": []
+    },
+    {
+      "name": "99_HELPERS",
+      "objects": [
+        "GROUND_PLANE"
+      ],
+      "children": []
+    },
+    {
+      "name": "Collection",
+      "objects": [],
+      "children": []
+    },
+    {
+      "name": "ROBOT_CAT",
+      "objects": [],
+      "children": [
+        "00_REFERENCE",
+        "00A_IMAGES",
+        "00B_MAQUETTE_ORIGINAL",
+        "00C_MAQUETTE_ALIGNED",
+        "01_BLOCKOUT",
+        "02_HEAD",
+        "03_NECK",
+        "04_BODY",
+        "05_FRONT_LEGS",
+        "06_REAR_LEGS",
+        "07_TAIL",
+        "08_CHEST_MODULE",
+        "09_SEAMS",
+        "10_LEDS",
+        "11_RIG_HELPERS",
+        "12_MATERIALS",
+        "13_CAMERAS",
+        "14_LIGHTS",
+        "99_HELPERS"
+      ]
+    }
+  ],
+  "objects": [
+    {
+      "name": "BODY_ROOT",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "ROOT",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "CAM_FRONT",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        -12.0,
+        3.18
+      ],
+      "rotation_euler": [
+        1.570796,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": null,
+      "collections": [
+        "13_CAMERAS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "CAM_REAR",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        12.0,
+        3.15
+      ],
+      "rotation_euler": [
+        -1.570796,
+        3.141593,
+        -0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": null,
+      "collections": [
+        "13_CAMERAS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "CAM_SIDE",
+      "type": "CAMERA",
+      "location": [
+        12.0,
+        0.45,
+        3.18
+      ],
+      "rotation_euler": [
+        1.570796,
+        -0.0,
+        1.570796
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": null,
+      "collections": [
+        "13_CAMERAS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "CAM_THREEQUARTER",
+      "type": "CAMERA",
+      "location": [
+        8.8,
+        -11.0,
+        4.9
+      ],
+      "rotation_euler": [
+        1.444746,
+        -0.0,
+        0.668144
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": null,
+      "collections": [
+        "13_CAMERAS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "CAT_BODY",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "04_BODY"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.288679,
+          -0.768143,
+          0.818291
+        ],
+        "max": [
+          1.288679,
+          2.5174,
+          2.749148
+        ],
+        "size": [
+          2.577358,
+          3.285543,
+          1.930856
+        ]
+      },
+      "vertices": 3122,
+      "edges": 6320,
+      "polygons": 3200,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_BODY_CORE",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "04_BODY"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.136024,
+          -0.611102,
+          0.899752
+        ],
+        "max": [
+          1.136024,
+          2.3518,
+          2.425836
+        ],
+        "size": [
+          2.272048,
+          2.962902,
+          1.526084
+        ]
+      },
+      "vertices": 1986,
+      "edges": 4032,
+      "polygons": 2048,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_BODY_FLANK_SLOT_L",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "09_SEAMS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.401935,
+          0.77313,
+          2.2784
+        ],
+        "max": [
+          -1.278065,
+          1.18687,
+          2.4316
+        ],
+        "size": [
+          0.12387,
+          0.413741,
+          0.153199
+        ]
+      }
+    },
+    {
+      "name": "CAT_BODY_FLANK_SLOT_R",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "09_SEAMS"
+      ],
+      "bbox_world": {
+        "min": [
+          1.278065,
+          0.77313,
+          2.2784
+        ],
+        "max": [
+          1.401935,
+          1.18687,
+          2.4316
+        ],
+        "size": [
+          0.12387,
+          0.413741,
+          0.153199
+        ]
+      }
+    },
+    {
+      "name": "CAT_BODY_SEAM_FRONT",
+      "type": "MESH",
+      "location": [
+        0.0,
+        -0.5,
+        1.8
+      ],
+      "rotation_euler": [
+        1.570796,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "09_SEAMS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.285,
+          -0.5324,
+          0.515
+        ],
+        "max": [
+          1.285,
+          -0.4676,
+          3.085
+        ],
+        "size": [
+          2.57,
+          0.0648,
+          2.57
+        ]
+      },
+      "vertices": 1152,
+      "edges": 2304,
+      "polygons": 1152,
+      "materials": [
+        "MAT_SEAM"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_BODY_SEAM_REAR",
+      "type": "MESH",
+      "location": [
+        0.0,
+        2.03,
+        1.8
+      ],
+      "rotation_euler": [
+        1.570796,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "09_SEAMS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.2354,
+          1.9976,
+          0.5646
+        ],
+        "max": [
+          1.2354,
+          2.0624,
+          3.0354
+        ],
+        "size": [
+          2.4708,
+          0.0648,
+          2.4708
+        ]
+      },
+      "vertices": 1152,
+      "edges": 2304,
+      "polygons": 1152,
+      "materials": [
+        "MAT_SEAM"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_CHEST_LED",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          -0.047,
+          -1.236991,
+          1.959096
+        ],
+        "max": [
+          0.047,
+          -1.138009,
+          2.220904
+        ],
+        "size": [
+          0.094,
+          0.098983,
+          0.261807
+        ]
+      }
+    },
+    {
+      "name": "CAT_CHEST_MODULE",
+      "type": "MESH",
+      "location": [
+        0.0,
+        -0.98,
+        2.1
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "08_CHEST_MODULE"
+      ],
+      "bbox_world": {
+        "min": [
+          -0.35,
+          -1.17,
+          1.68
+        ],
+        "max": [
+          0.35,
+          -0.79,
+          2.52
+        ],
+        "size": [
+          0.7,
+          0.38,
+          0.84
+        ]
+      },
+      "vertices": 1986,
+      "edges": 4032,
+      "polygons": 2048,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_EAR_INNER_L",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_EAR_L",
+      "collections": [
+        "02_HEAD"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.724472,
+          -0.772185,
+          5.0378
+        ],
+        "max": [
+          -0.829108,
+          -0.697815,
+          6.133422
+        ],
+        "size": [
+          0.895364,
+          0.074369,
+          1.095623
+        ]
+      },
+      "vertices": 12,
+      "edges": 18,
+      "polygons": 8,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": [
+        {
+          "name": "Soft consumer shell radii",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_EAR_INNER_R",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_EAR_R",
+      "collections": [
+        "02_HEAD"
+      ],
+      "bbox_world": {
+        "min": [
+          0.829108,
+          -0.772185,
+          5.0378
+        ],
+        "max": [
+          1.724472,
+          -0.697815,
+          6.133422
+        ],
+        "size": [
+          0.895364,
+          0.074369,
+          1.095623
+        ]
+      },
+      "vertices": 12,
+      "edges": 18,
+      "polygons": 8,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": [
+        {
+          "name": "Soft consumer shell radii",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_EAR_L",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_EAR_L",
+      "collections": [
+        "02_HEAD"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.881588,
+          -0.677398,
+          5.0
+        ],
+        "max": [
+          -0.674831,
+          -0.002602,
+          6.438738
+        ],
+        "size": [
+          1.206757,
+          0.674796,
+          1.438738
+        ]
+      },
+      "vertices": 12,
+      "edges": 18,
+      "polygons": 8,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": [
+        {
+          "name": "Soft consumer shell radii",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_EAR_LED_L",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_EAR_L",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.508281,
+          -0.833142,
+          5.41178
+        ],
+        "max": [
+          -1.150165,
+          -0.755057,
+          5.900553
+        ],
+        "size": [
+          0.358116,
+          0.078085,
+          0.488773
+        ]
+      }
+    },
+    {
+      "name": "CAT_EAR_LED_R",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_EAR_R",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          1.150165,
+          -0.833142,
+          5.41178
+        ],
+        "max": [
+          1.508281,
+          -0.755057,
+          5.900553
+        ],
+        "size": [
+          0.358116,
+          0.078085,
+          0.488773
+        ]
+      }
+    },
+    {
+      "name": "CAT_EAR_R",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_EAR_R",
+      "collections": [
+        "02_HEAD"
+      ],
+      "bbox_world": {
+        "min": [
+          0.674831,
+          -0.677398,
+          5.0
+        ],
+        "max": [
+          1.881588,
+          -0.002602,
+          6.438738
+        ],
+        "size": [
+          1.206757,
+          0.674796,
+          1.438738
+        ]
+      },
+      "vertices": 12,
+      "edges": 18,
+      "polygons": 8,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": [
+        {
+          "name": "Soft consumer shell radii",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_FACE_EYE_L",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.16,
+        -2.76
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          -0.988682,
+          -1.98291,
+          4.085312
+        ],
+        "max": [
+          -0.271318,
+          -1.845337,
+          4.41991
+        ],
+        "size": [
+          0.717364,
+          0.137573,
+          0.334598
+        ]
+      }
+    },
+    {
+      "name": "CAT_FACE_EYE_R",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.16,
+        -2.76
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          0.271318,
+          -1.98291,
+          4.085312
+        ],
+        "max": [
+          0.988682,
+          -1.845337,
+          4.41991
+        ],
+        "size": [
+          0.717364,
+          0.137573,
+          0.334598
+        ]
+      }
+    },
+    {
+      "name": "CAT_FACE_STATUS_1",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.16,
+        -2.76
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          0.854,
+          -1.949989,
+          3.6491
+        ],
+        "max": [
+          0.926,
+          -1.874011,
+          3.8109
+        ],
+        "size": [
+          0.072,
+          0.075978,
+          0.161799
+        ]
+      }
+    },
+    {
+      "name": "CAT_FACE_STATUS_2",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.16,
+        -2.76
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          1.054,
+          -1.949993,
+          3.624315
+        ],
+        "max": [
+          1.126,
+          -1.874007,
+          3.835685
+        ],
+        "size": [
+          0.072,
+          0.075987,
+          0.211371
+        ]
+      }
+    },
+    {
+      "name": "CAT_FACE_STATUS_3",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.16,
+        -2.76
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          1.254,
+          -1.949996,
+          3.594467
+        ],
+        "max": [
+          1.326,
+          -1.874004,
+          3.865533
+        ],
+        "size": [
+          0.072,
+          0.075992,
+          0.271066
+        ]
+      }
+    },
+    {
+      "name": "CAT_FRONT_LEG_PANEL_L",
+      "type": "MESH",
+      "location": [
+        -1.55,
+        -0.82,
+        1.55
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_L",
+      "collections": [
+        "09_SEAMS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.569,
+          -1.0,
+          1.37
+        ],
+        "max": [
+          -1.531,
+          -0.64,
+          1.73
+        ],
+        "size": [
+          0.038,
+          0.36,
+          0.36
+        ]
+      },
+      "vertices": 96,
+      "edges": 144,
+      "polygons": 50,
+      "materials": [
+        "MAT_SHELL_SECONDARY"
+      ],
+      "modifiers": [
+        {
+          "name": "Edge softness",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_FRONT_LEG_PANEL_R",
+      "type": "MESH",
+      "location": [
+        1.55,
+        -0.82,
+        1.55
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_R",
+      "collections": [
+        "09_SEAMS"
+      ],
+      "bbox_world": {
+        "min": [
+          1.531,
+          -1.0,
+          1.37
+        ],
+        "max": [
+          1.569,
+          -0.64,
+          1.73
+        ],
+        "size": [
+          0.038,
+          0.36,
+          0.36
+        ]
+      },
+      "vertices": 96,
+      "edges": 144,
+      "polygons": 50,
+      "materials": [
+        "MAT_SHELL_SECONDARY"
+      ],
+      "modifiers": [
+        {
+          "name": "Edge softness",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_FRONT_VENT_L_1",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_L",
+      "collections": [
+        "09_SEAMS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.08,
+          -1.595,
+          1.435
+        ],
+        "max": [
+          -0.78,
+          -1.505,
+          1.525
+        ],
+        "size": [
+          0.3,
+          0.09,
+          0.09
+        ]
+      }
+    },
+    {
+      "name": "CAT_FRONT_VENT_L_2",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_L",
+      "collections": [
+        "09_SEAMS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.08,
+          -1.595,
+          1.595
+        ],
+        "max": [
+          -0.78,
+          -1.505,
+          1.685
+        ],
+        "size": [
+          0.3,
+          0.09,
+          0.09
+        ]
+      }
+    },
+    {
+      "name": "CAT_FRONT_VENT_R_1",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_R",
+      "collections": [
+        "09_SEAMS"
+      ],
+      "bbox_world": {
+        "min": [
+          0.78,
+          -1.595,
+          1.435
+        ],
+        "max": [
+          1.08,
+          -1.505,
+          1.525
+        ],
+        "size": [
+          0.3,
+          0.09,
+          0.09
+        ]
+      }
+    },
+    {
+      "name": "CAT_FRONT_VENT_R_2",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_R",
+      "collections": [
+        "09_SEAMS"
+      ],
+      "bbox_world": {
+        "min": [
+          0.78,
+          -1.595,
+          1.595
+        ],
+        "max": [
+          1.08,
+          -1.505,
+          1.685
+        ],
+        "size": [
+          0.3,
+          0.09,
+          0.09
+        ]
+      }
+    },
+    {
+      "name": "CAT_HEAD_RECESS",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.16,
+        -2.76
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "02_HEAD"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.720001,
+          -1.8775,
+          3.149998
+        ],
+        "max": [
+          1.720001,
+          -1.725715,
+          5.190001
+        ],
+        "size": [
+          3.440001,
+          0.151785,
+          2.040003
+        ]
+      },
+      "vertices": 481,
+      "edges": 960,
+      "polygons": 480,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": [
+        {
+          "name": "Surface thickness",
+          "type": "SOLIDIFY"
+        },
+        {
+          "name": "Controlled edge radius",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_HEAD_SHELL",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.16,
+        -2.76
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "02_HEAD"
+      ],
+      "bbox_world": {
+        "min": [
+          -2.022807,
+          -1.73,
+          2.808755
+        ],
+        "max": [
+          2.022807,
+          0.976655,
+          5.61684
+        ],
+        "size": [
+          4.045613,
+          2.706655,
+          2.808085
+        ]
+      },
+      "vertices": 4514,
+      "edges": 9120,
+      "polygons": 4608,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_HIP_CAP_L",
+      "type": "MESH",
+      "location": [
+        -1.79,
+        1.68,
+        1.52
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_L",
+      "collections": [
+        "06_REAR_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.82,
+          1.39,
+          1.23
+        ],
+        "max": [
+          -1.76,
+          1.97,
+          1.81
+        ],
+        "size": [
+          0.06,
+          0.58,
+          0.58
+        ]
+      },
+      "vertices": 112,
+      "edges": 168,
+      "polygons": 58,
+      "materials": [
+        "MAT_SHELL_SECONDARY"
+      ],
+      "modifiers": [
+        {
+          "name": "Edge softness",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_HIP_CAP_R",
+      "type": "MESH",
+      "location": [
+        1.79,
+        1.68,
+        1.52
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_R",
+      "collections": [
+        "06_REAR_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          1.76,
+          1.39,
+          1.23
+        ],
+        "max": [
+          1.82,
+          1.97,
+          1.81
+        ],
+        "size": [
+          0.06,
+          0.58,
+          0.58
+        ]
+      },
+      "vertices": 112,
+      "edges": 168,
+      "polygons": 58,
+      "materials": [
+        "MAT_SHELL_SECONDARY"
+      ],
+      "modifiers": [
+        {
+          "name": "Edge softness",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_HIP_L",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_L",
+      "collections": [
+        "06_REAR_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.77,
+          0.93,
+          0.63
+        ],
+        "max": [
+          -0.29,
+          2.51,
+          2.29
+        ],
+        "size": [
+          1.48,
+          1.58,
+          1.66
+        ]
+      },
+      "vertices": 1514,
+      "edges": 3080,
+      "polygons": 1568,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_HIP_R",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_R",
+      "collections": [
+        "06_REAR_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          0.29,
+          0.93,
+          0.63
+        ],
+        "max": [
+          1.77,
+          2.51,
+          2.29
+        ],
+        "size": [
+          1.48,
+          1.58,
+          1.66
+        ]
+      },
+      "vertices": 1514,
+      "edges": 3080,
+      "polygons": 1568,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_HIP_RING_L",
+      "type": "MESH",
+      "location": [
+        -1.75,
+        1.68,
+        1.52
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_L",
+      "collections": [
+        "06_REAR_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.8,
+          1.29,
+          1.13
+        ],
+        "max": [
+          -1.7,
+          2.07,
+          1.91
+        ],
+        "size": [
+          0.1,
+          0.78,
+          0.78
+        ]
+      },
+      "vertices": 1152,
+      "edges": 2304,
+      "polygons": 1152,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_HIP_RING_R",
+      "type": "MESH",
+      "location": [
+        1.75,
+        1.68,
+        1.52
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_R",
+      "collections": [
+        "06_REAR_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          1.7,
+          1.29,
+          1.13
+        ],
+        "max": [
+          1.8,
+          2.07,
+          1.91
+        ],
+        "size": [
+          0.1,
+          0.78,
+          0.78
+        ]
+      },
+      "vertices": 1152,
+      "edges": 2304,
+      "polygons": 1152,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_LEG_FL",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_L",
+      "collections": [
+        "05_FRONT_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.600141,
+          -1.692806,
+          0.69
+        ],
+        "max": [
+          -0.290811,
+          -0.082317,
+          2.43
+        ],
+        "size": [
+          1.309329,
+          1.610489,
+          1.74
+        ]
+      },
+      "vertices": 624,
+      "edges": 1200,
+      "polygons": 578,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": [
+        {
+          "name": "Leg shell edge continuity",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_LEG_FR",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_R",
+      "collections": [
+        "05_FRONT_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          0.290811,
+          -1.692806,
+          0.69
+        ],
+        "max": [
+          1.600141,
+          -0.082317,
+          2.43
+        ],
+        "size": [
+          1.309329,
+          1.610489,
+          1.74
+        ]
+      },
+      "vertices": 624,
+      "edges": 1200,
+      "polygons": 578,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": [
+        {
+          "name": "Leg shell edge continuity",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_LEG_RL",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_L",
+      "collections": [
+        "06_REAR_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.665374,
+          1.032946,
+          0.48
+        ],
+        "max": [
+          -0.420179,
+          2.417446,
+          1.5
+        ],
+        "size": [
+          1.245195,
+          1.3845,
+          1.02
+        ]
+      },
+      "vertices": 624,
+      "edges": 1200,
+      "polygons": 578,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": [
+        {
+          "name": "Leg shell edge continuity",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_LEG_RR",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_R",
+      "collections": [
+        "06_REAR_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          0.420179,
+          1.032946,
+          0.48
+        ],
+        "max": [
+          1.665374,
+          2.417446,
+          1.5
+        ],
+        "size": [
+          1.245195,
+          1.3845,
+          1.02
+        ]
+      },
+      "vertices": 624,
+      "edges": 1200,
+      "polygons": 578,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": [
+        {
+          "name": "Leg shell edge continuity",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_NECK_COLLAR",
+      "type": "MESH",
+      "location": [
+        0.0,
+        -0.18,
+        2.85
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "03_NECK"
+      ],
+      "bbox_world": {
+        "min": [
+          -0.775,
+          -0.955,
+          2.755
+        ],
+        "max": [
+          0.775,
+          0.595,
+          2.945
+        ],
+        "size": [
+          1.55,
+          1.55,
+          0.19
+        ]
+      },
+      "vertices": 1152,
+      "edges": 2304,
+      "polygons": 1152,
+      "materials": [
+        "MAT_SEAM"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_NECK_LOWER",
+      "type": "MESH",
+      "location": [
+        0.0,
+        -0.14,
+        2.72
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "03_NECK"
+      ],
+      "bbox_world": {
+        "min": [
+          -0.77,
+          -0.91,
+          2.61
+        ],
+        "max": [
+          0.77,
+          0.63,
+          2.83
+        ],
+        "size": [
+          1.54,
+          1.54,
+          0.22
+        ]
+      },
+      "vertices": 128,
+      "edges": 192,
+      "polygons": 66,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": [
+        {
+          "name": "Edge softness",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_PAW_FL",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_L",
+      "collections": [
+        "05_FRONT_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.59,
+          -1.86,
+          0.01
+        ],
+        "max": [
+          -0.27,
+          -0.3,
+          0.81
+        ],
+        "size": [
+          1.32,
+          1.56,
+          0.8
+        ]
+      },
+      "vertices": 1858,
+      "edges": 3776,
+      "polygons": 1920,
+      "materials": [
+        "MAT_PAW_RUBBER"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_PAW_FR",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_R",
+      "collections": [
+        "05_FRONT_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          0.27,
+          -1.86,
+          0.01
+        ],
+        "max": [
+          1.59,
+          -0.3,
+          0.81
+        ],
+        "size": [
+          1.32,
+          1.56,
+          0.8
+        ]
+      },
+      "vertices": 1858,
+      "edges": 3776,
+      "polygons": 1920,
+      "materials": [
+        "MAT_PAW_RUBBER"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_PAW_LED_FL_1",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_L",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.147,
+          -1.866962,
+          0.25832
+        ],
+        "max": [
+          -1.073,
+          -1.783038,
+          0.48168
+        ],
+        "size": [
+          0.074,
+          0.083924,
+          0.22336
+        ]
+      }
+    },
+    {
+      "name": "CAT_PAW_LED_FL_2",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_L",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          -0.787,
+          -1.866962,
+          0.25832
+        ],
+        "max": [
+          -0.713,
+          -1.783038,
+          0.48168
+        ],
+        "size": [
+          0.074,
+          0.083924,
+          0.22336
+        ]
+      }
+    },
+    {
+      "name": "CAT_PAW_LED_FR_1",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_R",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          0.713,
+          -1.866962,
+          0.25832
+        ],
+        "max": [
+          0.787,
+          -1.783038,
+          0.48168
+        ],
+        "size": [
+          0.074,
+          0.083924,
+          0.22336
+        ]
+      }
+    },
+    {
+      "name": "CAT_PAW_LED_FR_2",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_R",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          1.073,
+          -1.866962,
+          0.25832
+        ],
+        "max": [
+          1.147,
+          -1.783038,
+          0.48168
+        ],
+        "size": [
+          0.074,
+          0.083924,
+          0.22336
+        ]
+      }
+    },
+    {
+      "name": "CAT_PAW_LED_RL_1",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_L",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.2,
+          0.800046,
+          0.198336
+        ],
+        "max": [
+          -1.14,
+          0.869954,
+          0.381664
+        ],
+        "size": [
+          0.06,
+          0.069908,
+          0.183328
+        ]
+      }
+    },
+    {
+      "name": "CAT_PAW_LED_RL_2",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_L",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          -0.92,
+          0.800046,
+          0.198336
+        ],
+        "max": [
+          -0.86,
+          0.869954,
+          0.381664
+        ],
+        "size": [
+          0.06,
+          0.069908,
+          0.183328
+        ]
+      }
+    },
+    {
+      "name": "CAT_PAW_LED_RR_1",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_R",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          0.86,
+          0.800046,
+          0.198336
+        ],
+        "max": [
+          0.92,
+          0.869954,
+          0.381664
+        ],
+        "size": [
+          0.06,
+          0.069908,
+          0.183328
+        ]
+      }
+    },
+    {
+      "name": "CAT_PAW_LED_RR_2",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_R",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          1.14,
+          0.800046,
+          0.198336
+        ],
+        "max": [
+          1.2,
+          0.869954,
+          0.381664
+        ],
+        "size": [
+          0.06,
+          0.069908,
+          0.183328
+        ]
+      }
+    },
+    {
+      "name": "CAT_PAW_RL",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_L",
+      "collections": [
+        "06_REAR_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.61,
+          0.85,
+          0.01
+        ],
+        "max": [
+          -0.45,
+          2.25,
+          0.69
+        ],
+        "size": [
+          1.16,
+          1.4,
+          0.68
+        ]
+      },
+      "vertices": 1514,
+      "edges": 3080,
+      "polygons": 1568,
+      "materials": [
+        "MAT_PAW_RUBBER"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_PAW_RR",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_HIP_R",
+      "collections": [
+        "06_REAR_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          0.45,
+          0.85,
+          0.01
+        ],
+        "max": [
+          1.61,
+          2.25,
+          0.69
+        ],
+        "size": [
+          1.16,
+          1.4,
+          0.68
+        ]
+      },
+      "vertices": 1514,
+      "edges": 3080,
+      "polygons": 1568,
+      "materials": [
+        "MAT_PAW_RUBBER"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_SHOULDER_SOCKET_L",
+      "type": "MESH",
+      "location": [
+        -0.93,
+        -0.48,
+        2.3
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_L",
+      "collections": [
+        "05_FRONT_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.429999,
+          -0.93,
+          1.78
+        ],
+        "max": [
+          -0.43,
+          -0.03,
+          2.82
+        ],
+        "size": [
+          0.999999,
+          0.9,
+          1.04
+        ]
+      },
+      "vertices": 1514,
+      "edges": 3080,
+      "polygons": 1568,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_SHOULDER_SOCKET_R",
+      "type": "MESH",
+      "location": [
+        0.93,
+        -0.48,
+        2.3
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_SHOULDER_R",
+      "collections": [
+        "05_FRONT_LEGS"
+      ],
+      "bbox_world": {
+        "min": [
+          0.430001,
+          -0.93,
+          1.78
+        ],
+        "max": [
+          1.43,
+          -0.03,
+          2.82
+        ],
+        "size": [
+          0.999999,
+          0.9,
+          1.04
+        ]
+      },
+      "vertices": 1514,
+      "edges": 3080,
+      "polygons": 1568,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_SIDE_CENTER_L",
+      "type": "MESH",
+      "location": [
+        -2.135,
+        -0.16,
+        1.36
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "02_HEAD"
+      ],
+      "bbox_world": {
+        "min": [
+          -2.1625,
+          -0.63,
+          3.81
+        ],
+        "max": [
+          -2.1075,
+          -0.01,
+          4.43
+        ],
+        "size": [
+          0.055,
+          0.62,
+          0.62
+        ]
+      },
+      "vertices": 128,
+      "edges": 192,
+      "polygons": 66,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": [
+        {
+          "name": "Edge softness",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_SIDE_CENTER_R",
+      "type": "MESH",
+      "location": [
+        2.135,
+        -0.16,
+        1.36
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "02_HEAD"
+      ],
+      "bbox_world": {
+        "min": [
+          2.1075,
+          -0.63,
+          3.81
+        ],
+        "max": [
+          2.1625,
+          -0.01,
+          4.43
+        ],
+        "size": [
+          0.055,
+          0.62,
+          0.62
+        ]
+      },
+      "vertices": 128,
+      "edges": 192,
+      "polygons": 66,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": [
+        {
+          "name": "Edge softness",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_SIDE_LED_L",
+      "type": "MESH",
+      "location": [
+        -2.123,
+        -0.16,
+        1.36
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          -2.16,
+          -0.737,
+          3.703
+        ],
+        "max": [
+          -2.086,
+          0.097,
+          4.537
+        ],
+        "size": [
+          0.074,
+          0.834,
+          0.834
+        ]
+      },
+      "vertices": 1152,
+      "edges": 2304,
+      "polygons": 1152,
+      "materials": [
+        "MAT_LED_CYAN"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_SIDE_LED_R",
+      "type": "MESH",
+      "location": [
+        2.123,
+        -0.16,
+        1.36
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          2.086,
+          -0.737,
+          3.703
+        ],
+        "max": [
+          2.16,
+          0.097,
+          4.537
+        ],
+        "size": [
+          0.074,
+          0.834,
+          0.834
+        ]
+      },
+      "vertices": 1152,
+      "edges": 2304,
+      "polygons": 1152,
+      "materials": [
+        "MAT_LED_CYAN"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_SIDE_MODULE_L",
+      "type": "MESH",
+      "location": [
+        -2.01,
+        -0.16,
+        1.36
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "02_HEAD"
+      ],
+      "bbox_world": {
+        "min": [
+          -2.0625,
+          -0.91,
+          3.53
+        ],
+        "max": [
+          -1.9575,
+          0.27,
+          4.71
+        ],
+        "size": [
+          0.105,
+          1.18,
+          1.18
+        ]
+      },
+      "vertices": 128,
+      "edges": 192,
+      "polygons": 66,
+      "materials": [
+        "MAT_SHELL_SECONDARY"
+      ],
+      "modifiers": [
+        {
+          "name": "Edge softness",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_SIDE_MODULE_R",
+      "type": "MESH",
+      "location": [
+        2.01,
+        -0.16,
+        1.36
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "02_HEAD"
+      ],
+      "bbox_world": {
+        "min": [
+          1.9575,
+          -0.91,
+          3.53
+        ],
+        "max": [
+          2.0625,
+          0.27,
+          4.71
+        ],
+        "size": [
+          0.105,
+          1.18,
+          1.18
+        ]
+      },
+      "vertices": 128,
+      "edges": 192,
+      "polygons": 66,
+      "materials": [
+        "MAT_SHELL_SECONDARY"
+      ],
+      "modifiers": [
+        {
+          "name": "Edge softness",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_SIDE_RECESS_L",
+      "type": "MESH",
+      "location": [
+        -2.075,
+        -0.16,
+        1.36
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "02_HEAD"
+      ],
+      "bbox_world": {
+        "min": [
+          -2.1175,
+          -0.8,
+          3.64
+        ],
+        "max": [
+          -2.0325,
+          0.16,
+          4.6
+        ],
+        "size": [
+          0.085,
+          0.96,
+          0.96
+        ]
+      },
+      "vertices": 128,
+      "edges": 192,
+      "polygons": 66,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": [
+        {
+          "name": "Edge softness",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_SIDE_RECESS_R",
+      "type": "MESH",
+      "location": [
+        2.075,
+        -0.16,
+        1.36
+      ],
+      "rotation_euler": [
+        -0.0,
+        1.570796,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "02_HEAD"
+      ],
+      "bbox_world": {
+        "min": [
+          2.0325,
+          -0.8,
+          3.64
+        ],
+        "max": [
+          2.1175,
+          0.16,
+          4.6
+        ],
+        "size": [
+          0.085,
+          0.96,
+          0.96
+        ]
+      },
+      "vertices": 128,
+      "edges": 192,
+      "polygons": 66,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": [
+        {
+          "name": "Edge softness",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "CAT_TAIL_BASE",
+      "type": "MESH",
+      "location": [
+        0.92,
+        2.34,
+        1.56
+      ],
+      "rotation_euler": [
+        1.570796,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_ROOT",
+      "collections": [
+        "07_TAIL"
+      ],
+      "bbox_world": {
+        "min": [
+          0.55,
+          2.25,
+          1.19
+        ],
+        "max": [
+          1.29,
+          2.43,
+          1.93
+        ],
+        "size": [
+          0.74,
+          0.18,
+          0.74
+        ]
+      },
+      "vertices": 1152,
+      "edges": 2304,
+      "polygons": 1152,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_TAIL_LED",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_05",
+      "collections": [
+        "10_LEDS"
+      ],
+      "bbox_world": {
+        "min": [
+          1.678575,
+          2.752676,
+          3.001999
+        ],
+        "max": [
+          1.801795,
+          3.168907,
+          3.346809
+        ],
+        "size": [
+          0.12322,
+          0.416231,
+          0.34481
+        ]
+      }
+    },
+    {
+      "name": "CAT_TAIL_SEG_01",
+      "type": "MESH",
+      "location": [
+        0.975,
+        2.52,
+        1.68
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_01",
+      "collections": [
+        "07_TAIL"
+      ],
+      "bbox_world": {
+        "min": [
+          0.795,
+          2.34,
+          1.425535
+        ],
+        "max": [
+          1.155,
+          2.7,
+          1.934465
+        ],
+        "size": [
+          0.36,
+          0.36,
+          0.508931
+        ]
+      },
+      "vertices": 1106,
+      "edges": 2256,
+      "polygons": 1152,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_TAIL_SEG_02",
+      "type": "MESH",
+      "location": [
+        1.085,
+        2.825,
+        1.96
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_02",
+      "collections": [
+        "07_TAIL"
+      ],
+      "bbox_world": {
+        "min": [
+          0.915,
+          2.655,
+          1.720193
+        ],
+        "max": [
+          1.255,
+          2.995,
+          2.199807
+        ],
+        "size": [
+          0.34,
+          0.34,
+          0.479614
+        ]
+      },
+      "vertices": 1106,
+      "edges": 2256,
+      "polygons": 1152,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_TAIL_SEG_03",
+      "type": "MESH",
+      "location": [
+        1.18,
+        3.035,
+        2.29
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_03",
+      "collections": [
+        "07_TAIL"
+      ],
+      "bbox_world": {
+        "min": [
+          1.02,
+          2.875,
+          2.068578
+        ],
+        "max": [
+          1.34,
+          3.195,
+          2.511421
+        ],
+        "size": [
+          0.32,
+          0.32,
+          0.442843
+        ]
+      },
+      "vertices": 1106,
+      "edges": 2256,
+      "polygons": 1152,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_TAIL_SEG_04",
+      "type": "MESH",
+      "location": [
+        1.25,
+        3.135,
+        2.62
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_04",
+      "collections": [
+        "07_TAIL"
+      ],
+      "bbox_world": {
+        "min": [
+          1.1,
+          2.985,
+          2.433635
+        ],
+        "max": [
+          1.4,
+          3.285,
+          2.806365
+        ],
+        "size": [
+          0.3,
+          0.3,
+          0.372729
+        ]
+      },
+      "vertices": 1106,
+      "edges": 2256,
+      "polygons": 1152,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_TAIL_SEG_05",
+      "type": "MESH",
+      "location": [
+        1.31,
+        3.105,
+        2.9
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_05",
+      "collections": [
+        "07_TAIL"
+      ],
+      "bbox_world": {
+        "min": [
+          1.17,
+          2.965,
+          2.749948
+        ],
+        "max": [
+          1.45,
+          3.245,
+          3.050052
+        ],
+        "size": [
+          0.28,
+          0.28,
+          0.300104
+        ]
+      },
+      "vertices": 1106,
+      "edges": 2256,
+      "polygons": 1152,
+      "materials": [
+        "MAT_SHELL_WHITE"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_TAIL_SHELL",
+      "type": "CURVE",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_ROOT",
+      "collections": [
+        "07_TAIL"
+      ],
+      "bbox_world": {
+        "min": [
+          0.752638,
+          2.236512,
+          1.41244
+        ],
+        "max": [
+          1.509971,
+          3.330158,
+          3.091823
+        ],
+        "size": [
+          0.757332,
+          1.093646,
+          1.679384
+        ]
+      }
+    },
+    {
+      "name": "CAT_TAIL_TIP",
+      "type": "MESH",
+      "location": [
+        1.36,
+        3.0,
+        3.2
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_05",
+      "collections": [
+        "07_TAIL"
+      ],
+      "bbox_world": {
+        "min": [
+          0.93,
+          2.48,
+          2.86
+        ],
+        "max": [
+          1.79,
+          3.52,
+          3.54
+        ],
+        "size": [
+          0.86,
+          1.04,
+          0.68
+        ]
+      },
+      "vertices": 1986,
+      "edges": 4032,
+      "polygons": 2048,
+      "materials": [
+        "MAT_SHELL_SECONDARY"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_TAIL_TIP_DARK",
+      "type": "MESH",
+      "location": [
+        1.36,
+        2.91,
+        3.28
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_05",
+      "collections": [
+        "07_TAIL"
+      ],
+      "bbox_world": {
+        "min": [
+          0.99,
+          2.51,
+          3.02
+        ],
+        "max": [
+          1.73,
+          3.31,
+          3.54
+        ],
+        "size": [
+          0.74,
+          0.8,
+          0.52
+        ]
+      },
+      "vertices": 1514,
+      "edges": 3080,
+      "polygons": 1568,
+      "materials": [
+        "MAT_DARK_MECHANICAL"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "CAT_VISOR",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.16,
+        -2.76
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "02_HEAD"
+      ],
+      "bbox_world": {
+        "min": [
+          -1.590001,
+          -1.95,
+          3.259062
+        ],
+        "max": [
+          1.590001,
+          -1.769376,
+          5.060938
+        ],
+        "size": [
+          3.180002,
+          0.180624,
+          1.801876
+        ]
+      },
+      "vertices": 481,
+      "edges": 960,
+      "polygons": 480,
+      "materials": [
+        "MAT_VISOR_GLOSS"
+      ],
+      "modifiers": [
+        {
+          "name": "Surface thickness",
+          "type": "SOLIDIFY"
+        },
+        {
+          "name": "Controlled edge radius",
+          "type": "BEVEL"
+        }
+      ]
+    },
+    {
+      "name": "FILL_SOFTBOX",
+      "type": "LIGHT",
+      "location": [
+        5.5,
+        -2.8,
+        5.2
+      ],
+      "rotation_euler": [
+        1.193762,
+        -0.0,
+        1.057544
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": null,
+      "collections": [
+        "14_LIGHTS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "FRONT_TOP",
+      "type": "LIGHT",
+      "location": [
+        0.0,
+        -1.5,
+        10.5
+      ],
+      "rotation_euler": [
+        0.226799,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": null,
+      "collections": [
+        "14_LIGHTS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "GROUND_PLANE",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        -0.02
+      ],
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": null,
+      "collections": [
+        "99_HELPERS"
+      ],
+      "bbox_world": {
+        "min": [
+          -15.0,
+          -15.0,
+          -0.02
+        ],
+        "max": [
+          15.0,
+          15.0,
+          -0.02
+        ],
+        "size": [
+          30.0,
+          30.0,
+          0.0
+        ]
+      },
+      "vertices": 4,
+      "edges": 4,
+      "polygons": 1,
+      "materials": [
+        "MAT_STUDIO_GROUND"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "HEAD_YAW",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        -0.16,
+        2.76
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "KEY_SOFTBOX",
+      "type": "LIGHT",
+      "location": [
+        -5.0,
+        -6.5,
+        8.5
+      ],
+      "rotation_euler": [
+        0.968731,
+        0.0,
+        -0.634023
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": null,
+      "collections": [
+        "14_LIGHTS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "PIVOT_EAR_L",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.16,
+        -2.76
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "PIVOT_EAR_R",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.16,
+        -2.76
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "HEAD_YAW",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "PIVOT_HIP_L",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "PIVOT_HIP_R",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "PIVOT_SHOULDER_L",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "PIVOT_SHOULDER_R",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "PIVOT_TAIL_01",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_ROOT",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "PIVOT_TAIL_02",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_01",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "PIVOT_TAIL_03",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_02",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "PIVOT_TAIL_04",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_03",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "PIVOT_TAIL_05",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "PIVOT_TAIL_04",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "PIVOT_TAIL_ROOT",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": "BODY_ROOT",
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "RIM_SOFTBOX",
+      "type": "LIGHT",
+      "location": [
+        2.0,
+        5.5,
+        7.2
+      ],
+      "rotation_euler": [
+        0.891376,
+        0.0,
+        2.774419
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": null,
+      "collections": [
+        "14_LIGHTS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "ROOT",
+      "type": "EMPTY",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": null,
+      "collections": [
+        "11_RIG_HELPERS"
+      ],
+      "bbox_world": null
+    },
+    {
+      "name": "SRC_MAQUETTE_ALIGNED",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.449926
+      ],
+      "rotation_euler": [
+        -0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": null,
+      "collections": [
+        "00C_MAQUETTE_ALIGNED"
+      ],
+      "bbox_world": {
+        "min": [
+          -0.333453,
+          -0.376708,
+          0.000711
+        ],
+        "max": [
+          0.336777,
+          0.399338,
+          0.949354
+        ],
+        "size": [
+          0.67023,
+          0.776046,
+          0.948643
+        ]
+      },
+      "vertices": 33590,
+      "edges": 67176,
+      "polygons": 33588,
+      "materials": [
+        "MAT_MAQUETTE_REFERENCE"
+      ],
+      "modifiers": []
+    },
+    {
+      "name": "SRC_MAQUETTE_ORIGINAL",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.449926
+      ],
+      "rotation_euler": [
+        -0.0,
+        -0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "parent": null,
+      "collections": [
+        "00B_MAQUETTE_ORIGINAL"
+      ],
+      "bbox_world": {
+        "min": [
+          -0.333453,
+          -0.376708,
+          0.000711
+        ],
+        "max": [
+          0.336777,
+          0.399338,
+          0.949354
+        ],
+        "size": [
+          0.67023,
+          0.776046,
+          0.948643
+        ]
+      },
+      "vertices": 33590,
+      "edges": 67176,
+      "polygons": 33588,
+      "materials": [
+        "MAT_MAQUETTE_REFERENCE"
+      ],
+      "modifiers": []
+    }
+  ],
+  "materials": [
+    "MAT_DARK_MECHANICAL",
+    "MAT_LED_CYAN",
+    "MAT_MAQUETTE_REFERENCE",
+    "MAT_PAW_RUBBER",
+    "MAT_SEAM",
+    "MAT_SHELL_SECONDARY",
+    "MAT_SHELL_WHITE",
+    "MAT_STUDIO_GROUND",
+    "MAT_VISOR_GLOSS"
+  ],
+  "scenes": [
+    "Scene"
+  ],
+  "mesh_world_bbox": {
+    "min": [
+      -15.0,
+      -15.0,
+      -0.02
+    ],
+    "max": [
+      15.0,
+      15.0,
+      6.51
+    ],
+    "size": [
+      30.0,
+      30.0,
+      6.53
+    ]
+  },
+  "totals": {
+    "objects": 98,
+    "mesh_objects": 51,
+    "vertices": 114656,
+    "edges": 229476,
+    "polygons": 114903
+  }
+}

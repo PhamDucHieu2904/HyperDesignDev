@@ -10,58 +10,59 @@
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: bottom center;
   filter: none; opacity: 1; mix-blend-mode: normal; transition: none;
 }
-.technology-scene--developer .android-stage { width: 42cqw; right: 3cqw; bottom: 0; height: 96cqh; }
+.technology-scene--developer .android-stage { z-index: 3; width: 42cqw; right: 3cqw; bottom: 0; height: 96cqh; }
 .technology-scene--developer .android-portrait { mask-image: linear-gradient(90deg, transparent, #000 12%, #000 93%, transparent); }
 
-/* Gallery's binary field echoes the CV's matrix backdrop, but stays behind the
-   identity copy so the red scan reads as atmosphere rather than decoration over text. */
-.binary-matrix {
-  position: absolute; z-index: 0; left: 7.6cqw; top: 12cqh; width: 42cqw; height: 66cqh;
-  overflow: hidden; pointer-events: none;
-  box-sizing: border-box; padding-inline: 1cqw;
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 11%, #000 86%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 11%, #000 86%, transparent 100%);
-}
-.binary-matrix__stream {
-  display: grid; gap: 1.1cqh; width: 100%;
-  color: #ef5366; opacity: 0;
-  font: 700 clamp(12px, 1.3cqw, 25px)/1 Consolas, "SFMono-Regular", monospace;
-  letter-spacing: .04em; white-space: nowrap;
-  transform: translate3d(0, 12%, 0);
-  animation: gallery-binary-cycle 5s cubic-bezier(.22,.7,.32,1) infinite;
-}
-.binary-matrix__stream span { text-align: center; }
-.binary-matrix__stream span:nth-child(2n) { opacity: .52; }
-.binary-matrix__stream span:nth-child(3n) { opacity: .72; }
-.binary-matrix__scan {
-  position: absolute; inset: -20% 0 auto; height: 15%;
-  display: block; opacity: 0;
-  background: linear-gradient(to bottom, transparent, #ff6d7b80 44%, #ff6d7b 50%, transparent);
-  filter: blur(.4px);
-  animation: gallery-binary-scan 5s cubic-bezier(.22,.7,.32,1) infinite;
-}
-@keyframes gallery-binary-cycle {
-  0%, 7% { opacity: 0; transform: translate3d(0, 12%, 0); }
-  14% { opacity: .22; }
-  23%, 73% { opacity: .22; transform: translate3d(0, -8%, 0); }
-  86%, 100% { opacity: 0; transform: translate3d(0, -14%, 0); }
-}
-@keyframes gallery-binary-scan {
-  0%, 10% { opacity: 0; transform: translateY(-10%); }
-  18% { opacity: .68; }
-  72% { opacity: .34; transform: translateY(590%); }
-  88%, 100% { opacity: 0; transform: translateY(720%); }
-}
 .shell[data-layout="gallery"] .portfolio-action { background: #17171e; }
 .shell[data-layout="gallery"] .rail { color: #fff1f2; }
 .shell[data-layout="gallery"] .rail :is(.arch-mark, .clock) { color: #fff1f2; }
 .shell[data-layout="gallery"] .workspaces, .shell[data-layout="gallery"] .status-stack { background: #731d2a; }
 .shell[data-layout="gallery"] .rail-bottom > svg.muted { color: #f5c2c9; }
 
+/* A low-contrast code field and restrained particles build depth behind the
+   developer portrait without competing with the identity copy. */
+.developer-code-backdrop {
+  position: absolute; z-index: 0; top: 3cqh; right: 0; width: 53cqw; height: 94cqh;
+  overflow: hidden; opacity: .3;
+  mask-image: radial-gradient(ellipse at 54% 48%, #000 24%, #000 44%, transparent 84%);
+  -webkit-mask-image: radial-gradient(ellipse at 54% 48%, #000 24%, #000 44%, transparent 84%);
+}
+.wallpaper .developer-code-backdrop img {
+  position: static; display: block; width: 100%; height: 100%; object-fit: cover;
+  filter: none; opacity: 1; mix-blend-mode: screen; transition: none;
+}
+.developer-particles {
+  position: absolute; z-index: 2; top: 10cqh; right: 1cqw; width: 47cqw; height: 84cqh;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+}
+.developer-particles i {
+  --particle-size: 4px; --particle-x: 50%; --particle-rise: 58cqh; --particle-duration: 13s; --particle-delay: 0s;
+  position: absolute; bottom: -7%; left: var(--particle-x); width: var(--particle-size); aspect-ratio: 1;
+  border-radius: 50%; background: radial-gradient(circle, #ffd6df 0 18%, #ff718b 42%, #ff3f65 100%); opacity: .28;
+  box-shadow: 0 0 9px #ff5475, 0 0 22px #ff5475ad;
+  transform: translate3d(0, calc(-1 * var(--particle-rise)), 0) scale(.7);
+}
+.developer-particles i:nth-child(1) { --particle-x: 8%; --particle-size: 3px; --particle-rise: 52cqh; --particle-duration: 12s; --particle-delay: -2s; }
+.developer-particles i:nth-child(2) { --particle-x: 16%; --particle-size: 5px; --particle-rise: 69cqh; --particle-duration: 15s; --particle-delay: -9s; }
+.developer-particles i:nth-child(3) { --particle-x: 24%; --particle-size: 2px; --particle-rise: 60cqh; --particle-duration: 11s; --particle-delay: -5s; }
+.developer-particles i:nth-child(4) { --particle-x: 33%; --particle-size: 4px; --particle-rise: 73cqh; --particle-duration: 16s; --particle-delay: -12s; }
+.developer-particles i:nth-child(5) { --particle-x: 41%; --particle-size: 3px; --particle-rise: 55cqh; --particle-duration: 13s; --particle-delay: -7s; }
+.developer-particles i:nth-child(6) { --particle-x: 49%; --particle-size: 6px; --particle-rise: 65cqh; --particle-duration: 17s; --particle-delay: -4s; }
+.developer-particles i:nth-child(7) { --particle-x: 57%; --particle-size: 3px; --particle-rise: 74cqh; --particle-duration: 14s; --particle-delay: -11s; }
+.developer-particles i:nth-child(8) { --particle-x: 65%; --particle-size: 4px; --particle-rise: 59cqh; --particle-duration: 12s; --particle-delay: -6s; }
+.developer-particles i:nth-child(9) { --particle-x: 72%; --particle-size: 2px; --particle-rise: 68cqh; --particle-duration: 16s; --particle-delay: -13s; }
+.developer-particles i:nth-child(10) { --particle-x: 79%; --particle-size: 5px; --particle-rise: 51cqh; --particle-duration: 13s; --particle-delay: -3s; }
+.developer-particles i:nth-child(11) { --particle-x: 85%; --particle-size: 3px; --particle-rise: 71cqh; --particle-duration: 15s; --particle-delay: -10s; }
+.developer-particles i:nth-child(12) { --particle-x: 91%; --particle-size: 4px; --particle-rise: 62cqh; --particle-duration: 14s; --particle-delay: -8s; }
+.developer-particles i:nth-child(13) { --particle-x: 37%; --particle-size: 2px; --particle-rise: 78cqh; --particle-duration: 18s; --particle-delay: -15s; }
+.developer-particles i:nth-child(14) { --particle-x: 68%; --particle-size: 3px; --particle-rise: 76cqh; --particle-duration: 17s; --particle-delay: -14s; }
+
 /* Three design studies arranged as the user's stacked, rounded card reference. */
 .design-showcase { top: 14cqh; right: 6cqw; width: 40cqw; height: 75cqh; }
 .design-card {
-  position: absolute; width: 46%; margin: 0; overflow: hidden; border: 1px solid #fcfff5;
+  position: absolute; display: flex; flex-direction: column; width: 46%; height: min(48cqh, 500px); margin: 0; overflow: hidden; border: 1px solid #fcfff5;
   border-radius: 22px; background: #f8faf3; color: #283c34;
   box-shadow: 0 24px 38px #33432b38, 0 3px 6px #26352220;
   transform: rotate(var(--card-angle)); transform-origin: center 70%;
@@ -69,13 +70,13 @@
 .design-card--label { --card-angle: -13deg; left: 0; top: 25%; z-index: 1; }
 .design-card--retouch { --card-angle: 7deg; left: 29%; top: 5%; z-index: 3; }
 .design-card--motion { --card-angle: 17deg; right: 1%; top: 35%; z-index: 2; }
-.editor-topbar { height: 33px; padding: 0 10px; display: flex; align-items: center; gap: 6px; background: #f1f3ed; font-size: 9px; }
+.editor-topbar { flex: 0 0 33px; height: 33px; padding: 0 10px; display: flex; align-items: center; gap: 6px; background: #f1f3ed; font-size: 9px; }
 .editor-topbar b { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 5px; background: #302310; color: #ffbc60; font-size: 12px; }
 .design-card--retouch .editor-topbar b { color: #83cbff; background: #14293f; }
 .design-card--motion .editor-topbar b { color: #d1b5ff; background: #36234c; }
 .editor-topbar span { flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .editor-topbar > i { width: 3px; height: 3px; border-radius: 50%; background: #869180; }
-.editor-canvas { position: relative; height: 33cqh; max-height: 365px; margin: 0 8px; padding: 8px 6px 8px 23px; background: #e5e9df; }
+.editor-canvas { position: relative; flex: 1 1 auto; min-height: 0; margin: 0 8px; padding: 8px 6px 8px 23px; background: #e5e9df; }
 .wallpaper .editor-canvas img { position: static; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; filter: none; opacity: 1; transition: none; }
 .design-card--label .editor-canvas img { object-fit: contain; background: #f7f4e9; }
 .editor-tools { position: absolute; left: 5px; top: 10px; display: grid; gap: 10px; color: #65705f; }
@@ -88,14 +89,14 @@
 .artwork-selection i:nth-child(4) { right: -2px; bottom: -2px; }
 .layer-indicator { position: absolute; bottom: 15px; right: 12px; display: flex; align-items: center; gap: 5px; padding: 5px 7px; border-radius: 5px; background: #182638da; color: white; font-size: 8px; }
 .layer-indicator svg { width: 11px; height: 11px; }
-.editor-timeline { position: relative; display: flex; align-items: center; gap: 8px; margin: 0 8px; padding: 6px; background: #252931; }
+.editor-timeline { position: relative; flex: 0 0 auto; display: flex; align-items: center; gap: 8px; margin: 0 8px; padding: 6px; background: #252931; }
 .editor-timeline > svg { color: #a7aab6; width: 11px; }
 .editor-timeline > div { flex: 1; display: grid; gap: 3px; }
 .editor-timeline i { display: block; height: 6px; background: repeating-linear-gradient(90deg, #847db5 0 24px, #4e4a6d 24px 26px); }
 .editor-timeline i:nth-child(2) { width: 80%; background: #6d9e94; }
 .editor-timeline i:nth-child(3) { width: 65%; background: #aa7c53; }
 .editor-timeline > span { position: absolute; top: 3px; bottom: 3px; left: 53%; width: 1px; background: #ffe4a7; }
-.design-card > figcaption { display: grid; gap: 4px; padding: 14px 16px 16px; }
+.design-card > figcaption { flex: 0 0 82px; box-sizing: border-box; display: grid; align-content: center; gap: 4px; padding: 12px 16px; }
 .design-card > figcaption > span { font-size: 9px; color: #607052; }
 .design-card > figcaption > strong { font-size: clamp(12px,1.1cqw,19px); font-weight: 650; line-height: 1.2; }
 .design-card > figcaption > small { font-size: 8px; color: #687362; }
@@ -103,10 +104,10 @@
 /* Editable HTML code illustrations orbit the developer portrait. */
 .developer-panels { position: absolute; inset: 0; }
 .code-panel { position: absolute; width: 19cqw; margin: 0; overflow: hidden; border-radius: 15px; border: 1px solid #8b47575e; background: #15171fe8; color: #e9e6ef; box-shadow: 0 18px 36px #0006; transform: rotate(var(--panel-angle)); }
-.code-panel--web { --panel-angle: -9deg; top: 9cqh; left: 51cqw; width: 17cqw; }
-.code-panel--app { --panel-angle: 9deg; top: 10cqh; right: 1.5cqw; width: 17cqw; }
-.code-panel--game { --panel-angle: -7deg; bottom: 10cqh; left: 51cqw; }
-.code-panel--ai { --panel-angle: 8deg; bottom: 21cqh; right: 1.5cqw; }
+.code-panel--web { --panel-angle: -9deg; z-index: 1; top: 9cqh; left: 51cqw; width: 17cqw; }
+.code-panel--app { --panel-angle: 9deg; z-index: 1; top: 10cqh; right: 1.5cqw; width: 17cqw; }
+.code-panel--game { --panel-angle: -7deg; z-index: 4; bottom: 10cqh; left: 51cqw; }
+.code-panel--ai { --panel-angle: 8deg; z-index: 4; bottom: 21cqh; right: 1.5cqw; }
 .code-panel figcaption { height: 35px; padding: 0 12px; display: flex; align-items: center; gap: 7px; border-bottom: 1px solid #ece5ff12; background: #24232d; }
 .code-panel figcaption svg { width: 13px; height: 13px; color: #ff8995; }
 .code-panel figcaption strong { font-size: 9px; letter-spacing: .12em; }
@@ -127,31 +128,38 @@
   .design-card--motion { animation-delay: -4.5s; }
   .code-panel { animation: terminal-float 8s ease-in-out infinite; }
   .code-panel--app, .code-panel--game { animation-delay: -4s; }
+  .developer-particles i { animation: developer-particle-rise var(--particle-duration) linear infinite; animation-delay: var(--particle-delay); }
 }
 @keyframes studio-float { 0%,100% { transform: translateY(0) rotate(var(--card-angle)); } 50% { transform: translateY(-7px) rotate(var(--card-angle)); } }
 @keyframes terminal-float { 0%,100% { transform: translateY(0) rotate(var(--panel-angle)); } 50% { transform: translateY(-6px) rotate(var(--panel-angle)); } }
+@keyframes developer-particle-rise {
+  0% { opacity: 0; transform: translate3d(0, 8cqh, 0) scale(.55); }
+  18% { opacity: .82; }
+  72% { opacity: .42; }
+  100% { opacity: 0; transform: translate3d(1.2cqw, calc(-1 * var(--particle-rise)), 0) scale(1.15); }
+}
 
 @media (max-width: 820px) and (orientation: portrait) {
   .shell:is([data-layout="blueprint"], [data-layout="sage"], [data-layout="gallery"]) .portfolio-logo { top: 3.5cqh; left: 6cqw; width: 43cqw; }
   .android-stage { right: 0; bottom: auto; top: 9cqh; width: 100cqw; height: 50cqh; }
   .technology-scene--developer .android-stage { right: 0; top: 8cqh; width: 100cqw; height: 47cqh; }
-  .binary-matrix { left: 7.6cqw; top: 2cqh; width: 84cqw; height: 58cqh; }
-  .binary-matrix__stream { gap: 1.25cqh; font-size: clamp(8px, 2.2cqw, 11px); }
+  .developer-code-backdrop { top: 5cqh; right: -9cqw; width: 108cqw; height: 52cqh; opacity: .22; }
+  .developer-particles { top: 6cqh; right: -3cqw; width: 92cqw; height: 50cqh; }
   .shell:is([data-layout="blueprint"], [data-layout="sage"], [data-layout="gallery"]) .portfolio-manifesto { top: 61cqh; width: 86cqw; left: 7cqw; font-size: 10px; }
   .shell:is([data-layout="blueprint"], [data-layout="sage"], [data-layout="gallery"]) .portfolio-summary { top: 65cqh; width: 86cqw; left: 7cqw; font-size: 12px; line-height: 1.35; }
   .shell:is([data-layout="blueprint"], [data-layout="sage"], [data-layout="gallery"]) .portfolio-actions { top: auto; bottom: 16px; left: 7cqw; flex-direction: row; width: 86cqw; gap: 8px; }
   .shell:is([data-layout="blueprint"], [data-layout="sage"], [data-layout="gallery"]) .portfolio-action { width: 50%; min-width: 0; padding: 0 7px; text-align: center; font-size: 10px; min-height: 48px; }
   .shell:is([data-layout="blueprint"], [data-layout="sage"], [data-layout="gallery"]) .portfolio-index { top: 4px; left: 7px; font-size: 7px; }
   .design-showcase { top: 14cqh; right: 17cqw; width: 68cqw; height: 35cqh; }
-  .design-card { width: 48%; border-radius: 12px; }
-  .editor-topbar { height: 23px; padding: 0 5px; gap: 3px; font-size: 5px; }
+  .design-card { width: 48%; height: 25cqh; border-radius: 12px; }
+  .editor-topbar { flex-basis: 23px; height: 23px; padding: 0 5px; gap: 3px; font-size: 5px; }
   .editor-topbar b { width: 16px; height: 16px; border-radius: 3px; font-size: 9px; }
   .editor-topbar > i { display: none; }
-  .editor-canvas { height: 15cqh; margin: 0 4px; padding: 4px 3px 4px 13px; }
+  .editor-canvas { margin: 0 4px; padding: 4px 3px 4px 13px; }
   .editor-tools { left: 3px; top: 7px; gap: 5px; }
   .editor-tools svg { width: 7px; height: 7px; }
   .artwork-selection { inset: 5px 4px 5px 14px; }
-  .design-card > figcaption { padding: 8px; gap: 3px; }
+  .design-card > figcaption { flex-basis: 50px; padding: 6px 8px; gap: 3px; }
   .design-card > figcaption > span { font-size: 6px; }
   .design-card > figcaption > strong { font-size: 9px; }
   .design-card > figcaption > small { font-size: 6px; }
@@ -175,7 +183,7 @@
 }
 @media (max-width: 820px) and (orientation: portrait) and (max-height: 710px) {
   .design-showcase { top: 11cqh; }
-  .editor-canvas { height: 13cqh; }
+  .design-card { height: 24cqh; }
   .shell:is([data-layout="blueprint"], [data-layout="sage"], [data-layout="gallery"]) .portfolio-manifesto { top: 57cqh; }
   .shell:is([data-layout="blueprint"], [data-layout="sage"], [data-layout="gallery"]) .portfolio-summary { top: 62cqh; font-size: 11px; }
   .android-stage { height: 45cqh; }
@@ -183,8 +191,7 @@
 }
 @media (max-height: 500px) and (orientation: landscape) {
   .design-showcase { right: 5cqw; width: 39cqw; top: 5cqh; }
-  .editor-canvas { height: 30cqh; }
-  .design-card { border-radius: 12px; }
+  .design-card { height: 58cqh; border-radius: 12px; }
   .design-card > figcaption { padding: 8px; }
   .design-card > figcaption > strong { font-size: 10px; }
   .code-panel figcaption { height: 22px; }

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-label="Abstract software code field">
+  <defs>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#ff6078" stroke-opacity=".12" stroke-width="1"/>
+    </pattern>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#grid)"/>
+  <g fill="none" stroke="#ff6078" stroke-opacity=".22" stroke-width="2">
+    <path d="M84 182H242l38 38h196M718 156h228l52 52h118M96 902h172l46-46h190M740 998h214l54-54h108"/>
+    <circle cx="84" cy="182" r="5" fill="#ff6078"/><circle cx="1116" cy="208" r="5" fill="#ff6078"/>
+    <circle cx="96" cy="902" r="5" fill="#ff6078"/><circle cx="1116" cy="944" r="5" fill="#ff6078"/>
+  </g>
+  <g font-family="Consolas, 'SFMono-Regular', monospace" font-size="25" letter-spacing="1">
+    <text x="112" y="280" fill="#ff8293">const <tspan fill="#f4c1ca">profile</tspan> = await identity.render();</text>
+    <text x="112" y="326" fill="#c6c2ce">scene.add(<tspan fill="#ff6078">developer</tspan>, designer);</text>
+    <text x="112" y="372" fill="#8ecfd0">if (idea) build(idea).ship();</text>
+    <text x="178" y="478" fill="#c6c2ce">&lt;Experience mode="creative" /&gt;</text>
+    <text x="178" y="524" fill="#ff8293">interface Future extends Imagination {}</text>
+    <text x="178" y="570" fill="#8ecfd0">system.connect("app · web · game · ai");</text>
+    <text x="96" y="696" fill="#ff6078">async function engineer(aesthetic) {</text>
+    <text x="140" y="742" fill="#c6c2ce">const logic = await prototype(aesthetic);</text>
+    <text x="140" y="788" fill="#8ecfd0">return deploy(logic, { robust: true });</text>
+    <text x="96" y="834" fill="#ff6078">}</text>
+  </g>
+  <g filter="url(#glow)" fill="#ff6078">
+    <circle cx="1038" cy="350" r="3"/><circle cx="924" cy="688" r="3"/><circle cx="384" cy="1040" r="3"/>
+  </g>
+</svg>

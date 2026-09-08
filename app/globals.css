@@ -234,6 +234,9 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
   width: 42px; height: 43px; border: 0; display: grid; place-items: center; color: #483c34;
   background: transparent; font-family: Georgia, serif; font-size: 18px; font-weight: 700; cursor: pointer; transform: scaleX(.8);
 }
+.dashboard-toggle {
+  width: 42px; height: 42px; margin: 2px 0 8px; border-radius: 50%;
+}
 .icon-button {
   width: 34px; height: 34px; padding: 0; border: 0; display: grid; place-items: center; border-radius: 13px;
   color: inherit; background: transparent; cursor: pointer;
@@ -243,9 +246,15 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
 .icon-button:active { transform: scale(.9); }
 .icon-button svg { width: 18px; height: 18px; stroke-width: 2.1; }
 
+.icon-button.dashboard-toggle {
+  width: 42px; height: 42px; margin: 2px 0 8px; border-radius: 50%; background: transparent;
+}
+.icon-button.dashboard-toggle:hover { border-radius: 50%; background: rgba(112,83,73,.12); }
+.icon-button.dashboard-toggle.active { border-radius: 50%; color: var(--on-accent); background: var(--rose-strong); }
+
 .workspaces {
   width: 48px; padding: 6px 7px 8px; display: flex; align-items: center; gap: 2px; flex-direction: column;
-  border-radius: 0 0 21px 21px; background: color-mix(in srgb, var(--rose) 82%, white);
+  border-radius: 24px; background: color-mix(in srgb, var(--rose) 82%, white);
 }
 .workspaces .icon-button { width: 34px; height: 29px; border-radius: 12px; }
 .workspaces .icon-button.active { color: #6f3125; background: #fff8f3; }

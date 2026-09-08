@@ -64,24 +64,25 @@
 }
 
 /* Constant hit areas: only the visual circle changes, never the rail layout. */
-.layout-picker { display: flex; flex-direction: column; align-items: center; gap: 0; }
+.layout-picker { display: flex; flex-direction: column; align-items: center; gap: 0; touch-action: none; user-select: none; }
 .workspaces { padding: 4px 0 6px; }
 .layout-option {
   position: relative; display: grid; place-items: center; flex: 0 0 auto;
   width: 44px; height: 36px; padding: 0; border: 0; background: transparent;
-  color: var(--ink); cursor: pointer; border-radius: 50%;
+  color: var(--ink); cursor: grab; border-radius: 50%; -webkit-tap-highlight-color: transparent;
 }
+.layout-option:active { cursor: grabbing; }
 .layout-orb {
   display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; transform: scale(.3125);
   background: color-mix(in srgb, var(--rose-strong) 24%, transparent);
   transition: transform 200ms var(--ease), background-color 200ms ease, box-shadow 200ms ease;
 }
 .layout-orb svg { width: 17px; height: 17px; stroke-width: 1.8; opacity: 0; transform: scale(.65); transition: opacity 180ms ease, transform 200ms var(--ease); }
-.layout-option:is(:hover, :focus-visible, [aria-pressed="true"]) .layout-orb {
+.layout-option:is(:hover, :focus-visible, [aria-pressed="true"], [data-preview="true"]) .layout-orb {
   transform: scale(1); background: var(--rose-strong); color: var(--on-accent);
   box-shadow: 0 3px 9px color-mix(in srgb, var(--rose-strong) 22%, transparent);
 }
-.layout-option:is(:hover, :focus-visible, [aria-pressed="true"]) svg { opacity: 1; transform: scale(1); }
+.layout-option:is(:hover, :focus-visible, [aria-pressed="true"], [data-preview="true"]) svg { opacity: 1; transform: scale(1); }
 .layout-option:focus-visible { outline: 2px solid var(--rose-strong); outline-offset: -2px; }
 .layout-tooltip {
   position: absolute; z-index: 100; left: calc(100% + 8px); top: 50%; min-width: 166px;
@@ -92,7 +93,7 @@
 }
 .layout-tooltip strong { display: block; font-size: 13px; font-weight: 650; }
 .layout-tooltip small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
-.layout-option:is(:hover, :focus-visible) .layout-tooltip { visibility: visible; opacity: 1; transform: translate(0, -50%); }
+.layout-option:is(:hover, :focus-visible, [data-preview="true"]) .layout-tooltip { visibility: visible; opacity: 1; transform: translate(0, -50%); }
 
 /* The portrait remains the signature; each background has its own treatment. */
 .wallpaper { background: var(--wall-color); }
@@ -125,7 +126,7 @@
 /* App chrome follows the selected palette; album artwork keeps its own colors. */
 .shell:not([data-layout="paper"]) :is(.rail, .arch-mark, .clock, kbd, .music-search input, .nav-logo, .music-nav nav button, .track-head, .tracks button, .music-search, .hero-copy, .launcher-drawer input) { color: var(--ink); }
 .shell:not([data-layout="paper"]) :is(.workspaces, .status-stack, .rail-bottom .power, .launcher-apps button span) { background: var(--rose); color: var(--rose-strong); }
-.shell:not([data-layout="paper"]) :is(.workspaces .icon-button.active, .rail-bottom .power:hover, .rail-bottom .power.active, .calendar-card .today, .hero-copy button, .hero-copy > span) { background: var(--rose-strong); color: var(--on-accent); }
+.shell:not([data-layout="paper"]) :is(.dashboard-toggle.active, .rail-bottom .power:hover, .rail-bottom .power.active, .calendar-card .today, .hero-copy button, .hero-copy > span) { background: var(--rose-strong); color: var(--on-accent); }
 .shell:not([data-layout="paper"]) :is(.music-window, .music-nav, .music-main, .track-list, .player-bar, .terminal-window, .files-window, .media-popout, .dashboard-drawer, .launcher-drawer, .session-drawer, .terminal-window > header, .files-window > header) { background: var(--panel); color: var(--ink); border-color: var(--border); }
 .shell:not([data-layout="paper"]) :is(.explore-pill, kbd, .music-search, .tracks button, .session-gif, .session-drawer .icon-button, .files-body button, .dash-grid article, .launcher-apps button, .launcher-drawer > label, .media-preview, .media-popout header > button:first-child) { background: var(--elevated); color: var(--ink); border-color: var(--border); }
 .shell:not([data-layout="paper"]) :is(.album-card > small, .track-title small, .tracks button > span:first-child, .tracks button > span:nth-last-child(3), .tracks button > span:nth-last-child(2), .now-track small, .now-track em, .rail-bottom > svg.muted) { color: var(--muted); }

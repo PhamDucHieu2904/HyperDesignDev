@@ -4,7 +4,7 @@ Paper and Graphite are preserved. This revision follows the owner's request to s
 
 - Blueprint: original face reinterpreted as a ceramic/titanium android, independently composited above solid cobalt with the existing subtle grid.
 - Sage: solid matcha with three floating, rounded illustrative concept cards: Illustrator label artwork, Photoshop beverage compositing, and product video/exhibition design. LUMA is a fictional concept brand, not a claimed client project.
-- Gallery: red sidebar and outer frame, rounded black surface, white logo, red-lit android variation and four HTML code illustrations for app/web/game/AI. Code windows are visual illustrations, not interactive editors.
+- Code Lab: red sidebar and outer frame, rounded black surface, white logo, red-lit android variation and four HTML code illustrations for app/web/game/AI. Code windows are visual illustrations, not interactive editors.
 
 Implementation: `app/portfolio-scenes.tsx` and `app/portfolio-scenes.css`. UI/UX Pro Max's HUD guidance informed restrained accent colors, thin borders, clear text and reduced motion. Portrait scenes and copy occupy separate mobile regions. Cards move only with transform, and reduced-motion disables their floating animation.
 
@@ -52,4 +52,3 @@ Use case identity-preserve style-transfer. Create a second cinematic 3D render b
 ### matte
 
 Use case: background-extraction MASK. This is an image editing task, NOT a new portrait. Output ONLY an exact segmentation matte for the supplied 1024x1536 image. KEEP pixel alignment and dimensions exactly 1024x1536. Paint every pixel belonging to the android subject (hair, face, neck, torso, arms, all human and mechanical body parts) PURE WHITE #FFFFFF, with no interior detail, no shading. Paint every background pixel (the current white-gray checkerboard) PURE BLACK #000000 including spaces between limbs. Preserve the exact subject silhouette, no shift, no resize, no pose change. Crisp lightly antialiased contour. The entire interior of the person must be solid white with no gray or black facial features. Deliver a plain white silhouette of this exact man on black, suitable as a CSS luminance mask. NO checkerboard. NO texture. NO text.
-

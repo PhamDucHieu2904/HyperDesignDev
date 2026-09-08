@@ -13,11 +13,11 @@ type View = "desktop" | "music" | "terminal" | "files";
 type Overlay = "dashboard" | "launcher" | "session" | "media" | null;
 
 const layouts = [
-  { id: 2, name: "Graphite", detail: "Charcoal · copper", icon: Moon },
-  { id: 3, name: "Blueprint", detail: "Android · 3D / AI", icon: Grid2X2 },
-  { id: 4, name: "Sage", detail: "Packaging · image · motion", icon: Leaf },
-  { id: 5, name: "Gallery", detail: "App · web · game · AI", icon: Frame },
-  { id: 1, name: "Paper", detail: "Original · warm parchment", icon: Feather },
+  { id: 2, theme: "graphite", name: "Graphite", detail: "Charcoal · copper", icon: Moon },
+  { id: 3, theme: "blueprint", name: "Blueprint", detail: "Android · 3D / AI", icon: Grid2X2 },
+  { id: 4, theme: "sage", name: "Sage", detail: "Packaging · image · motion", icon: Leaf },
+  { id: 5, theme: "gallery", name: "Code Lab", detail: "App · web · game · AI", icon: Frame },
+  { id: 1, theme: "paper", name: "Paper", detail: "Original · warm parchment", icon: Feather },
 ];
 const layoutStorageKey = "hyperd-layout";
 
@@ -64,16 +64,71 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, toggl
   now: Date | null; workspace: number; setWorkspace: (workspace: number) => void; view: View;
   overlay: Overlay; openView: (view: View) => void; toggleOverlay: (overlay: Exclude<Overlay, null>) => void;
 }) {
+  const layoutPickerRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef<{ pointerId: number; startX: number; startY: number; startId: number; previewId: number; moved: boolean } | null>(null);
+  const suppressClickRef = useRef(false);
+  const [previewLayout, setPreviewLayout] = useState<number | null>(null);
   const label = view === "music" ? "(Paused)  (24 / 53)  Reset – Tiger JK"
     : view === "terminal" ? "Terminal" : view === "files" ? "Files" : "Desktop";
+  const layoutAtPoint = (clientX: number, clientY: number) => {
+    const target = document.elementFromPoint(clientX, clientY)?.closest<HTMLButtonElement>(".layout-option");
+    if (!target || !layoutPickerRef.current?.contains(target)) return null;
+    const id = Number(target.dataset.layoutId);
+    return layouts.some(layout => layout.id === id) ? id : null;
+  };
+  const finishLayoutDrag = (event: React.PointerEvent<HTMLButtonElement>, cancelled = false) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    if (cancelled && drag.moved) setWorkspace(drag.startId);
+    suppressClickRef.current = drag.moved;
+    dragRef.current = null;
+    setPreviewLayout(null);
+    if (event.currentTarget.hasPointerCapture?.(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+  };
   return <aside className="rail" aria-label="Caelestia bar">
     <button type="button" className="arch-mark" aria-label="Open launcher" onClick={() => toggleOverlay("launcher")}>A</button>
+    <IconButton label="Open dashboard" icon={Moon} className="dashboard-toggle" active={overlay === "dashboard"} onClick={() => toggleOverlay("dashboard")} />
     <div className="workspaces">
-      <IconButton label="Open dashboard" icon={Moon} active={overlay === "dashboard"} onClick={() => toggleOverlay("dashboard")} />
-      <div className="layout-picker" role="group" aria-label="Website layouts">
+      <div ref={layoutPickerRef} className="layout-picker" role="group" aria-label="Website layouts; drag to switch">
         {layouts.map(({ id, name, detail, icon: Icon }) => <button type="button"
-          className="layout-option" key={id} aria-label={`${name} layout`} aria-pressed={workspace === id}
-          onClick={() => setWorkspace(id)} onKeyDown={(event) => {
+          className="layout-option" key={id} data-layout-id={id} data-preview={previewLayout === id ? "true" : undefined}
+          aria-label={`${name} layout`} aria-pressed={workspace === id}
+          onClick={(event) => {
+            if (suppressClickRef.current) {
+              suppressClickRef.current = false;
+              // A captured pointer can still synthesize a click on the origin
+              // button after release. Clear its focus so its tooltip cannot
+              // remain visible after the live drag has switched layouts.
+              event.currentTarget.blur();
+              return;
+            }
+            setWorkspace(id);
+          }}
+          onPointerDown={(event) => {
+            if (event.button !== 0) return;
+            dragRef.current = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, startId: workspace, previewId: id, moved: false };
+            setPreviewLayout(id);
+            event.currentTarget.setPointerCapture?.(event.pointerId);
+          }}
+          onPointerMove={(event) => {
+            const drag = dragRef.current;
+            if (!drag || drag.pointerId !== event.pointerId) return;
+            const distance = Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY);
+            if (distance > 8) drag.moved = true;
+            if (!drag.moved) return;
+            const nextId = layoutAtPoint(event.clientX, event.clientY);
+            if (nextId === null || nextId === drag.previewId) return;
+            // Pointer capture keeps the original button as the event target. Blur it
+            // as soon as the drag enters another layout so its focus styling cannot
+            // leave a stale highlight behind the live-selected button.
+            event.currentTarget.blur();
+            drag.previewId = nextId;
+            setPreviewLayout(nextId);
+            setWorkspace(nextId);
+          }}
+          onPointerUp={(event) => finishLayoutDrag(event)}
+          onPointerCancel={(event) => finishLayoutDrag(event, true)}
+          onKeyDown={(event) => {
             const offset = event.key === "ArrowDown" ? 1 : event.key === "ArrowUp" ? -1 : 0;
             if (!offset && event.key !== "Home" && event.key !== "End") return;
             event.preventDefault();
@@ -455,7 +510,7 @@ export default function HomePage() {
     if (overlay === next) closeOverlay();
     else showOverlay(next);
   };
-  return <main className="shell" data-layout={layouts.find(layout => layout.id === workspace)?.name.toLowerCase()}>
+  return <main className="shell" data-layout={layouts.find(layout => layout.id === workspace)?.theme}>
     <LeftRail now={now} workspace={workspace} setWorkspace={selectLayout} view={view} overlay={overlay}
       openView={openView} toggleOverlay={toggleOverlay} />
     <section className="desktop-surface" aria-label="Caelestia desktop">

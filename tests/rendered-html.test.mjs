@@ -133,6 +133,10 @@ for (const mode of ["file", "github-subpath"]) {
     try {
       await until(() => document.querySelector(".clock")?.textContent !== "----", "Clock did not hydrate");
       assert.equal(document.querySelectorAll(".shell").length, 1);
+      assert.ok(document.querySelector(".dashboard-toggle"));
+      assert.equal(document.querySelector(".workspaces .icon-button"), null);
+      assert.equal(document.querySelector(".dashboard-toggle").parentElement.classList.contains("rail"), true);
+      assert.equal(document.querySelector(".layout-picker").getAttribute("aria-label"), "Website layouts; drag to switch");
       key("k", true);
       await until(() => document.querySelector(".launcher-drawer"), "Ctrl+K did not open launcher");
       const search = document.querySelector(".launcher-drawer input");
@@ -145,23 +149,32 @@ for (const mode of ["file", "github-subpath"]) {
       key("Escape");
       await until(() => !document.querySelector(".terminal-window"), "Escape did not close terminal");
 
-      for (const name of ["Graphite", "Blueprint", "Sage", "Gallery", "Paper"]) {
+      for (const [name, theme] of [["Graphite", "graphite"], ["Blueprint", "blueprint"], ["Sage", "sage"], ["Code Lab", "gallery"], ["Paper", "paper"]]) {
         click(`[aria-label="${name} layout"]`);
-        await until(() => document.querySelector(".shell").dataset.layout === name.toLowerCase(), `${name} layout did not apply`);
+        await until(() => document.querySelector(".shell").dataset.layout === theme, `${name} layout did not apply`);
         assert.equal(document.querySelectorAll('.layout-option[aria-pressed="true"]').length, 1);
         if (name === "Sage") {
           assert.equal(document.querySelectorAll(".design-card").length, 3);
           for (const image of document.querySelectorAll(".design-card img")) await access(new URL(image.getAttribute("src"), root));
+          assert.deepEqual(
+            [...document.querySelectorAll(".design-card img")].map((image) => image.getAttribute("src")),
+            ["./public/vinut-coco-boba-label.webp", "./public/coco-boba-poster.webp", "./public/nam-viet-group-booth.webp"],
+          );
+          assert.match(document.querySelector(".design-card--label").textContent, /Vinut coco boba\.ai/);
+          assert.match(document.querySelector(".design-card--retouch").textContent, /Coco boba tini world\.psd/);
           assert.equal(document.querySelector('img[src="./public/sage-studio.png"]'), null);
         }
-        if (name === "Blueprint" || name === "Gallery") {
+        if (name === "Blueprint" || name === "Code Lab") {
           const portrait = document.querySelector(".android-portrait");
           await access(new URL(portrait.getAttribute("src"), root));
           if (name === "Blueprint") assert.match(portrait.style.maskImage, /^url\(data:image\/png;base64,/);
           else {
             assert.equal(document.querySelectorAll(".code-panel").length, 4);
-            assert.equal(document.querySelectorAll(".binary-matrix").length, 1);
-            assert.match(document.querySelector(".binary-matrix__stream").textContent, /0110/);
+            assert.equal(document.querySelectorAll(".binary-matrix").length, 0);
+            assert.equal(document.querySelectorAll(".developer-particles i").length, 14);
+            const codeBackdrop = document.querySelector('.developer-code-backdrop img[src="./public/code-field.svg"]');
+            assert.ok(codeBackdrop);
+            await access(new URL(codeBackdrop.getAttribute("src"), root));
           }
         }
       }

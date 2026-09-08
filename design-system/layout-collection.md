@@ -1,6 +1,6 @@
 # Hyper D² layout collection
 
-Paper is the default. The sidebar offers Graphite, Blueprint, Sage, Gallery, and Paper. Each preset themes the hero, rail, buttons, dashboard, launcher, media player, files and terminal chrome. Album covers keep their original artwork colors.
+Graphite is the default. The sidebar offers Graphite, Blueprint, Sage, Code Lab, and Paper. Each preset themes the hero, rail, buttons, dashboard, launcher, media player, files and terminal chrome. Album covers keep their original artwork colors.
 
 Theme tokens and scoped responsive composition live in `app/layouts.css`; definitions and local preference persistence live in `app/page.tsx`. `hyperd-layout` stores the selected numeric ID. Missing, invalid or unavailable storage falls back to Paper without blocking the UI.
 
@@ -8,7 +8,7 @@ Theme tokens and scoped responsive composition live in `app/layouts.css`; defini
 - Graphite: monochrome portrait, charcoal, copper, inset frame.
 - Blueprint: separate 3D android portrait, solid cobalt and subtle technical grid, rounded frame.
 - Sage: solid matcha, three rounded design concept cards (label, Photoshop composite, video/exhibition).
-- Gallery: crimson sidebar, rounded black canvas, red-lit android and floating app/web/game/AI code illustrations.
+- Code Lab: crimson sidebar, rounded black canvas, red-lit android and floating app/web/game/AI code illustrations.
 
 Current assets, generation prompts and the offline compositing strategy are documented in `portfolio-scene-revision.md`. The original Sage studio asset below is retained only as a previous iteration and is no longer displayed.
 
