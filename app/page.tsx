@@ -338,6 +338,7 @@ function AboutPage({ onClose }: { onClose: () => void }) {
     </button>
     </div>
 
+    <div className="about-scroll">
     <section className="about-hero" aria-label="CV identity">
       <figure className="about-profile-card">
         <div className="about-portrait-frame">
@@ -403,6 +404,7 @@ function AboutPage({ onClose }: { onClose: () => void }) {
       </aside>
     </section>
 
+    </div>
   </section>;
 }
 

@@ -238,8 +238,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
   display: flex;
   flex-direction: column;
   gap: 16px;
-  overflow: hidden auto;
-  padding: clamp(18px, 2.6cqh, 28px);
+  overflow: hidden;
+  padding: 0;
   border: 1px solid var(--about-line);
   border-radius: clamp(16px, 3cqh, 26px);
   color: var(--ink);
@@ -251,13 +251,25 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
   scrollbar-width: thin;
   scrollbar-color: var(--about-accent) transparent;
 }
-.about-page > * { flex-shrink: 0; }
+.about-scroll {
+  position: relative;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: clamp(18px, 2.6cqh, 28px);
+  scrollbar-width: thin;
+  scrollbar-color: var(--about-accent) transparent;
+  overscroll-behavior: contain;
+}
+.about-scroll > * { flex-shrink: 0; }
 .about-toolbar {
-  position: sticky;
+  position: absolute;
   top: 20px;
+  right: 12px;
   z-index: 20;
-  height: 0;
-  margin-bottom: -16px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
@@ -1080,7 +1092,7 @@ kbd {
   .about-page {
     inset: 7px;
     gap: 20px;
-    padding: 64px 16px 16px;
+    padding: 0;
     border-radius: 19px;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
@@ -1116,7 +1128,8 @@ kbd {
     min-width: 44px;
     min-height: 44px;
   }
-  .about-toolbar { top: 12px; margin-top: -52px; margin-bottom: 32px; }
+  .about-toolbar { top: 12px; right: 12px; }
+  .about-scroll { padding: 16px; gap: 20px; }
   .about-profile-card {
     min-height: 0;
   }
