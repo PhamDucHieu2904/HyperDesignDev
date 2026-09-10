@@ -95,6 +95,22 @@
 .layout-tooltip small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
 .layout-option:is(:hover, :focus-visible, [data-preview="true"]) .layout-tooltip { visibility: visible; opacity: 1; transform: translate(0, -50%); }
 
+/* Pointer capture can leave :hover stuck on the drag origin. During a live
+   layout slide, preview is the single visual source of truth. */
+.layout-picker[data-dragging="true"] .layout-option:not([data-preview="true"]) .layout-orb {
+  transform: scale(.3125); background: color-mix(in srgb, var(--rose-strong) 24%, transparent);
+  color: var(--ink); box-shadow: none;
+}
+.layout-picker[data-dragging="true"] .layout-option:not([data-preview="true"]) .layout-orb svg {
+  opacity: 0; transform: scale(.65);
+}
+.layout-picker[data-dragging="true"] .layout-option:not([data-preview="true"]) .layout-tooltip {
+  visibility: hidden; opacity: 0; transform: translate(4px, -50%); transition: none;
+}
+.layout-picker[data-dragging="true"] .layout-option[data-preview="true"] .layout-tooltip {
+  visibility: visible; opacity: 1; transform: translate(0, -50%);
+}
+
 /* The portrait remains the signature; each background has its own treatment. */
 .wallpaper { background: var(--wall-color); }
 .wallpaper .wallpaper-motion { background: var(--wall-color); }

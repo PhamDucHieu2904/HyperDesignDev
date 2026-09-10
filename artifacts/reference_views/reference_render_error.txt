@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "D:\program project\HyperDesignDev\tools\render_reference_maquette.py", line 38, in <module>
-    scene.render.engine = 'BLENDER_EEVEE_NEXT'
-    ^^^^^^^^^^^^^^^^^^^
-TypeError: bpy_struct: item.attr = val: enum "BLENDER_EEVEE_NEXT" not found in ('BLENDER_EEVEE', 'BLENDER_WORKBENCH', 'CYCLES')

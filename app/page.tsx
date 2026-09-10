@@ -1,6 +1,6 @@
 import {
-  Bluetooth, CalendarDays, ChevronLeft, ChevronRight, Command, Download, Eye,
-  Folder, Gamepad2, Heart, Home, Feather, Leaf, Grid2X2, Frame, Image as ImageIcon, ListMusic, LogOut, Menu,
+  BadgeCheck, Bluetooth, BriefcaseBusiness, CalendarDays, ChevronLeft, ChevronRight, Code2, Command, Download, Eye,
+  Folder, Gamepad2, Heart, Home, Feather, Leaf, Grid2X2, Frame, Image as ImageIcon, ListMusic, LogOut, MapPin, Menu,
   Moon, MoreVertical, Music2, Pause, Play, Power, RefreshCw, Repeat2, Rocket,
   Search, Settings2, Shuffle, SkipBack, SkipForward,
   Sparkles, Square, Terminal, TimerReset, Trash2, Upload, UsersRound, Volume2,
@@ -9,7 +9,7 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import { PortfolioScene } from "./portfolio-scenes";
 
-type View = "desktop" | "music" | "terminal" | "files";
+type View = "desktop" | "about" | "music" | "terminal" | "files";
 type Overlay = "dashboard" | "launcher" | "session" | "media" | null;
 
 const layouts = [
@@ -44,6 +44,46 @@ const tracks = [
   ["It’s you", "Jeong Sewoon", "3:39", "7"],
 ];
 
+const profileFacts = [
+  { label: "Full name", value: "Pham Duc Hieu" },
+  { label: "Base", value: "Ho Chi Minh City, Vietnam" },
+  { label: "Class", value: "Graphic Designer / UI-UX Engineer / Web & Game Developer" },
+];
+
+const profileMetrics = [
+  { value: "2022", label: "started shipping" },
+  { value: "3D", label: "product systems" },
+  { value: "AI", label: "workflow lead" },
+];
+
+const experienceRecords = [
+  {
+    period: "2022 - 2023",
+    company: "Lucky Tech",
+    role: "Junior Game Developer",
+    detail: "Built inside a blockchain game ecosystem and contributed to Space Hunter, an NFT-based game project.",
+  },
+  {
+    period: "2023 - Present",
+    company: "Nam Viet Group",
+    role: "Head of Design & Technology Lead",
+    detail: "Directed packaging, labels and promotional systems for an F&B export corporation, then expanded the design department with internal tools, AI workflows and training protocols.",
+  },
+];
+
+const capabilityGroups = [
+  { title: "Commercial packaging", copy: "Labels, dielines, mockups, product campaigns and export-ready visual systems." },
+  { title: "3D product environment", copy: "Realistic packaging scenes, booth visualization, Unity rendering and product presentation tools." },
+  { title: "Internal applications", copy: "Web, desktop and game interfaces that turn repeated team work into faster workflows." },
+  { title: "Automation & database", copy: "Clean data flow, searchable assets, versioned content and AI-supported operation pipelines." },
+];
+
+const stackGroups = [
+  ["Design Lab", "Photoshop", "Illustrator", "Blender", "Packaging", "Retouch"],
+  ["Dev Portal", "Unity", "C#", "JavaScript", "React", "TypeScript"],
+  ["AI Skilled", "GPT/Codex", "Gemini", "Claude", "Automation", "Systems"],
+];
+
 function IconButton({ label, icon: Icon, onClick, active = false, className = "" }: {
   label: string; icon: LucideIcon; onClick?: () => void; active?: boolean; className?: string;
 }) {
@@ -68,8 +108,9 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, toggl
   const dragRef = useRef<{ pointerId: number; startX: number; startY: number; startId: number; previewId: number; moved: boolean } | null>(null);
   const suppressClickRef = useRef(false);
   const [previewLayout, setPreviewLayout] = useState<number | null>(null);
+  const [isLayoutDragging, setIsLayoutDragging] = useState(false);
   const label = view === "music" ? "(Paused)  (24 / 53)  Reset – Tiger JK"
-    : view === "terminal" ? "Terminal" : view === "files" ? "Files" : "Desktop";
+    : view === "terminal" ? "Terminal" : view === "files" ? "Files" : view === "about" ? "About Hyper D²" : "Desktop";
   const layoutAtPoint = (clientX: number, clientY: number) => {
     const target = document.elementFromPoint(clientX, clientY)?.closest<HTMLButtonElement>(".layout-option");
     if (!target || !layoutPickerRef.current?.contains(target)) return null;
@@ -82,6 +123,7 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, toggl
     if (cancelled && drag.moved) setWorkspace(drag.startId);
     suppressClickRef.current = drag.moved;
     dragRef.current = null;
+    setIsLayoutDragging(false);
     setPreviewLayout(null);
     if (event.currentTarget.hasPointerCapture?.(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
   };
@@ -89,7 +131,8 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, toggl
     <button type="button" className="arch-mark" aria-label="Open launcher" onClick={() => toggleOverlay("launcher")}>A</button>
     <IconButton label="Open dashboard" icon={Moon} className="dashboard-toggle" active={overlay === "dashboard"} onClick={() => toggleOverlay("dashboard")} />
     <div className="workspaces">
-      <div ref={layoutPickerRef} className="layout-picker" role="group" aria-label="Website layouts; drag to switch">
+      <div ref={layoutPickerRef} className="layout-picker" role="group" aria-label="Website layouts; drag to switch"
+        data-dragging={isLayoutDragging ? "true" : undefined}>
         {layouts.map(({ id, name, detail, icon: Icon }) => <button type="button"
           className="layout-option" key={id} data-layout-id={id} data-preview={previewLayout === id ? "true" : undefined}
           aria-label={`${name} layout`} aria-pressed={workspace === id}
@@ -114,7 +157,11 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, toggl
             const drag = dragRef.current;
             if (!drag || drag.pointerId !== event.pointerId) return;
             const distance = Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY);
-            if (distance > 8) drag.moved = true;
+            if (distance > 8 && !drag.moved) {
+              drag.moved = true;
+              setIsLayoutDragging(true);
+              (document.activeElement as HTMLElement | null)?.blur?.();
+            }
             if (!drag.moved) return;
             const nextId = layoutAtPoint(event.clientX, event.clientY);
             if (nextId === null || nextId === drag.previewId) return;
@@ -144,7 +191,7 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, toggl
     </div>
     <button type="button" className="active-window" onClick={() => openView(view === "desktop" ? "terminal" : "desktop")}
       aria-label={`Active window: ${label}`}>
-      {view === "desktop" ? <Square /> : view === "music" ? <Music2 /> : view === "files" ? <Folder /> : <Terminal />}
+      {view === "desktop" ? <Square /> : view === "music" ? <Music2 /> : view === "files" ? <Folder /> : view === "about" ? <UsersRound /> : <Terminal />}
       <span>{label}</span>
     </button>
     <div className="rail-bottom">
@@ -258,7 +305,7 @@ function DesktopWallpaper({ workspace }: { workspace: number }) {
   </div>;
 }
 
-function PortfolioIntro() {
+function PortfolioIntro({ onOpenAbout }: { onOpenAbout: () => void }) {
   return <section className="portfolio-intro" aria-labelledby="portfolio-title">
     <img
       className="portfolio-logo"
@@ -273,13 +320,89 @@ function PortfolioIntro() {
 commercial packaging and realistic 3D environments to automated workflows and
 seamless database systems. Beautiful on the surface, robust under the hood.`}</p>
     <nav className="portfolio-actions" aria-label="Portfolio navigation">
-      <button type="button" className="portfolio-action" data-action="about">
+      <button type="button" className="portfolio-action" data-action="about" onClick={onOpenAbout}>
         <span className="portfolio-index" aria-hidden="true">01</span><span className="portfolio-action-label">About Hyper D²</span>
       </button>
       <button type="button" className="portfolio-action" data-action="portfolio">
         <span className="portfolio-index" aria-hidden="true">02</span><span className="portfolio-action-label">Portfolio</span>
       </button>
     </nav>
+  </section>;
+}
+
+function AboutPage({ onClose }: { onClose: () => void }) {
+  return <section className="about-page" aria-labelledby="about-title">
+    <div className="about-toolbar">
+    <button type="button" className="about-close" onClick={onClose} aria-label="Close CV" title="Close CV">
+      <X aria-hidden="true" />
+    </button>
+    </div>
+
+    <section className="about-hero" aria-label="CV identity">
+      <figure className="about-profile-card">
+        <div className="about-portrait-frame">
+          <img className="about-portrait-logo" src="./public/hyperd-logo.svg" alt="" aria-hidden="true" width={743} height={147} />
+          <img className="about-avatar" src="./public/hieu-about-avatar.webp" alt="Pham Duc Hieu portrait" width={1157} height={1359} />
+        </div>
+      </figure>
+      <header className="about-header">
+        <h1 id="about-title">Pham Duc Hieu</h1>
+        <p className="about-role">Designer x Developer</p>
+        <p className="about-lead">A hybrid designer and developer building practical visual systems: commercial packaging, 3D product presentation, internal apps, game workflows, databases and AI-assisted operations.</p>
+        <div className="about-id-strip" aria-label="Profile facts">
+          {profileFacts.map((fact) => <p key={fact.label}><span>{fact.label}</span><strong>{fact.value}</strong></p>)}
+        </div>
+        <div className="about-metrics" aria-label="Profile highlights">
+          {profileMetrics.map((metric) => <span key={metric.label}><strong>{metric.value}</strong><small>{metric.label}</small></span>)}
+        </div>
+      </header>
+    </section>
+
+    <section className="about-content" aria-label="CV details">
+      <section className="about-panel about-experience">
+        <div className="about-panel-title"><BriefcaseBusiness aria-hidden="true" /><h2>Experience Record</h2></div>
+        <div className="about-records">
+          {experienceRecords.map((record) => <article key={record.company} className="about-job">
+            <span>{record.period}</span>
+            <h3>{record.company}</h3>
+            <strong>{record.role}</strong>
+            <p>{record.detail}</p>
+          </article>)}
+        </div>
+      </section>
+
+      <section className="about-panel about-capabilities">
+        <div className="about-panel-title"><Sparkles aria-hidden="true" /><h2>What I Build</h2></div>
+        <div className="about-capability-grid">
+          {capabilityGroups.map((capability) => <article key={capability.title}>
+            <h3>{capability.title}</h3>
+            <p>{capability.copy}</p>
+          </article>)}
+        </div>
+      </section>
+
+      <aside className="about-side">
+        <section className="about-panel about-directive">
+          <div className="about-panel-title"><BadgeCheck aria-hidden="true" /><h2>Core Directive</h2></div>
+          <p>Innovate, iterate and create. Make the surface beautiful, then engineer the system so it stays reliable.</p>
+          <div className="about-signal-row">
+            <span><MapPin aria-hidden="true" />Ho Chi Minh City</span>
+            <span><Code2 aria-hidden="true" />Design systems + software</span>
+          </div>
+        </section>
+
+        <section className="about-panel about-stack">
+          <div className="about-panel-title"><Frame aria-hidden="true" /><h2>Core Stack</h2></div>
+          <div className="about-stack-groups">
+            {stackGroups.map(([group, ...items]) => <div key={group} className="about-stack-row">
+              <strong>{group}</strong>
+              <div>{items.map((item) => <span key={item}>{item}</span>)}</div>
+            </div>)}
+          </div>
+        </section>
+      </aside>
+    </section>
+
   </section>;
 }
 
@@ -515,7 +638,8 @@ export default function HomePage() {
       openView={openView} toggleOverlay={toggleOverlay} />
     <section className="desktop-surface" aria-label="Caelestia desktop">
       <DesktopWallpaper workspace={workspace} />
-      {view === "desktop" && <PortfolioIntro />}
+      {view === "desktop" && <PortfolioIntro onOpenAbout={() => openView("about")} />}
+      {view === "about" && <AboutPage onClose={() => openView("desktop")} />}
       {view === "music" && <MusicApp playing={playing} setPlaying={setPlaying} onClose={() => openView("desktop")} openMedia={() => showOverlay("media")} />}
       {view === "terminal" && <TerminalApp onClose={() => openView("desktop")} />}
       {view === "files" && <FilesApp onClose={() => openView("desktop")} />}

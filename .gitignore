@@ -43,3 +43,10 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# Local 3D/Blender work (large generated and backup files)
+/artifacts/
+*.blend
+*.blend1
+__pycache__/
+*.pyc

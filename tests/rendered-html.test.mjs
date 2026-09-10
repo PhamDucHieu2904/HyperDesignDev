@@ -63,6 +63,8 @@ test("ships real HTML, metadata and a classic browser bundle without a runtime s
     assert.match(css, /color:#79726b/);
     assert.match(css, /logo-ink-reveal/);
     assert.match(css, /prefers-reduced-motion:reduce/);
+    assert.match(css, /layout-picker\[data-dragging=true\] \.layout-option:not\(\[data-preview=true\]\) \.layout-tooltip/);
+    assert.match(css, /layout-picker\[data-dragging=true\] \.layout-option\[data-preview=true\] \.layout-tooltip/);
   } finally { dom.window.close(); }
 });
 
@@ -137,6 +139,17 @@ for (const mode of ["file", "github-subpath"]) {
       assert.equal(document.querySelector(".workspaces .icon-button"), null);
       assert.equal(document.querySelector(".dashboard-toggle").parentElement.classList.contains("rail"), true);
       assert.equal(document.querySelector(".layout-picker").getAttribute("aria-label"), "Website layouts; drag to switch");
+      click('[data-action="about"]');
+      await until(() => document.querySelector(".about-page"), "About page did not open");
+      assert.match(document.querySelector(".about-page").textContent, /Pham Duc Hieu/);
+      assert.match(document.querySelector(".about-page").textContent, /Experience Record/);
+      assert.match(document.querySelector(".about-page").textContent, /Nam Viet Group/);
+      assert.match(document.querySelector(".about-page").textContent, /Core Stack/);
+      const avatar = document.querySelector('.about-avatar[src="./public/hieu-about-avatar.webp"]');
+      assert.ok(avatar);
+      await access(new URL(avatar.getAttribute("src"), root));
+      click(".about-close");
+      await until(() => !document.querySelector(".about-page"), "About page did not close");
       key("k", true);
       await until(() => document.querySelector(".launcher-drawer"), "Ctrl+K did not open launcher");
       const search = document.querySelector(".launcher-drawer input");
