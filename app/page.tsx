@@ -1,16 +1,17 @@
 import {
-  BadgeCheck, Bluetooth, BriefcaseBusiness, CalendarDays, ChevronLeft, ChevronRight, Code2, Command, Download, Eye,
-  Folder, Gamepad2, Heart, Home, Feather, Leaf, Grid2X2, Frame, Image as ImageIcon, ListMusic, LogOut, MapPin, Menu,
-  Moon, MoreVertical, Music2, Pause, Play, Power, RefreshCw, Repeat2, Rocket,
-  Search, Settings2, Shuffle, SkipBack, SkipForward,
-  Sparkles, Square, Terminal, TimerReset, Trash2, Upload, UsersRound, Volume2,
-  Wifi, X, type LucideIcon,
+  BadgeCheck, Bot, Box, BriefcaseBusiness, CalendarDays, ChevronLeft, ChevronRight, Code2, Command,
+  Folder, Gamepad2, Feather, Leaf, Grid2X2, Frame, Image as ImageIcon, LogOut, MapPin, PenTool,
+  Moon, Power, RefreshCw, Search,
+  Sparkles, Square, Terminal, TimerReset, UsersRound,
+  X, type LucideIcon,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { PortfolioScene } from "./portfolio-scenes";
+import { PortfolioApp } from "./portfolio/PortfolioApp";
+import type { Filter } from "./portfolio/types";
 
-type View = "desktop" | "about" | "music" | "terminal" | "files";
-type Overlay = "dashboard" | "launcher" | "session" | "media" | null;
+type View = "desktop" | "about" | "portfolio" | "terminal" | "files";
+type Overlay = "dashboard" | "launcher" | "session" | null;
 
 const layouts = [
   { id: 2, theme: "graphite", name: "Graphite", detail: "Charcoal · copper", icon: Moon },
@@ -20,29 +21,6 @@ const layouts = [
   { id: 1, theme: "paper", name: "Paper", detail: "Original · warm parchment", icon: Feather },
 ];
 const layoutStorageKey = "hyperd-layout";
-
-const albums = [
-  { title: "ONE SPARK", artist: "TWICE", tone: "rose", mark: "ONE\nSPARK" },
-  { title: "Nobody Knows", artist: "KISS OF LIFE", tone: "ink", mark: "KISS\nOF LIFE" },
-  { title: "I GOT YOU", artist: "TWICE", tone: "field", mark: "I GOT\nYOU" },
-  { title: "UNTOUCHABLE", artist: "ITZY", tone: "ember", mark: "BORN\nTO BE" },
-  { title: "DASH", artist: "NMIXX", tone: "portrait", mark: "DASH" },
-];
-const library = [
-  { title: "GOLD", artist: "ABBA", tone: "gold", mark: "ABBA" },
-  { title: "Layover", artist: "V", tone: "blue", mark: "LAYOVER" },
-  { title: "Love wins all", artist: "IU", tone: "film", mark: "LOVE\nWINS ALL" },
-  { title: "Supernova", artist: "aespa", tone: "silver", mark: "SUPERNOVA" },
-  { title: "Drama", artist: "aespa", tone: "violet", mark: "DRAMA" },
-];
-const tracks = [
-  ["Burn It’s Destiny", "10cm", "3:51", "5"], ["Star", "N.Flying", "3:38", "1"],
-  ["Everytime", "CHEN, Punch", "3:09", "12"], ["Reset", "Tiger JK", "4:02", "4"],
-  ["Call Me Maybe", "SAya", "3:21", "5"], ["All With You", "TAEYEON", "3:55", "9"],
-  ["Love Virus", "Kihyun, Seol.A", "3:27", "6"], ["You Are My Everything", "Gummy", "4:00", "8"],
-  ["I Remember You", "I.O.I", "4:08", "8"], ["A Little More", "JinHo, Rothy", "3:24", "5"],
-  ["It’s you", "Jeong Sewoon", "3:39", "7"],
-];
 
 const profileFacts = [
   { label: "Full name", value: "Pham Duc Hieu" },
@@ -84,32 +62,24 @@ const stackGroups = [
   ["AI Skilled", "GPT/Codex", "Gemini", "Claude", "Automation", "Systems"],
 ];
 
-function IconButton({ label, icon: Icon, onClick, active = false, className = "" }: {
-  label: string; icon: LucideIcon; onClick?: () => void; active?: boolean; className?: string;
+function IconButton({ label, icon: Icon, onClick, active = false, className = "", disabled = false }: {
+  label: string; icon: LucideIcon; onClick?: () => void; active?: boolean; className?: string; disabled?: boolean;
 }) {
   return <button type="button" className={`icon-button ${active ? "active" : ""} ${className}`}
-    aria-label={label} title={label} onClick={onClick}><Icon aria-hidden="true" /></button>;
+    aria-label={label} title={label} onClick={onClick} disabled={disabled}><Icon aria-hidden="true" /></button>;
 }
 
-function AlbumCard({ album }: { album: { title: string; artist: string; tone: string; mark: string } }) {
-  return <button type="button" className="album-card" aria-label={`Open ${album.title}`}>
-    <span className={`album-cover ${album.tone}`}>
-      {album.mark.split("\n").map((part) => <b key={part}>{part}</b>)}
-    </span>
-    <strong>{album.title}</strong><small>{album.artist}</small>
-  </button>;
-}
-
-function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, toggleOverlay }: {
-  now: Date | null; workspace: number; setWorkspace: (workspace: number) => void; view: View;
-  overlay: Overlay; openView: (view: View) => void; toggleOverlay: (overlay: Exclude<Overlay, null>) => void;
+function LeftRail({ workspace, setWorkspace, view, overlay, openView, openPortfolio, toggleOverlay }: {
+  workspace: number; setWorkspace: (workspace: number) => void; view: View;
+  overlay: Overlay; openView: (view: View) => void; openPortfolio: (category: Filter) => void;
+  toggleOverlay: (overlay: Exclude<Overlay, null>) => void;
 }) {
   const layoutPickerRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ pointerId: number; startX: number; startY: number; startId: number; previewId: number; moved: boolean } | null>(null);
   const suppressClickRef = useRef(false);
   const [previewLayout, setPreviewLayout] = useState<number | null>(null);
   const [isLayoutDragging, setIsLayoutDragging] = useState(false);
-  const label = view === "music" ? "(Paused)  (24 / 53)  Reset – Tiger JK"
+  const label = view === "portfolio" ? "Portfolio"
     : view === "terminal" ? "Terminal" : view === "files" ? "Files" : view === "about" ? "About Hyper D²" : "Desktop";
   const layoutAtPoint = (clientX: number, clientY: number) => {
     const target = document.elementFromPoint(clientX, clientY)?.closest<HTMLButtonElement>(".layout-option");
@@ -191,18 +161,16 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, toggl
     </div>
     <button type="button" className="active-window" onClick={() => openView(view === "desktop" ? "terminal" : "desktop")}
       aria-label={`Active window: ${label}`}>
-      {view === "desktop" ? <Square /> : view === "music" ? <Music2 /> : view === "files" ? <Folder /> : view === "about" ? <UsersRound /> : <Terminal />}
+      {view === "desktop" ? <Square /> : view === "portfolio" ? <Frame /> : view === "files" ? <Folder /> : view === "about" ? <UsersRound /> : <Terminal />}
       <span>{label}</span>
     </button>
     <div className="rail-bottom">
-      <Bluetooth className="muted" aria-hidden="true" />
-      <IconButton label="Eye comfort" icon={Eye} /><IconButton label="Games" icon={Gamepad2} />
-      <IconButton label="Open Feishin" icon={Music2} className="spotify" active={view === "music"} onClick={() => openView("music")} />
-      <IconButton label="Calendar" icon={CalendarDays} onClick={() => toggleOverlay("dashboard")} />
-      <button type="button" className="clock" aria-label="Open dashboard" onClick={() => toggleOverlay("dashboard")}>
-        <span>{now ? String(now.getHours()).padStart(2, "0") : "--"}</span><span>{now ? String(now.getMinutes()).padStart(2, "0") : "--"}</span>
-      </button>
-      <div className="status-stack" aria-label="System status"><Wifi /><Bluetooth /><Rocket /></div>
+      <IconButton label="Adobe Photoshop — open Visual portfolio" icon={ImageIcon} className="rail-shortcut" onClick={() => openPortfolio("photoshop")} />
+      <IconButton label="Adobe Illustrator — open Brand portfolio" icon={PenTool} className="rail-shortcut" onClick={() => openPortfolio("illustrator")} />
+      <IconButton label="Blender — open 3D portfolio" icon={Box} className="rail-shortcut" onClick={() => openPortfolio("blender")} />
+      <IconButton label="Unity — open Game portfolio" icon={Gamepad2} className="rail-shortcut" onClick={() => openPortfolio("game")} />
+      <IconButton label="Visual Studio Code — open Web portfolio" icon={Code2} className="rail-shortcut" onClick={() => openPortfolio("web")} />
+      <IconButton label="Codex — coming soon" icon={Bot} className="rail-shortcut rail-shortcut-pending" disabled />
       <IconButton label="Power menu" icon={Power} className="power" active={overlay === "session"} onClick={() => toggleOverlay("session")} />
     </div>
   </aside>;
@@ -305,7 +273,7 @@ function DesktopWallpaper({ workspace }: { workspace: number }) {
   </div>;
 }
 
-function PortfolioIntro({ onOpenAbout }: { onOpenAbout: () => void }) {
+function PortfolioIntro({ onOpenAbout, onOpenPortfolio }: { onOpenAbout: () => void; onOpenPortfolio: () => void }) {
   return <section className="portfolio-intro" aria-labelledby="portfolio-title">
     <img
       className="portfolio-logo"
@@ -323,7 +291,7 @@ seamless database systems. Beautiful on the surface, robust under the hood.`}</p
       <button type="button" className="portfolio-action" data-action="about" onClick={onOpenAbout}>
         <span className="portfolio-index" aria-hidden="true">01</span><span className="portfolio-action-label">About Hyper D²</span>
       </button>
-      <button type="button" className="portfolio-action" data-action="portfolio">
+      <button type="button" className="portfolio-action" data-action="portfolio" onClick={onOpenPortfolio}>
         <span className="portfolio-index" aria-hidden="true">02</span><span className="portfolio-action-label">Portfolio</span>
       </button>
     </nav>
@@ -408,76 +376,6 @@ function AboutPage({ onClose }: { onClose: () => void }) {
   </section>;
 }
 
-function MusicApp({ playing, setPlaying, onClose, openMedia }: {
-  playing: boolean; setPlaying: (playing: boolean) => void; onClose: () => void; openMedia: () => void;
-}) {
-  const [musicQuery, setMusicQuery] = useState("");
-
-  return <section className="music-window" aria-label="Feishin music player">
-    <aside className="music-nav">
-      <div className="window-nav">
-        <IconButton label="Back" icon={ChevronLeft} />
-        <IconButton label="Forward" icon={ChevronRight} />
-      </div>
-      <IconButton label="Close Feishin" icon={X} className="mobile-close" onClick={onClose} />
-      <button type="button" className="nav-logo" aria-label="Feishin menu"><Menu /><span>Menu</span></button>
-      <nav>
-        <button type="button" className="selected"><Home /><span>Home</span></button>
-        <button type="button"><Search /><span>Search</span></button>
-        <button type="button"><ListMusic /><span>Playlists</span></button>
-        <button type="button"><Settings2 /><span>Settings</span></button>
-        <button type="button"><UsersRound /><span>Artists</span></button>
-      </nav>
-    </aside>
-    <div className="music-main">
-      <label className="music-search">
-        <Search aria-hidden="true" />
-        <input
-          type="search"
-          value={musicQuery}
-          onChange={(event) => setMusicQuery(event.target.value)}
-          placeholder="Search albums, artists and tracks"
-          aria-label="Search music"
-        />
-        <kbd>Esc</kbd>
-      </label>
-      <section className="music-hero">
-        <div className="book-cover"><small>YOASOBI</small><i /></div>
-        <div className="hero-copy"><h1>THE BOOK 3</h1><h2>YOASOBI</h2><span>2023</span>
-          <button type="button" onClick={() => setPlaying(true)}>Play</button></div>
-        <div className="hero-arrows"><IconButton label="Previous album" icon={ChevronLeft} /><IconButton label="Next album" icon={ChevronRight} /></div>
-      </section>
-      <section className="album-section"><header><h2>Recently played</h2><div>
-        <IconButton label="Previous" icon={ChevronLeft} /><IconButton label="Next" icon={ChevronRight} />
-      </div></header><div className="album-row">{albums.map(album => <AlbumCard key={album.title} album={album} />)}</div></section>
-      <section className="album-section library-section"><header><h2>Explore from your library</h2><RefreshCw /></header>
-        <div className="album-row">{library.map(album => <AlbumCard key={album.title} album={album} />)}</div></section>
-    </div>
-    <aside className="track-list">
-      <header><div className="track-actions">
-        <IconButton label="Shuffle" icon={Shuffle} /><IconButton label="Refresh" icon={RefreshCw} />
-        <IconButton label="Download" icon={Download} /><IconButton label="Upload" icon={Upload} /><IconButton label="Clear" icon={Trash2} />
-      </div><IconButton label="Close Feishin" icon={X} className="window-close" onClick={onClose} /></header>
-      <div className="track-head"><span>#</span><span>Title</span><span>◷</span><span>Plays</span><Heart /></div>
-      <div className="tracks">{tracks.map(([title, artist, duration, plays], index) =>
-        <button type="button" className={title === "Reset" ? "active" : ""} key={title} onClick={() => { setPlaying(true); openMedia(); }}>
-          <span>{index + 21}</span><i className={`track-art art-${index % 5}`} />
-          <span className="track-title"><strong>{title}</strong><small>{artist}</small></span>
-          <span>{duration}</span><span>{plays}</span><Heart className={index === 6 ? "liked" : ""} />
-        </button>)}</div>
-    </aside>
-    <footer className="player-bar">
-      <button type="button" className="now-track" onClick={openMedia}><i className="reset-cover">R</i>
-        <span><strong>Reset</strong><small>Tiger JK</small><em>학교 2015 OST</em></span><MoreVertical /></button>
-      <div className="transport"><div><IconButton label="Stop" icon={Square} /><IconButton label="Shuffle" icon={Shuffle} />
-        <IconButton label="Previous" icon={SkipBack} /><IconButton label={playing ? "Pause" : "Play"} icon={playing ? Pause : Play} onClick={() => setPlaying(!playing)} />
-        <IconButton label="Next" icon={SkipForward} /><IconButton label="Repeat" icon={Repeat2} /></div>
-        <div className="song-progress"><span>0:00</span><i><b /></i><span>4:02</span></div></div>
-      <div className="volume"><Heart /><ListMusic /><Volume2 /><i><b /></i></div>
-    </footer>
-  </section>;
-}
-
 function TerminalApp({ onClose }: { onClose: () => void }) {
   return <section className="terminal-window" aria-label="Terminal window"><header>
     <span><Terminal /> hieu@caelestia: ~</span><div><IconButton label="Minimize terminal" icon={Square} />
@@ -500,19 +398,6 @@ function FilesApp({ onClose }: { onClose: () => void }) {
     <span>Home / hieu</span><IconButton label="Close files" icon={X} onClick={onClose} /></header>
     <div className="files-body">{files.map(([name, size, folder]) => <button type="button" key={String(name)}>
       {folder ? <Folder /> : <Square />}<strong>{name}</strong><small>{size}</small></button>)}</div>
-  </section>;
-}
-
-function MediaPopout({ playing, setPlaying, close, closing }: {
-  playing: boolean; setPlaying: (playing: boolean) => void; close: () => void; closing: boolean;
-}) {
-  return <section className={`media-popout ${closing ? "closing" : ""}`} aria-label="Media controls"><header>
-    <button type="button" onClick={() => setPlaying(!playing)}>{playing ? <Pause /> : <Play />}</button>
-    <span><strong>({playing ? "Playing" : "Paused"}) (24 / 53) Reset – Tiger JK</strong><small>feishin</small></span>
-    <IconButton label="Close media controls" icon={X} onClick={close} /></header>
-    <div className="media-preview"><div className="preview-album"><span>THE BOOK 3</span><i /></div>
-      <div className="preview-list">{[0, 1, 2, 3, 4].map(item => <i key={item} />)}</div></div>
-    <div className="popout-progress"><span /></div>
   </section>;
 }
 
@@ -540,11 +425,13 @@ function DashboardDrawer({ now, close, closing }: { now: Date; close: () => void
   </section>;
 }
 
-function LauncherDrawer({ close, openView, closing }: { close: () => void; openView: (view: View) => void; closing: boolean }) {
+function LauncherDrawer({ close, openView, openPortfolio, closing }: {
+  close: () => void; openView: (view: View) => void; openPortfolio: (category: Filter) => void; closing: boolean;
+}) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const apps: { name: string; view: View; icon: LucideIcon }[] = [
-    { name: "Feishin", view: "music", icon: Music2 }, { name: "Terminal", view: "terminal", icon: Terminal },
+    { name: "Portfolio", view: "portfolio", icon: Frame }, { name: "Terminal", view: "terminal", icon: Terminal },
     { name: "Files", view: "files", icon: Folder }, { name: "Desktop", view: "desktop", icon: ImageIcon },
   ];
   const filtered = apps.filter(app => app.name.toLowerCase().includes(query.toLowerCase()));
@@ -554,7 +441,8 @@ function LauncherDrawer({ close, openView, closing }: { close: () => void; openV
   }, []);
   return <section className={`launcher-drawer ${closing ? "closing" : ""}`} aria-label="Application launcher"><header><Command /><span>Applications</span>
     <IconButton label="Close launcher" icon={X} onClick={close} /></header>
-    <div className="launcher-apps">{filtered.map(({ name, view, icon: Icon }) => <button type="button" key={name} onClick={() => openView(view)}>
+    <div className="launcher-apps">{filtered.map(({ name, view, icon: Icon }) => <button type="button" key={name}
+      onClick={() => view === "portfolio" ? openPortfolio("all") : openView(view)}>
       <span><Icon /></span><strong>{name}</strong><small>Open</small></button>)}</div>
     <label><Search /><input ref={inputRef} value={query} onChange={event => setQuery(event.target.value)}
       placeholder="Search applications" /><kbd>esc</kbd></label>
@@ -568,9 +456,9 @@ export default function HomePage() {
   // A previously selected workspace still wins when it is present in storage.
   const [workspace, setWorkspace] = useState(2);
   const [view, setView] = useState<View>("desktop");
+  const [portfolioEntry, setPortfolioEntry] = useState<{ category: Filter; request: number }>({ category: "all", request: 0 });
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [overlayClosing, setOverlayClosing] = useState(false);
-  const [playing, setPlaying] = useState(false);
   const closeTimerRef = useRef<number | null>(null);
   useEffect(() => {
     try {
@@ -612,7 +500,7 @@ export default function HomePage() {
       if (event.key === "Escape") {
         if (overlay) {
           closeOverlay();
-        } else if (view !== "desktop") {
+        } else if (view !== "desktop" && view !== "portfolio") {
           setView("desktop");
         }
       }
@@ -631,26 +519,31 @@ export default function HomePage() {
     setOverlay(null);
     setOverlayClosing(false);
   };
+  const openPortfolio = (category: Filter) => {
+    setPortfolioEntry(current => ({ category, request: current.request + 1 }));
+    openView("portfolio");
+  };
   const toggleOverlay = (next: Exclude<Overlay, null>) => {
     if (overlay === next) closeOverlay();
     else showOverlay(next);
   };
   return <main className="shell" data-layout={layouts.find(layout => layout.id === workspace)?.theme}>
-    <LeftRail now={now} workspace={workspace} setWorkspace={selectLayout} view={view} overlay={overlay}
-      openView={openView} toggleOverlay={toggleOverlay} />
+    <LeftRail workspace={workspace} setWorkspace={selectLayout} view={view} overlay={overlay}
+      openView={openView} openPortfolio={openPortfolio} toggleOverlay={toggleOverlay} />
     <section className="desktop-surface" aria-label="Caelestia desktop">
       <DesktopWallpaper workspace={workspace} />
-      {view === "desktop" && <PortfolioIntro onOpenAbout={() => openView("about")} />}
+      {view === "desktop" && <PortfolioIntro onOpenAbout={() => openView("about")} onOpenPortfolio={() => openPortfolio("all")} />}
       {view === "about" && <AboutPage onClose={() => openView("desktop")} />}
-      {view === "music" && <MusicApp playing={playing} setPlaying={setPlaying} onClose={() => openView("desktop")} openMedia={() => showOverlay("media")} />}
+      {view === "portfolio" && <PortfolioApp key={portfolioEntry.request} initialCategory={portfolioEntry.category}
+        onClose={() => openView("desktop")} />}
       {view === "terminal" && <TerminalApp onClose={() => openView("desktop")} />}
       {view === "files" && <FilesApp onClose={() => openView("desktop")} />}
       {overlay === "dashboard" && now && <DashboardDrawer now={now} close={closeOverlay} closing={overlayClosing} />}
-      {overlay === "launcher" && <LauncherDrawer close={closeOverlay} openView={openView} closing={overlayClosing} />}
+      {overlay === "launcher" && <LauncherDrawer close={closeOverlay} openView={openView}
+        openPortfolio={openPortfolio} closing={overlayClosing} />}
       {overlay === "session" && <SessionDrawer close={closeOverlay} closing={overlayClosing} />}
       {view === "desktop" && !overlay && <button type="button" className="explore-pill" onClick={() => showOverlay("launcher")}>
         <Sparkles /> Explore the shell <kbd>Ctrl K</kbd></button>}
     </section>
-    {overlay === "media" && <MediaPopout playing={playing} setPlaying={setPlaying} close={closeOverlay} closing={overlayClosing} />}
   </main>;
 }

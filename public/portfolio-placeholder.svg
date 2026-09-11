@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-labelledby="title description">
+  <title id="title">Portfolio project preview</title>
+  <desc id="description">Abstract grid placeholder for a future portfolio project.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f5eee9"/>
+      <stop offset="1" stop-color="#ddc6bf"/>
+    </linearGradient>
+    <linearGradient id="ink" x1="0" y1="1" x2="1" y2="0">
+      <stop stop-color="#4f4945"/>
+      <stop offset="1" stop-color="#b46251"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="640" rx="48" fill="url(#paper)"/>
+  <g fill="none" stroke="#b9a8a1" stroke-width="2" opacity=".7">
+    <path d="M80 80h480v480H80z"/>
+    <path d="M80 220h480M80 420h480M220 80v480M420 80v480"/>
+  </g>
+  <rect x="188" y="188" width="264" height="264" rx="34" fill="url(#ink)" opacity=".92"/>
+  <path d="M270 276h100v16H270zm0 38h100v16H270zm0 38h66v16h-66z" fill="#fff8f2"/>
+  <circle cx="392" cy="360" r="18" fill="#f1d5ce"/>
+</svg>

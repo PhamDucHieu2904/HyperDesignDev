@@ -133,7 +133,7 @@ for (const mode of ["file", "github-subpath"]) {
     };
     const key = (value, ctrlKey = false) => window.dispatchEvent(new window.KeyboardEvent("keydown", { key: value, ctrlKey }));
     try {
-      await until(() => document.querySelector(".clock")?.textContent !== "----", "Clock did not hydrate");
+      await until(() => document.querySelector('[data-action="about"]'), "Application did not hydrate");
       assert.equal(document.querySelectorAll(".shell").length, 1);
       assert.ok(document.querySelector(".dashboard-toggle"));
       assert.equal(document.querySelector(".workspaces .icon-button"), null);
@@ -150,11 +150,25 @@ for (const mode of ["file", "github-subpath"]) {
       await access(new URL(avatar.getAttribute("src"), root));
       click(".about-close");
       await until(() => !document.querySelector(".about-page"), "About page did not close");
+      click('[data-action="portfolio"]');
+      await until(() => document.querySelector(".pf-window"), "Hero Portfolio action did not open Portfolio");
+      click(".pf-close");
+      await until(() => !document.querySelector(".pf-window"), "Hero-opened Portfolio did not close");
       key("k", true);
       await until(() => document.querySelector(".launcher-drawer"), "Ctrl+K did not open launcher");
       const search = document.querySelector(".launcher-drawer input");
-      Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set.call(search, "term");
+      Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set.call(search, "port");
       search.dispatchEvent(new window.Event("input", { bubbles: true }));
+      await until(() => document.querySelectorAll(".launcher-apps button").length === 1, "Launcher Portfolio search did not filter");
+      click(".launcher-apps button");
+      await until(() => document.querySelector(".pf-window"), "Launcher did not open Portfolio");
+      click(".pf-close");
+      await until(() => !document.querySelector(".pf-window"), "Launcher-opened Portfolio did not close");
+      key("k", true);
+      await until(() => document.querySelector(".launcher-drawer"), "Launcher did not reopen for Terminal");
+      const terminalSearch = document.querySelector(".launcher-drawer input");
+      Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set.call(terminalSearch, "term");
+      terminalSearch.dispatchEvent(new window.Event("input", { bubbles: true }));
       await until(() => document.querySelectorAll(".launcher-apps button").length === 1, "Launcher search did not filter");
       assert.match(document.querySelector(".launcher-apps").textContent, /Terminal/);
       click(".launcher-apps button");
@@ -209,17 +223,66 @@ for (const mode of ["file", "github-subpath"]) {
       key("Escape");
       await until(() => !document.querySelector(".session-drawer"), "Power menu did not close");
 
-      click('[aria-label="Open Feishin"]');
-      await until(() => document.querySelector(".music-window"), "Music window did not open");
-      click('.transport [aria-label="Play"]');
-      await until(() => document.querySelector('.transport [aria-label="Pause"]'), "Play did not update state");
-      click(".now-track");
-      await until(() => document.querySelector(".media-popout"), "Media popout did not open");
-      assert.match(document.querySelector(".media-popout").textContent, /Playing/);
+      click('[aria-label="Adobe Illustrator — open Brand portfolio"]');
+      await until(() => document.querySelector(".pf-case"), "Brand shortcut did not open its first project");
+      assert.match(document.querySelector(".pf-case-header h1").textContent, /Label System/);
+      click('.pf-nav-history [aria-label="Next project"]');
+      await until(() => /Tini World/.test(document.querySelector(".pf-case-header h1").textContent),
+        "Next project did not follow Brand → Visual order");
+      click('.pf-nav-history [aria-label="Next project"]');
+      await until(() => /Exhibition Booth/.test(document.querySelector(".pf-case-header h1").textContent),
+        "Next project did not follow Visual → 3D order");
+      click('[data-category="all"]');
+      await until(() => document.querySelector(".pf-overview"), "All category did not open the overview");
+      assert.match(document.querySelector(".pf-overview").textContent, /Hyper Design/);
+      assert.equal(document.querySelector(".player-bar"), null);
+      click(".pf-project-card");
+      await until(() => document.querySelector(".pf-case"), "Case study did not open");
+      assert.ok(document.querySelector('.pf-index [aria-current="true"]'));
+      assert.ok(document.querySelector('.pf-nav [aria-pressed="true"]:not([data-category="all"])'));
+      click(".pf-back");
+      await until(() => document.querySelector(".pf-overview"), "Portfolio overview did not return");
+      click('[data-category="photoshop"]');
+      await until(() => document.querySelector(".pf-case"), "Photoshop category did not open its first project directly");
+      assert.match(document.querySelector(".pf-case-header h1").textContent, /Tini World/);
+      assert.equal(document.querySelectorAll(".pf-index li").length, 1);
+      click('[data-category="all"]');
+      await until(() => document.querySelector(".pf-overview"), "All category did not return to the overview");
+      const portfolioSearch = document.querySelector('[aria-label="Search portfolio"]');
+      Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set.call(portfolioSearch, "poster");
+      portfolioSearch.dispatchEvent(new window.Event("input", { bubbles: true }));
+      await until(() => document.querySelectorAll(".pf-project-card").length === 1, "Portfolio search did not filter projects");
+      assert.match(document.querySelector(".pf-project-card").textContent, /Tini World/);
       key("Escape");
-      await until(() => !document.querySelector(".media-popout"), "Media popout did not close");
-      key("Escape");
-      await until(() => !document.querySelector(".music-window"), "Music window did not close");
+      await until(() => portfolioSearch.value === "" && document.querySelectorAll(".pf-project-card:not(.pf-project-placeholder)").length === 3,
+        "Escape did not clear portfolio search");
+      assert.ok(document.querySelector(".pf-window"), "Clearing search unexpectedly closed Portfolio");
+      click('[data-category="game"]');
+      await until(() => document.querySelector(".pf-case"), "Game category did not open its temporary first project directly");
+      assert.match(document.querySelector(".pf-case-header h1").textContent, /Game Systems/);
+      assert.equal(document.querySelectorAll(".pf-index li").length, 1);
+      Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set.call(portfolioSearch, "no-such-project");
+      portfolioSearch.dispatchEvent(new window.Event("input", { bubbles: true }));
+      await until(() => document.querySelector(".pf-empty"), "Empty portfolio search state did not render");
+      click(".pf-empty button");
+      await until(() => document.querySelector('.pf-project-card'), "Portfolio reset did not restore projects");
+      click(".pf-close");
+      await until(() => !document.querySelector(".pf-window"), "Portfolio did not close");
+
+      const shortcutCases = [
+        ["Adobe Photoshop — open Visual portfolio", /Tini World/],
+        ["Blender — open 3D portfolio", /Exhibition Booth/],
+        ["Unity — open Game portfolio", /Game Systems/],
+        ["Visual Studio Code — open Web portfolio", /Web Experiences/],
+      ];
+      for (const [label, expectedTitle] of shortcutCases) {
+        click(`[aria-label="${label}"]`);
+        await until(() => expectedTitle.test(document.querySelector(".pf-case-header h1")?.textContent ?? ""),
+          `${label} did not open its mapped portfolio`);
+        click(".pf-close");
+        await until(() => !document.querySelector(".pf-window"), `${label} portfolio did not close`);
+      }
+      assert.equal(document.querySelector('[aria-label="Codex — coming soon"]').disabled, true);
 
       key("k", true);
       await until(() => document.querySelector(".launcher-apps"), "Launcher did not reopen");

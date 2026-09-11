@@ -24,7 +24,7 @@ export async function buildSite() {
       ...options, entryPoints: ["app/page.tsx"], platform: "node",
       format: "cjs", packages: "external",
     }),
-    Promise.all(["globals.css", "layouts.css", "portfolio-scenes.css"].map(name => readFile(new URL(`../app/${name}`, import.meta.url), "utf8")))
+    Promise.all(["globals.css", "layouts.css", "portfolio-scenes.css", "portfolio.css"].map(name => readFile(new URL(`../app/${name}`, import.meta.url), "utf8")))
       .then((sources) => transform(sources.join("\n"), { loader: "css", minify: true, target: "es2020" })),
   ]);
 

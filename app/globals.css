@@ -720,6 +720,9 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
 .rail-bottom .icon-button { width: 36px; height: 29px; }
 .rail-bottom .spotify { color: #17271b; }
 .rail-bottom .spotify svg { padding: 2px; border-radius: 50%; color: #0b2112; background: var(--green); stroke-width: 2.5; }
+.rail-bottom .portfolio-launch.active { color: var(--on-accent); background: var(--rose-strong); }
+.rail-bottom .rail-shortcut { color: inherit; }
+.rail-bottom .rail-shortcut-pending { opacity: .58; cursor: default; }
 .clock {
   width: 38px; margin: 4px 0 5px; padding: 3px 0; border: 0; display: grid; color: #574840;
   background: transparent; cursor: pointer; font-size: 13px; font-weight: 620; line-height: 1.08;
