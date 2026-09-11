@@ -723,6 +723,17 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
 .rail-bottom .portfolio-launch.active { color: var(--on-accent); background: var(--rose-strong); }
 .rail-bottom .rail-shortcut { color: inherit; }
 .rail-bottom .rail-shortcut-pending { opacity: .58; cursor: default; }
+.rail-music-accent {
+  width: 36px; height: 29px; display: grid; place-items: center; color: #102718;
+}
+.rail-music-accent svg {
+  width: 18px; height: 18px; padding: 2px; border-radius: 50%; background: var(--green); stroke-width: 2.5;
+}
+.rail-calendar {
+  width: 38px; display: grid; justify-items: center; gap: 1px; color: #574840;
+}
+.rail-calendar > svg { width: 17px; height: 17px; }
+.rail-calendar time { display: grid; font-size: 12px; font-weight: 650; line-height: 1.02; text-align: center; }
 .clock {
   width: 38px; margin: 4px 0 5px; padding: 3px 0; border: 0; display: grid; color: #574840;
   background: transparent; cursor: pointer; font-size: 13px; font-weight: 620; line-height: 1.08;
@@ -733,7 +744,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
 }
 .status-stack svg { width: 16px; height: 16px; }
 .rail-bottom .power {
-  width: 43px; height: 43px; margin-top: 7px; border-radius: 50%; color: #a54432;
+  width: 44px; height: 44px; min-height: 44px; flex: 0 0 44px; margin-top: 7px; border-radius: 50%; color: #a54432;
   background: color-mix(in srgb, var(--rose) 72%, white);
 }
 .rail-bottom .power:hover, .rail-bottom .power.active { color: #fff; background: #b95f4e; }
@@ -1251,7 +1262,9 @@ kbd {
   }
 }
 @media (max-height: 760px) {
-  .rail-bottom .icon-button { height: 25px; }
+  .rail-bottom .icon-button:not(.power) { height: 25px; }
+  .rail-music-accent { height: 25px; }
+  .rail-calendar time { font-size: 11px; }
   .clock { margin: 1px 0; }
   .status-stack { padding: 5px 0; gap: 4px; }
   .session-drawer { min-height: 455px; gap: 8px; }

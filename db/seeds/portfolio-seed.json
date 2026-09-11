@@ -1,0 +1,499 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "app/portfolio/data.ts",
+  "generatedAt": "2026-09-11T00:00:00.000Z",
+  "media": [
+    {
+      "id": "seed-media-vinut-coco-boba-label",
+      "sourcePath": "./public/vinut-coco-boba-label.webp",
+      "objectKey": "seed/original/vinut-coco-boba-label.webp",
+      "originalName": "vinut-coco-boba-label.webp",
+      "mime": "image/webp",
+      "bytes": 58678,
+      "width": 741,
+      "height": 680,
+      "altDefault": "Vinut Coco Boba coconut milk tea label artwork and print production sheet",
+      "checksum": "112c7d28670f728d2d574e426d173e033650f788f37d84792c44a28b8ef763f4"
+    },
+    {
+      "id": "seed-media-coco-boba-poster",
+      "sourcePath": "./public/coco-boba-poster.webp",
+      "objectKey": "seed/original/coco-boba-poster.webp",
+      "originalName": "coco-boba-poster.webp",
+      "mime": "image/webp",
+      "bytes": 57904,
+      "width": 484,
+      "height": 684,
+      "altDefault": "Coco Boba Tini World campaign poster with a coconut milk tea can and miniature storefront",
+      "checksum": "b8517d83f39f0cae5106a40934c414ff91507d1df588088e1286e0b9df3bf39e"
+    },
+    {
+      "id": "seed-media-nam-viet-group-booth",
+      "sourcePath": "./public/nam-viet-group-booth.webp",
+      "objectKey": "seed/original/nam-viet-group-booth.webp",
+      "originalName": "nam-viet-group-booth.webp",
+      "mime": "image/webp",
+      "bytes": 28788,
+      "width": 553,
+      "height": 553,
+      "altDefault": "Nam Viet Group exhibition booth concept with beverage displays and green branding",
+      "checksum": "b0b44953f8f451e093252ed4a806bcb419cb8ddc8315d0baeaba93154f546d9d"
+    },
+    {
+      "id": "seed-media-portfolio-placeholder",
+      "sourcePath": "./public/portfolio-placeholder.svg",
+      "objectKey": "seed/original/portfolio-placeholder.svg",
+      "originalName": "portfolio-placeholder.svg",
+      "mime": "image/svg+xml",
+      "bytes": 1059,
+      "width": 640,
+      "height": 640,
+      "altDefault": "Temporary portfolio project placeholder",
+      "checksum": "35c3c2d003542b8c75acfb09407eeb551418f74959e4c410946883c8201350d5"
+    }
+  ],
+  "projects": [
+    {
+      "id": "vinut-coco-boba-label",
+      "legacyStatus": "published",
+      "slug": "vinut-coco-boba-label-system",
+      "metadata": {
+        "categoryId": "illustrator",
+        "title": "Vinut Coco Boba — Label System",
+        "shortTitle": "Coco Boba Label",
+        "subtitle": "A production-ready label system balancing a playful character world with dense export information.",
+        "thumbnailAssetId": "seed-media-vinut-coco-boba-label",
+        "coverAssetId": "seed-media-vinut-coco-boba-label",
+        "tags": [
+          "packaging",
+          "label",
+          "vector",
+          "print",
+          "coco boba",
+          "vinut"
+        ],
+        "tools": [
+          "Adobe Illustrator",
+          "Print production"
+        ],
+        "role": "Packaging & label design",
+        "year": "Selected work",
+        "isFeatured": true,
+        "sortOrder": 10
+      },
+      "document": {
+        "schemaVersion": 1,
+        "blocks": [
+          {
+            "id": "visual-system-eyebrow",
+            "type": "text",
+            "paragraphs": [
+              {
+                "spans": [
+                  {
+                    "text": "01 / Visual system",
+                    "italic": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "visual-system-heading",
+            "type": "heading",
+            "level": 2,
+            "text": "One label, many layers of information"
+          },
+          {
+            "id": "visual-system-copy",
+            "type": "text",
+            "paragraphs": [
+              {
+                "spans": [
+                  {
+                    "text": "The composition gives the character and Coco Boba name a clear center while nutritional, legal and production information remain organized around it."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "visual-system-media",
+            "type": "image",
+            "assetId": "seed-media-vinut-coco-boba-label",
+            "alt": "Vinut Coco Boba coconut milk tea label artwork and print production sheet",
+            "fit": "contain"
+          },
+          {
+            "id": "production-eyebrow",
+            "type": "text",
+            "paragraphs": [
+              {
+                "spans": [
+                  {
+                    "text": "02 / Production",
+                    "italic": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "production-heading",
+            "type": "heading",
+            "level": 2,
+            "text": "Prepared for real packaging work"
+          },
+          {
+            "id": "production-copy",
+            "type": "text",
+            "paragraphs": [
+              {
+                "spans": [
+                  {
+                    "text": "Color channels, dimensions, print status and artwork variants are presented as part of the working file rather than hidden behind a decorative mockup."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "contentState": "ready",
+      "revisionId": "seed-revision-vinut-coco-boba-label-v1",
+      "assetIds": [
+        "seed-media-vinut-coco-boba-label"
+      ]
+    },
+    {
+      "id": "coco-boba-tini-world",
+      "legacyStatus": "published",
+      "slug": "coco-boba-tini-world",
+      "metadata": {
+        "categoryId": "photoshop",
+        "title": "Coco Boba — Tini World",
+        "shortTitle": "Tini World",
+        "subtitle": "A bright product campaign that turns the beverage can into the center of a miniature brand world.",
+        "thumbnailAssetId": "seed-media-coco-boba-poster",
+        "coverAssetId": "seed-media-coco-boba-poster",
+        "tags": [
+          "photoshop",
+          "campaign",
+          "poster",
+          "compositing",
+          "beverage",
+          "coco boba"
+        ],
+        "tools": [
+          "Adobe Photoshop",
+          "Art direction"
+        ],
+        "role": "Campaign visual & compositing",
+        "year": "2024",
+        "isFeatured": false,
+        "sortOrder": 20
+      },
+      "document": {
+        "schemaVersion": 1,
+        "blocks": [
+          {
+            "id": "campaign-world-eyebrow",
+            "type": "text",
+            "paragraphs": [
+              {
+                "spans": [
+                  {
+                    "text": "01 / Campaign world",
+                    "italic": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "campaign-world-heading",
+            "type": "heading",
+            "level": 2,
+            "text": "A product large enough to become a place"
+          },
+          {
+            "id": "campaign-world-copy",
+            "type": "text",
+            "paragraphs": [
+              {
+                "spans": [
+                  {
+                    "text": "The can anchors the scene while storefronts, characters and small details build a playful world around the product without losing brand recognition."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "campaign-world-media",
+            "type": "image",
+            "assetId": "seed-media-coco-boba-poster",
+            "alt": "Coco Boba Tini World campaign poster with a coconut milk tea can and miniature storefront",
+            "fit": "cover"
+          },
+          {
+            "id": "hierarchy-eyebrow",
+            "type": "text",
+            "paragraphs": [
+              {
+                "spans": [
+                  {
+                    "text": "02 / Composition",
+                    "italic": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "hierarchy-heading",
+            "type": "heading",
+            "level": 2,
+            "text": "Fast recognition from top to bottom"
+          },
+          {
+            "id": "hierarchy-copy",
+            "type": "text",
+            "paragraphs": [
+              {
+                "spans": [
+                  {
+                    "text": "Launch messaging leads into the hero can, then the eye lands on the product family and milk-tea proposition at the bottom of the poster."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "contentState": "ready",
+      "revisionId": "seed-revision-coco-boba-tini-world-v1",
+      "assetIds": [
+        "seed-media-coco-boba-poster"
+      ]
+    },
+    {
+      "id": "nam-viet-exhibition",
+      "legacyStatus": "published",
+      "slug": "nam-viet-group-exhibition-booth",
+      "metadata": {
+        "categoryId": "blender",
+        "title": "Nam Viet Group — Exhibition Booth",
+        "shortTitle": "Exhibition Booth",
+        "subtitle": "A product-led exhibition environment designed to present a broad beverage portfolio from one clear viewpoint.",
+        "thumbnailAssetId": "seed-media-nam-viet-group-booth",
+        "coverAssetId": "seed-media-nam-viet-group-booth",
+        "tags": [
+          "3d",
+          "blender",
+          "booth",
+          "exhibition",
+          "beverage",
+          "nam viet"
+        ],
+        "tools": [
+          "3D visualization",
+          "Spatial design"
+        ],
+        "role": "Exhibition environment",
+        "year": "Selected work",
+        "isFeatured": false,
+        "sortOrder": 30
+      },
+      "document": {
+        "schemaVersion": 1,
+        "blocks": [
+          {
+            "id": "space-eyebrow",
+            "type": "text",
+            "paragraphs": [
+              {
+                "spans": [
+                  {
+                    "text": "01 / Environment",
+                    "italic": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "space-heading",
+            "type": "heading",
+            "level": 2,
+            "text": "A compact stage for a large product family"
+          },
+          {
+            "id": "space-copy",
+            "type": "text",
+            "paragraphs": [
+              {
+                "spans": [
+                  {
+                    "text": "The booth uses a strong green-and-white silhouette, illuminated product walls and a clear central counter to stay recognizable across a busy exhibition floor."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "space-media",
+            "type": "image",
+            "assetId": "seed-media-nam-viet-group-booth",
+            "alt": "Nam Viet Group exhibition booth concept with beverage displays and green branding",
+            "fit": "cover"
+          },
+          {
+            "id": "navigation-eyebrow",
+            "type": "text",
+            "paragraphs": [
+              {
+                "spans": [
+                  {
+                    "text": "02 / Visitor flow",
+                    "italic": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "navigation-heading",
+            "type": "heading",
+            "level": 2,
+            "text": "Products remain visible from the aisle"
+          },
+          {
+            "id": "navigation-copy",
+            "type": "text",
+            "paragraphs": [
+              {
+                "spans": [
+                  {
+                    "text": "Large campaign graphics establish the brand at a distance while lower displays bring physical products into reach as visitors approach."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "contentState": "ready",
+      "revisionId": "seed-revision-nam-viet-exhibition-v1",
+      "assetIds": [
+        "seed-media-nam-viet-group-booth"
+      ]
+    },
+    {
+      "id": "game-systems-preview",
+      "legacyStatus": "placeholder",
+      "slug": "game-systems-project-preview",
+      "metadata": {
+        "categoryId": "game",
+        "title": "Game Systems — Project Preview",
+        "shortTitle": "Game Systems",
+        "subtitle": "A temporary project page reserved for future game-development case studies.",
+        "thumbnailAssetId": "seed-media-portfolio-placeholder",
+        "coverAssetId": "seed-media-portfolio-placeholder",
+        "tags": [
+          "game",
+          "unity",
+          "systems",
+          "preview"
+        ],
+        "tools": [
+          "Details pending"
+        ],
+        "role": "Project preview",
+        "year": "Coming soon",
+        "isFeatured": false,
+        "sortOrder": 40
+      },
+      "document": {
+        "schemaVersion": 1,
+        "blocks": []
+      },
+      "contentState": "empty",
+      "revisionId": "seed-revision-game-systems-preview-v1",
+      "assetIds": [
+        "seed-media-portfolio-placeholder"
+      ]
+    },
+    {
+      "id": "web-experiences-preview",
+      "legacyStatus": "placeholder",
+      "slug": "web-experiences-project-preview",
+      "metadata": {
+        "categoryId": "web",
+        "title": "Web Experiences — Project Preview",
+        "shortTitle": "Web Experiences",
+        "subtitle": "A temporary project page reserved for future web product and interface case studies.",
+        "thumbnailAssetId": "seed-media-portfolio-placeholder",
+        "coverAssetId": "seed-media-portfolio-placeholder",
+        "tags": [
+          "web",
+          "react",
+          "interface",
+          "preview"
+        ],
+        "tools": [
+          "Details pending"
+        ],
+        "role": "Project preview",
+        "year": "Coming soon",
+        "isFeatured": false,
+        "sortOrder": 50
+      },
+      "document": {
+        "schemaVersion": 1,
+        "blocks": []
+      },
+      "contentState": "empty",
+      "revisionId": "seed-revision-web-experiences-preview-v1",
+      "assetIds": [
+        "seed-media-portfolio-placeholder"
+      ]
+    },
+    {
+      "id": "desktop-apps-preview",
+      "legacyStatus": "placeholder",
+      "slug": "desktop-apps-project-preview",
+      "metadata": {
+        "categoryId": "app",
+        "title": "Desktop Apps — Project Preview",
+        "shortTitle": "Desktop Apps",
+        "subtitle": "A temporary project page reserved for future desktop and mobile application case studies.",
+        "thumbnailAssetId": "seed-media-portfolio-placeholder",
+        "coverAssetId": "seed-media-portfolio-placeholder",
+        "tags": [
+          "app",
+          "desktop",
+          "mobile",
+          "automation",
+          "preview"
+        ],
+        "tools": [
+          "Details pending"
+        ],
+        "role": "Project preview",
+        "year": "Coming soon",
+        "isFeatured": false,
+        "sortOrder": 60
+      },
+      "document": {
+        "schemaVersion": 1,
+        "blocks": []
+      },
+      "contentState": "empty",
+      "revisionId": "seed-revision-desktop-apps-preview-v1",
+      "assetIds": [
+        "seed-media-portfolio-placeholder"
+      ]
+    }
+  ]
+}

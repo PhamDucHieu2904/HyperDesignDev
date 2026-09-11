@@ -17,7 +17,9 @@
   },
   "include": [
     "app/**/*.ts",
-    "app/**/*.tsx"
+    "app/**/*.tsx",
+    "shared/**/*.ts",
+    "workers/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

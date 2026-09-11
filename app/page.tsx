@@ -1,7 +1,7 @@
 import {
   BadgeCheck, Bot, Box, BriefcaseBusiness, CalendarDays, ChevronLeft, ChevronRight, Code2, Command,
   Folder, Gamepad2, Feather, Leaf, Grid2X2, Frame, Image as ImageIcon, LogOut, MapPin, PenTool,
-  Moon, Power, RefreshCw, Search,
+  Moon, Music2, Power, RefreshCw, Search,
   Sparkles, Square, Terminal, TimerReset, UsersRound,
   X, type LucideIcon,
 } from "lucide-react";
@@ -69,8 +69,8 @@ function IconButton({ label, icon: Icon, onClick, active = false, className = ""
     aria-label={label} title={label} onClick={onClick} disabled={disabled}><Icon aria-hidden="true" /></button>;
 }
 
-function LeftRail({ workspace, setWorkspace, view, overlay, openView, openPortfolio, toggleOverlay }: {
-  workspace: number; setWorkspace: (workspace: number) => void; view: View;
+function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, openPortfolio, toggleOverlay }: {
+  now: Date | null; workspace: number; setWorkspace: (workspace: number) => void; view: View;
   overlay: Overlay; openView: (view: View) => void; openPortfolio: (category: Filter) => void;
   toggleOverlay: (overlay: Exclude<Overlay, null>) => void;
 }) {
@@ -168,6 +168,14 @@ function LeftRail({ workspace, setWorkspace, view, overlay, openView, openPortfo
       <IconButton label="Adobe Photoshop — open Visual portfolio" icon={ImageIcon} className="rail-shortcut" onClick={() => openPortfolio("photoshop")} />
       <IconButton label="Adobe Illustrator — open Brand portfolio" icon={PenTool} className="rail-shortcut" onClick={() => openPortfolio("illustrator")} />
       <IconButton label="Blender — open 3D portfolio" icon={Box} className="rail-shortcut" onClick={() => openPortfolio("blender")} />
+      <span className="rail-music-accent" aria-hidden="true"><Music2 /></span>
+      <div className="rail-calendar" aria-label={now ? `Today: ${now.toLocaleDateString("en-GB")}` : "Loading date"}>
+        <CalendarDays aria-hidden="true" />
+        <time dateTime={now ? now.toISOString().slice(0, 10) : undefined}>
+          <span>{now ? String(now.getMonth() + 1).padStart(2, "0") : "--"}</span>
+          <span>{now ? String(now.getDate()).padStart(2, "0") : "--"}</span>
+        </time>
+      </div>
       <IconButton label="Unity — open Game portfolio" icon={Gamepad2} className="rail-shortcut" onClick={() => openPortfolio("game")} />
       <IconButton label="Visual Studio Code — open Web portfolio" icon={Code2} className="rail-shortcut" onClick={() => openPortfolio("web")} />
       <IconButton label="Codex — coming soon" icon={Bot} className="rail-shortcut rail-shortcut-pending" disabled />
@@ -528,7 +536,7 @@ export default function HomePage() {
     else showOverlay(next);
   };
   return <main className="shell" data-layout={layouts.find(layout => layout.id === workspace)?.theme}>
-    <LeftRail workspace={workspace} setWorkspace={selectLayout} view={view} overlay={overlay}
+    <LeftRail now={now} workspace={workspace} setWorkspace={selectLayout} view={view} overlay={overlay}
       openView={openView} openPortfolio={openPortfolio} toggleOverlay={toggleOverlay} />
     <section className="desktop-surface" aria-label="Caelestia desktop">
       <DesktopWallpaper workspace={workspace} />

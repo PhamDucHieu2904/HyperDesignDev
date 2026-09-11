@@ -1,0 +1,7 @@
+DEPLOY_ENV=local
+LOCAL_ADMIN_BYPASS=true
+
+# API-01 will require these values for deployed admin authentication.
+ACCESS_TEAM_DOMAIN=your-team.cloudflareaccess.com
+ACCESS_AUD=replace-with-access-application-audience
+ADMIN_SUBJECT=replace-with-owner-identity-subject

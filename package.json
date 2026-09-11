@@ -8,8 +8,20 @@
   "scripts": {
     "dev": "node --watch --watch-path=app --watch-path=site.config.mjs scripts/preview.mjs --build",
     "build": "node scripts/build.mjs",
+    "build:cloud": "node scripts/build-cloud.mjs",
+    "build:admin": "node scripts/build-admin.mjs",
+    "db:seed": "node scripts/generate-db-seed.mjs",
+    "db:verify": "npm run db:seed && node scripts/verify-db.mjs",
+    "cf:local:migrate": "wrangler d1 migrations apply DB --local --persist-to .wrangler/state --config workers/public/wrangler.jsonc",
+    "cf:local:seed": "wrangler d1 execute DB --local --persist-to .wrangler/state --file db/seeds/portfolio-seed.sql --config workers/public/wrangler.jsonc",
+    "cf:staging:migrate": "wrangler d1 migrations apply DB --remote --config workers/public/wrangler.jsonc",
+    "cf:smoke": "node scripts/verify-cloud.mjs",
+    "cf:dev:public": "wrangler dev --persist-to .wrangler/state --config workers/public/wrangler.jsonc",
+    "cf:dev:admin": "wrangler dev --persist-to .wrangler/state --config workers/admin/wrangler.jsonc",
     "start": "node scripts/preview.mjs",
-    "test": "npm run build && npm run check && node --test tests/rendered-html.test.mjs",
+    "test:contracts": "node --test tests/contracts.test.mjs",
+    "test:workers": "node --test tests/workers.test.mjs",
+    "test": "npm run build && npm run check && node --test tests/rendered-html.test.mjs tests/contracts.test.mjs tests/workers.test.mjs",
     "check": "tsc --noEmit --noUnusedLocals --noUnusedParameters",
     "lint": "npm run check"
   },
@@ -24,7 +36,8 @@
     "@types/react-dom": "19.2.3",
     "esbuild": "0.28.0",
     "jsdom": "26.1.0",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "wrangler": "^4.131.0"
   },
   "type": "module"
 }
