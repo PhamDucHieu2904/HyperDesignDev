@@ -1,3 +1,5 @@
+import type { ArticleDocument, MediaDescriptor } from "../../shared/contracts";
+
 export type Category = "photoshop" | "illustrator" | "blender" | "game" | "web" | "app";
 export type Filter = "all" | Category;
 
@@ -33,4 +35,8 @@ export type PortfolioProject = {
   year: string;
   tools: string[];
   sections: ProjectSection[];
+  revisionId?: string;
+  contentState?: "empty" | "ready";
+  document?: ArticleDocument;
+  media?: MediaDescriptor[];
 };

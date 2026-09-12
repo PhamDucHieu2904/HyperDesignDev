@@ -10,7 +10,6 @@ export const categoryDefinitions = [
 export type CategoryId = typeof categoryDefinitions[number]["id"];
 export type Discipline = typeof categoryDefinitions[number]["discipline"];
 export type ContentState = "empty" | "ready";
-export type ProjectAdminState = "draft" | "published" | "unpublished-changes" | "trash";
 
 const categoryIds = new Set<string>(categoryDefinitions.map(category => category.id));
 export const isCategoryId = (value: unknown): value is CategoryId => typeof value === "string" && categoryIds.has(value);
@@ -99,52 +98,19 @@ export type ProjectSummary = {
 export type ProjectDetail = ProjectSummary & {
   document: ArticleDocument;
   cover?: MediaDescriptor;
+  media: MediaDescriptor[];
   tags: string[];
   tools: string[];
   role?: string;
   year?: string;
 };
 
+export type AdjacentProject = { id: string; slug: string; categoryId: CategoryId; shortTitle: string };
+export type AdjacentProjects = { previous: AdjacentProject | null; next: AdjacentProject | null };
+
 export type ProjectPage = {
   items: ProjectSummary[];
   nextCursor: string | null;
-};
-
-export type AdminProject = {
-  id: string;
-  slug: string;
-  metadata: ProjectMetadata;
-  document: ArticleDocument;
-  version: number;
-  state: ProjectAdminState;
-  publicRevisionId: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type CreateProjectInput = {
-  slug?: string;
-  metadata: ProjectMetadata;
-};
-
-export type SaveProjectDraftInput = {
-  expectedVersion: number;
-  metadata: ProjectMetadata;
-  document: ArticleDocument;
-};
-
-export type PublishProjectInput = {
-  expectedVersion: number;
-  requestId: string;
-};
-
-export type ApiErrorBody = {
-  error: {
-    code: string;
-    message: string;
-    requestId: string;
-    fieldErrors?: Record<string, string[]>;
-  };
 };
 
 export type ValidationIssue = { path: string; message: string };
@@ -406,19 +372,6 @@ export function validateProjectMetadata(value: unknown): ValidationResult<Projec
     ...(coverAssetId && { coverAssetId }), tags, tools,
     ...(role !== undefined && { role }), ...(year !== undefined && { year }), isFeatured, sortOrder,
   } };
-}
-
-export function validateSaveProjectDraftInput(value: unknown): ValidationResult<SaveProjectDraftInput> {
-  if (!isRecord(value)) return { ok: false, issues: [{ path: "$", message: "Must be an object." }] };
-  const metadata = validateProjectMetadata(value.metadata);
-  const document = validateArticleDocument(value.document);
-  const issues: ValidationIssue[] = [];
-  if (!metadata.ok) issues.push(...metadata.issues.map(issue => ({ ...issue, path: `$.metadata${issue.path.slice(1)}` })));
-  if (!document.ok) issues.push(...document.issues.map(issue => ({ ...issue, path: `$.document${issue.path.slice(1)}` })));
-  const expectedVersion = value.expectedVersion;
-  if (!isSafeInteger(expectedVersion) || expectedVersion < 1) issues.push({ path: "$.expectedVersion", message: "Must be a positive integer." });
-  if (issues.length || !metadata.ok || !document.ok) return { ok: false, issues };
-  return { ok: true, value: { expectedVersion: expectedVersion as number, metadata: metadata.value, document: document.value } };
 }
 
 export function collectArticleAssetIds(document: ArticleDocument): string[] {

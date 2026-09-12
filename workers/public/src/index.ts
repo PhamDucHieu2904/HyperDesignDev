@@ -1,27 +1,8 @@
-type D1Statement = { first<T = unknown>(): Promise<T | null> };
-type D1Database = { prepare(query: string): D1Statement };
-type AssetFetcher = { fetch(request: Request): Promise<Response> };
+import { corsHeaders, json, PublicApiException, publicError } from "./http";
+import { getAdjacentProjects, getPublicMedia, getPublicProject, listCategories, listPublicProjects } from "./projects";
+import type { PublicEnv } from "./types";
 
-export type PublicEnv = {
-  ASSETS: AssetFetcher;
-  DB: D1Database;
-  MEDIA: unknown;
-  DEPLOY_ENV?: string;
-  PUBLIC_CORS_ORIGINS?: string;
-};
-
-const json = (body: unknown, status = 200, headers: HeadersInit = {}) => new Response(JSON.stringify(body), {
-  status,
-  headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", ...headers },
-});
-
-function corsHeaders(request: Request, env: PublicEnv): HeadersInit | null {
-  const origin = request.headers.get("Origin");
-  if (!origin) return {};
-  const allowed = new Set((env.PUBLIC_CORS_ORIGINS ?? "").split(",").map(value => value.trim()).filter(Boolean));
-  if (!allowed.has(origin)) return null;
-  return { "Access-Control-Allow-Origin": origin, "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS", Vary: "Origin" };
-}
+export type { PublicEnv } from "./types";
 
 export const publicWorker = {
   async fetch(request: Request, env: PublicEnv): Promise<Response> {
@@ -29,8 +10,9 @@ export const publicWorker = {
     const isApi = url.pathname.startsWith("/api/");
     const isMedia = url.pathname.startsWith("/media/");
     const cors = corsHeaders(request, env);
+    const requestId = crypto.randomUUID();
 
-    if ((isApi || isMedia) && cors === null) return json({ error: { code: "ORIGIN_NOT_ALLOWED", message: "Origin is not allowed." } }, 403);
+    if ((isApi || isMedia) && cors === null) return publicError(new PublicApiException(403, "ORIGIN_NOT_ALLOWED", "Origin is not allowed."), requestId);
     if (request.method === "OPTIONS" && (isApi || isMedia)) return new Response(null, { status: 204, headers: cors ?? {} });
 
     if (request.method === "GET" && url.pathname === "/api/v1/health") {
@@ -42,8 +24,33 @@ export const publicWorker = {
       }
     }
 
-    if (isApi || isMedia) return json({ error: { code: "NOT_FOUND", message: "Public endpoint not found." } }, 404, cors ?? {});
-    return env.ASSETS.fetch(request);
+    try {
+      const cache = "public, max-age=60, stale-while-revalidate=300";
+      if (request.method === "GET" && url.pathname === "/api/v1/categories") {
+        return json(await listCategories(env.DB), 200, cors ?? {}, "public, max-age=3600, stale-while-revalidate=86400");
+      }
+      if (request.method === "GET" && url.pathname === "/api/v1/projects") return json(await listPublicProjects(env.DB, url), 200, cors ?? {}, cache);
+
+      const adjacentRoute = /^\/api\/v1\/projects\/([a-zA-Z0-9._:-]+)\/adjacent$/.exec(url.pathname);
+      if (request.method === "GET" && adjacentRoute) return json(await getAdjacentProjects(env.DB, adjacentRoute[1]), 200, cors ?? {}, cache);
+      const detailRoute = /^\/api\/v1\/projects\/([a-zA-Z0-9._:-]+)$/.exec(url.pathname);
+      if (request.method === "GET" && detailRoute) return json(await getPublicProject(env.DB, detailRoute[1]), 200, cors ?? {}, cache);
+
+      const mediaRoute = /^\/media\/([a-zA-Z0-9._:-]+)$/.exec(url.pathname);
+      if ((request.method === "GET" || request.method === "HEAD") && mediaRoute) {
+        const response = await getPublicMedia(env.DB, env.MEDIA, mediaRoute[1], request.method === "HEAD");
+        const headers = new Headers(response.headers);
+        Object.entries(cors ?? {}).forEach(([name, value]) => headers.set(name, String(value)));
+        return new Response(response.body, { status: response.status, headers });
+      }
+
+      if (isApi || isMedia) throw new PublicApiException(404, "NOT_FOUND", "Public endpoint not found.");
+      return env.ASSETS.fetch(request);
+    } catch (error) {
+      if (error instanceof PublicApiException) return publicError(error, requestId, cors ?? {});
+      console.error("Public request failed", { requestId, error });
+      return publicError(new PublicApiException(503, "SERVICE_UNAVAILABLE", "Public service is temporarily unavailable."), requestId, cors ?? {});
+    }
   },
 };
 

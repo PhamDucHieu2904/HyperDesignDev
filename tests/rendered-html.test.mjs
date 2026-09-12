@@ -33,6 +33,7 @@ test("ships real HTML, metadata and a classic browser bundle without a runtime s
   try {
     const { document } = dom.window;
     assert.equal(document.title, site.title);
+    assert.equal(document.querySelector('link[rel="icon"]').getAttribute("href"), "./public/DSquared.svg");
     assert.ok(document.querySelector('[aria-label="Caelestia bar"]'));
     assert.ok(document.querySelector('[aria-label="Caelestia desktop"]'));
     assert.match(document.body.textContent, /Explore the shell/);
@@ -53,7 +54,8 @@ test("ships real HTML, metadata and a classic browser bundle without a runtime s
     assert.equal(document.querySelector("script").defer, true);
     assert.doesNotThrow(() => new Script(script));
     assert.doesNotMatch(html, /_next|__next|localhost|cloudflare|type="module"|codex-preview/i);
-    assert.doesNotMatch(script, /import\s*\(|fetch\s*\(|XMLHttpRequest|WebSocket/);
+    assert.doesNotMatch(script, /import\s*\(|XMLHttpRequest|WebSocket/);
+    assert.match(script, /fetch\s*\(/, "Public portfolio adapter was not included in the browser bundle");
     await access(new URL(".nojekyll", root));
     await access(new URL("public/CAELESTIA-LICENSE.txt", root));
     await access(new URL("public/designer-normal.otf", root));

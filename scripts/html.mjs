@@ -22,7 +22,7 @@ export function renderDocument(markup, site) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${title}</title>
   <meta name="description" content="${description}">
-  <link rel="icon" href="./public/caelestia-logo.svg" type="image/svg+xml">
+  <link rel="icon" href="./public/DSquared.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/app.css">
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${description}">
@@ -30,7 +30,7 @@ export function renderDocument(markup, site) {
   <meta property="og:image" content="${preview}">
   <meta property="og:image:width" content="1680">
   <meta property="og:image:height" content="945">
-  <meta property="og:image:alt" content="Hieu Pham Caelestia Shell web replica">
+  <meta property="og:image:alt" content="Hyper D² portfolio preview">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${title}">
   <meta name="twitter:description" content="${description}">

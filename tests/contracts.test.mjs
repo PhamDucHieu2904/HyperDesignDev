@@ -17,7 +17,6 @@ test("accepts an empty article and valid metadata", () => {
     thumbnailAssetId: "asset-thumb", tags: ["packaging"], tools: ["Illustrator"], isFeatured: false, sortOrder: 10,
   };
   assert.equal(contracts.validateProjectMetadata(metadata).ok, true);
-  assert.equal(contracts.validateSaveProjectDraftInput({ expectedVersion: 1, metadata, document: contracts.emptyArticleDocument }).ok, true);
 });
 
 test("rejects unsupported categories, unsafe links and duplicate block IDs", () => {

@@ -10,7 +10,6 @@ async function loadWorker(entryPoint, namedExport) {
 }
 
 const publicWorker = await loadWorker("workers/public/src/index.ts", "publicWorker");
-const adminWorker = await loadWorker("workers/admin/src/index.ts", "adminWorker");
 const db = { prepare: () => ({ first: async () => ({ ok: 1 }) }) };
 const assets = { fetch: async request => new Response(`asset:${new URL(request.url).pathname}`) };
 
@@ -26,16 +25,4 @@ test("public worker exposes health, restricts CORS and does not SPA-fallback API
   const missing = await publicWorker.fetch(new Request("https://worker.example/api/v1/missing"), env);
   assert.equal(missing.status, 404);
   assert.equal(await (await publicWorker.fetch(new Request("https://worker.example/portfolio"), env)).text(), "asset:/portfolio");
-});
-
-test("admin worker is fail-closed and only allows an explicit local bypass", async () => {
-  const lockedEnv = { DB: db, MEDIA: {}, ASSETS: assets, DEPLOY_ENV: "staging" };
-  const health = await adminWorker.fetch(new Request("https://admin.example/api/admin/health"), lockedEnv);
-  assert.equal(health.status, 200);
-  assert.equal((await health.json()).accessMode, "locked");
-  assert.equal((await adminWorker.fetch(new Request("https://admin.example/"), lockedEnv)).status, 503);
-
-  const localEnv = { ...lockedEnv, DEPLOY_ENV: "local", LOCAL_ADMIN_BYPASS: "true" };
-  assert.equal(await (await adminWorker.fetch(new Request("http://localhost/"), localEnv)).text(), "asset:/");
-  assert.equal((await adminWorker.fetch(new Request("http://localhost/api/admin/projects"), localEnv)).status, 501);
 });

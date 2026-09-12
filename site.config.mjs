@@ -1,6 +1,6 @@
 export default {
-  title: "Hieu Pham — Caelestia Shell Web Replica",
-  description: "A faithful interactive web translation of the Caelestia Linux shell, rebuilt for Hieu Pham.",
+  title: "Hyper D²",
+  description: "Hyper D² — design and development portfolio.",
   lang: "en",
   // Optional: your real GitHub Pages URL or custom domain, including a repo subpath.
   // Example: "https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/"
