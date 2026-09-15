@@ -1,3 +1,5 @@
+import type { ArticleDocument, MediaDescriptor } from "../../shared/contracts";
+import labelLabDocument from "./content/label-lab.json";
 import type { Filter, PortfolioProject } from "./types";
 
 export const categoryLabels: Record<Filter, string> = {
@@ -47,6 +49,57 @@ const placeholderMedia = {
   width: 640,
   height: 640,
   fit: "cover" as const,
+};
+
+const labelLabMedia: MediaDescriptor[] = [
+  {
+    id: "label-lab-app-icon",
+    url: "./public/portfolio/label-lab/app-icon.png",
+    alt: "Label Lab application icon made from stacked geometric planes",
+    mime: "image/png",
+    width: 1025,
+    height: 1025,
+  },
+  {
+    id: "label-lab-wordmark",
+    url: "./public/portfolio/label-lab/wordmark.png",
+    alt: "Label Lab wordmark and geometric 3D mockup system logo",
+    mime: "image/png",
+    width: 2022,
+    height: 423,
+  },
+  {
+    id: "label-lab-package-1500",
+    url: "./public/portfolio/label-lab/package-1500.png",
+    alt: "Label Lab thumbnail for a 1500 ml bottle preset",
+    mime: "image/png",
+    width: 250,
+    height: 250,
+  },
+  {
+    id: "label-lab-package-500-short",
+    url: "./public/portfolio/label-lab/package-500-short.png",
+    alt: "Label Lab thumbnail for a short-label 500 ml bottle preset",
+    mime: "image/png",
+    width: 232,
+    height: 228,
+  },
+  {
+    id: "label-lab-package-500-long",
+    url: "./public/portfolio/label-lab/package-500-long.png",
+    alt: "Label Lab thumbnail for a long-label 500 ml bottle preset",
+    mime: "image/png",
+    width: 230,
+    height: 219,
+  },
+];
+
+const labelLabIcon = {
+  src: labelLabMedia[0].url,
+  alt: labelLabMedia[0].alt,
+  width: labelLabMedia[0].width ?? 1025,
+  height: labelLabMedia[0].height ?? 1025,
+  fit: "contain" as const,
 };
 
 export const portfolioProjects: PortfolioProject[] = [
@@ -193,5 +246,26 @@ export const portfolioProjects: PortfolioProject[] = [
     year: "Coming soon",
     tools: ["Details pending"],
     sections: [{ id: "app-preview", eyebrow: "01 / Preview", title: "Case study content is being prepared", copy: "The final project story, process and media will replace this temporary layout without changing the navigation structure." }],
+  },
+  {
+    id: "label-lab-3d-mockup-system",
+    title: "Label Lab — 3D Mockup System",
+    shortTitle: "Label Lab",
+    summary: "A Unity-powered desktop studio for turning flat packaging artwork into presentation-ready 3D product visuals.",
+    primaryCategory: "app",
+    discipline: "development",
+    tags: ["desktop app", "3d mockup", "packaging", "unity", "hdrp", "workflow tool"],
+    status: "published",
+    order: 35,
+    thumbnail: labelLabIcon,
+    cover: labelLabIcon,
+    role: "Product design & Unity development",
+    year: "2026",
+    tools: ["Unity 6", "C#", "HDRP", "Addressables", "Cloudflare R2"],
+    sections: [],
+    revisionId: "label-lab-revision-v1",
+    contentState: "ready",
+    document: labelLabDocument as ArticleDocument,
+    media: labelLabMedia,
   },
 ];

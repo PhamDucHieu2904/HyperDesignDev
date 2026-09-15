@@ -51,13 +51,13 @@ function ArticleBlockView({ block, media }: { block: ArticleBlock; media: Map<st
     const asset = media.get(block.assetId);
     const poster = media.get(block.posterAssetId);
     return <figure {...props}>{asset
-      ? <video controls preload="metadata" poster={poster?.url}><source src={asset.url} type={asset.mime} /></video>
+      ? <video controls preload="none" poster={poster?.url}><source src={asset.url} type={asset.mime} /></video>
       : <div className="pf-article-missing">Video unavailable</div>}
       {block.caption && <figcaption>{block.caption}</figcaption>}
     </figure>;
   }
-  if (block.type === "links") return <nav {...props} aria-label="Project links">{block.items.map(item =>
-    <a key={item.url} href={item.url} target="_blank" rel="noreferrer">{item.label}</a>)}</nav>;
+  if (block.type === "links") return <nav {...props} aria-label="Project links">{block.items.map((item, index) =>
+    <a key={`${item.url}-${index}`} href={item.url} target="_blank" rel="noreferrer">{item.label}</a>)}</nav>;
   return <div {...props} data-size={block.size} aria-hidden="true" />;
 }
 

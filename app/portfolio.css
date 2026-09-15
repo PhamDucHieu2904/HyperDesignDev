@@ -587,7 +587,7 @@ h3.pf-block-heading { font-size: clamp(21px, 2.7cqw, 30px); }
   .pf-case-section { padding-block: 52px; grid-template-columns: 1fr; }
   .pf-case-section figure { padding: 10px; border-radius: 16px; }
   .pf-case-next { align-items: flex-start; flex-direction: column; }
-  .pf-block-gallery[data-columns="3"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pf-block-gallery, .pf-block-gallery[data-columns="3"] { grid-template-columns: 1fr; }
   .pf-window[data-searching="true"] {
     grid-template-rows: 56px minmax(0, 1fr);
     grid-template-areas: "header" "viewer";

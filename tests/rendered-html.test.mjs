@@ -158,25 +158,19 @@ for (const mode of ["file", "github-subpath"]) {
       await until(() => !document.querySelector(".pf-window"), "Hero-opened Portfolio did not close");
       key("k", true);
       await until(() => document.querySelector(".launcher-drawer"), "Ctrl+K did not open launcher");
-      const search = document.querySelector(".launcher-drawer input");
-      Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set.call(search, "port");
-      search.dispatchEvent(new window.Event("input", { bubbles: true }));
-      await until(() => document.querySelectorAll(".launcher-apps button").length === 1, "Launcher Portfolio search did not filter");
-      click(".launcher-apps button");
-      await until(() => document.querySelector(".pf-window"), "Launcher did not open Portfolio");
-      click(".pf-close");
-      await until(() => !document.querySelector(".pf-window"), "Launcher-opened Portfolio did not close");
-      key("k", true);
-      await until(() => document.querySelector(".launcher-drawer"), "Launcher did not reopen for Terminal");
-      const terminalSearch = document.querySelector(".launcher-drawer input");
-      Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set.call(terminalSearch, "term");
-      terminalSearch.dispatchEvent(new window.Event("input", { bubbles: true }));
-      await until(() => document.querySelectorAll(".launcher-apps button").length === 1, "Launcher search did not filter");
-      assert.match(document.querySelector(".launcher-apps").textContent, /Terminal/);
-      click(".launcher-apps button");
-      await until(() => document.querySelector(".terminal-window"), "Terminal did not open");
+      assert.equal(document.querySelector(".launcher-drawer input"), null, "Removed launcher search was rendered");
+      assert.equal(document.querySelectorAll(".launcher-project").length, 4);
+      const projectLinks = [...document.querySelectorAll(".launcher-project[href]")];
+      assert.equal(projectLinks.length, 2);
+      assert.equal(projectLinks[0].href, "https://phamduchieu2904.github.io/DesignForge/");
+      assert.equal(projectLinks[1].href, "https://phamduchieu2904.github.io/tamantu/");
+      const tamAnTuMark = document.querySelector('.launcher-project svg.tam-an-tu-mark');
+      assert.ok(tamAnTuMark, "Tam An Tu launcher logo was not rendered");
+      assert.equal(tamAnTuMark.getAttribute("viewBox"), "0 0 548.86 466.54");
+      assert.ok(projectLinks.every(link => link.target === "_blank" && link.rel.includes("noopener")));
+      assert.equal(document.querySelectorAll(".launcher-project:disabled").length, 2);
       key("Escape");
-      await until(() => !document.querySelector(".terminal-window"), "Escape did not close terminal");
+      await until(() => !document.querySelector(".launcher-drawer"), "Escape did not close launcher");
 
       for (const [name, theme] of [["Graphite", "graphite"], ["Blueprint", "blueprint"], ["Sage", "sage"], ["Code Lab", "gallery"], ["Paper", "paper"]]) {
         click(`[aria-label="${name} layout"]`);
@@ -256,7 +250,7 @@ for (const mode of ["file", "github-subpath"]) {
       await until(() => document.querySelectorAll(".pf-project-card").length === 1, "Portfolio search did not filter projects");
       assert.match(document.querySelector(".pf-project-card").textContent, /Tini World/);
       key("Escape");
-      await until(() => portfolioSearch.value === "" && document.querySelectorAll(".pf-project-card:not(.pf-project-placeholder)").length === 3,
+      await until(() => portfolioSearch.value === "" && document.querySelectorAll(".pf-project-card:not(.pf-project-placeholder)").length === 4,
         "Escape did not clear portfolio search");
       assert.ok(document.querySelector(".pf-window"), "Clearing search unexpectedly closed Portfolio");
       click('[data-category="game"]');
@@ -288,11 +282,10 @@ for (const mode of ["file", "github-subpath"]) {
 
       key("k", true);
       await until(() => document.querySelector(".launcher-apps"), "Launcher did not reopen");
-      [...document.querySelectorAll(".launcher-apps button")].find((button) => button.textContent.includes("Files")).click();
-      await until(() => document.querySelector(".files-window"), "Files window did not open");
-      assert.match(document.querySelector(".files-window").textContent, /Resume.pdf/);
-      click('[aria-label="Close files"]');
-      await until(() => !document.querySelector(".files-window"), "Files window did not close");
+      assert.match(document.querySelector(".launcher-apps").textContent, /Design Forge/);
+      assert.match(document.querySelector(".launcher-apps").textContent, /Tam An Tu/);
+      key("Escape");
+      await until(() => !document.querySelector(".launcher-drawer"), "Reopened launcher did not close");
       assert.equal(requests.length, 2);
       assert.deepEqual(errors, [], "Hydration or script errors occurred");
     } finally { window.close(); }

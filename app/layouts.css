@@ -140,14 +140,14 @@
 .shell:not([data-layout="paper"]) .portfolio-action:focus-visible { outline-color: var(--rose-strong); }
 
 /* App chrome follows the selected palette; album artwork keeps its own colors. */
-.shell:not([data-layout="paper"]) :is(.rail, .arch-mark, .clock, kbd, .music-search input, .nav-logo, .music-nav nav button, .track-head, .tracks button, .music-search, .hero-copy, .launcher-drawer input) { color: var(--ink); }
-.shell:not([data-layout="paper"]) :is(.workspaces, .status-stack, .rail-bottom .power, .launcher-apps button span) { background: var(--rose); color: var(--rose-strong); }
+.shell:not([data-layout="paper"]) :is(.rail, .arch-mark, .clock, kbd, .music-search input, .nav-logo, .music-nav nav button, .track-head, .tracks button, .music-search, .hero-copy) { color: var(--ink); }
+.shell:not([data-layout="paper"]) :is(.workspaces, .status-stack, .rail-bottom .power, .launcher-project span) { background: var(--rose); color: var(--rose-strong); }
 .shell:not([data-layout="paper"]) :is(.dashboard-toggle.active, .rail-bottom .power:hover, .rail-bottom .power.active, .calendar-card .today, .hero-copy button, .hero-copy > span) { background: var(--rose-strong); color: var(--on-accent); }
 .shell:not([data-layout="paper"]) :is(.music-window, .music-nav, .music-main, .track-list, .player-bar, .terminal-window, .files-window, .media-popout, .dashboard-drawer, .launcher-drawer, .session-drawer, .terminal-window > header, .files-window > header) { background: var(--panel); color: var(--ink); border-color: var(--border); }
-.shell:not([data-layout="paper"]) :is(.explore-pill, kbd, .music-search, .tracks button, .session-gif, .session-drawer .icon-button, .files-body button, .dash-grid article, .launcher-apps button, .launcher-drawer > label, .media-preview, .media-popout header > button:first-child) { background: var(--elevated); color: var(--ink); border-color: var(--border); }
+.shell:not([data-layout="paper"]) :is(.explore-pill, kbd, .music-search, .tracks button, .session-gif, .session-drawer .icon-button, .files-body button, .dash-grid article, .launcher-project, .media-preview, .media-popout header > button:first-child) { background: var(--elevated); color: var(--ink); border-color: var(--border); }
 .shell:not([data-layout="paper"]) :is(.album-card > small, .track-title small, .tracks button > span:first-child, .tracks button > span:nth-last-child(3), .tracks button > span:nth-last-child(2), .now-track small, .now-track em, .rail-bottom > svg.muted) { color: var(--muted); }
 .shell:not([data-layout="paper"]) :is(.explore-pill svg, .files-body svg, .weather-card > svg, .tracks button > svg, .terminal-body pre, .terminal-body p span, .terminal-body p b) { color: var(--rose-strong); }
-.shell:not([data-layout="paper"]) :is(.icon-button:hover, .files-body button:hover, .launcher-apps button:hover, .session-drawer .icon-button:hover, .session-drawer .icon-button.focused, .tracks button:hover, .tracks button.active) { background: var(--rose); color: var(--ink); }
+.shell:not([data-layout="paper"]) :is(.icon-button:hover, .files-body button:hover, .launcher-project:hover, .session-drawer .icon-button:hover, .session-drawer .icon-button.focused, .tracks button:hover, .tracks button.active) { background: var(--rose); color: var(--ink); }
 .shell:not([data-layout="paper"]) :is(.popout-progress span, .system-card i em, .song-progress i b, .volume i b, .music-nav nav button::before) { background: var(--rose-strong); }
 .shell:not([data-layout="paper"]) :is(.song-progress i, .volume i, .system-card i, .popout-progress) { background: var(--border); }
 .shell:not([data-layout="paper"]) .music-hero { background: var(--elevated); }
@@ -161,8 +161,8 @@
 .shell:not([data-layout="paper"]) .hero-copy :is(h1, h2) { color: var(--ink); }
 .shell:not([data-layout="paper"]) .dashboard-drawer::before { box-shadow: 13px -13px 0 13px var(--panel); }
 .shell:not([data-layout="paper"]) .dashboard-drawer::after { box-shadow: -13px -13px 0 13px var(--panel); }
-.shell:not([data-layout="paper"]) .launcher-drawer::before { box-shadow: 13px 13px 0 13px var(--panel); }
-.shell:not([data-layout="paper"]) .launcher-drawer::after { box-shadow: -13px 13px 0 13px var(--panel); }
+.shell:not([data-layout="paper"]) .launcher-drawer::before { box-shadow: 13px 13px 0 0 var(--panel); }
+.shell:not([data-layout="paper"]) .launcher-drawer::after { box-shadow: -13px 13px 0 0 var(--panel); }
 .shell:not([data-layout="paper"]) .session-drawer::before { box-shadow: 19px 20px 0 19px var(--panel); }
 .shell:not([data-layout="paper"]) .session-drawer::after { box-shadow: 19px -20px 0 19px var(--panel); }
 

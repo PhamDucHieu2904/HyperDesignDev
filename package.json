@@ -15,6 +15,7 @@
     "cf:local:seed": "wrangler d1 execute DB --local --persist-to .wrangler/state --file db/seeds/portfolio-seed.sql --config workers/public/wrangler.jsonc",
     "cf:staging:migrate": "wrangler d1 migrations apply DB --remote --config workers/public/wrangler.jsonc",
     "cf:smoke": "node scripts/verify-cloud.mjs",
+    "mig:verify:staging": "node scripts/verify-migration.mjs",
     "cf:dev:public": "wrangler dev --persist-to .wrangler/state --config workers/public/wrangler.jsonc",
     "start": "node scripts/preview.mjs",
     "test:contracts": "node --test tests/contracts.test.mjs",

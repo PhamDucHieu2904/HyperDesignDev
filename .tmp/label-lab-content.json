@@ -1,0 +1,146 @@
+{
+  "id": "label-lab-3d-mockup-system",
+  "slug": "label-lab-3d-mockup-system",
+  "metadata": {
+    "categoryId": "app",
+    "title": "Label Lab — 3D Mockup System",
+    "shortTitle": "Label Lab",
+    "subtitle": "A Unity-powered desktop studio for turning flat packaging artwork into presentation-ready 3D product visuals.",
+    "thumbnailAssetId": "label-lab-app-icon",
+    "coverAssetId": "label-lab-app-icon",
+    "tags": ["desktop app", "3d mockup", "packaging", "unity", "hdrp", "workflow tool"],
+    "tools": ["Unity 6", "C#", "HDRP", "Addressables", "Cloudflare R2"],
+    "role": "Product design & Unity development",
+    "year": "2026",
+    "isFeatured": true,
+    "sortOrder": 35
+  },
+  "document": {
+    "schemaVersion": 1,
+    "blocks": [
+      {
+        "id": "label-lab-hero",
+        "type": "image",
+        "assetId": "label-lab-wordmark",
+        "alt": "Label Lab wordmark and geometric 3D mockup system logo",
+        "caption": "Label Lab is designed as a focused production tool rather than a general-purpose 3D editor.",
+        "fit": "contain",
+        "style": { "width": "wide", "background": "surface", "padding": "lg" }
+      },
+      {
+        "id": "label-lab-intro",
+        "type": "text",
+        "paragraphs": [
+          { "spans": [{ "text": "Packaging artwork often looks finished in two dimensions but still needs a believable product presentation. Label Lab brings that gap into one controlled desktop workflow: choose a package, apply the artwork, tune the material and lighting, then export the result." }] }
+        ]
+      },
+      {
+        "id": "label-lab-overview",
+        "type": "columns",
+        "style": { "width": "wide", "background": "surface", "padding": "md" },
+        "columns": [
+          [
+            { "id": "label-lab-problem-title", "type": "heading", "level": 3, "text": "The problem" },
+            { "id": "label-lab-problem-copy", "type": "text", "paragraphs": [{ "spans": [{ "text": "A design team may need to preview the same label across several cans, bottles and trays. Rebuilding every scene manually slows down comparison and makes output inconsistent." }] }] }
+          ],
+          [
+            { "id": "label-lab-response-title", "type": "heading", "level": 3, "text": "The response" },
+            { "id": "label-lab-response-copy", "type": "text", "paragraphs": [{ "spans": [{ "text": "The application turns recurring 3D setup into reusable product presets while keeping the creative controls needed for artwork placement, materials, environments and camera output." }] }] }
+          ]
+        ]
+      },
+      { "id": "label-lab-space-1", "type": "spacer", "size": "sm" },
+      {
+        "id": "label-lab-workflow-label",
+        "type": "text",
+        "paragraphs": [{ "spans": [{ "text": "01 / Product workflow", "italic": true }] }]
+      },
+      {
+        "id": "label-lab-workflow-title",
+        "type": "heading",
+        "level": 2,
+        "text": "Choose, wrap, tune and render"
+      },
+      {
+        "id": "label-lab-workflow-copy",
+        "type": "text",
+        "paragraphs": [{ "spans": [{ "text": "The interface organizes the workflow around real packaging decisions. Product categories and packing sizes load as reusable data, imported artwork can be cropped and positioned on the selected surface, and visual settings remain close to the object being edited." }] }]
+      },
+      {
+        "id": "label-lab-package-gallery",
+        "type": "gallery",
+        "columns": 3,
+        "style": { "width": "reading", "background": "surface", "padding": "md" },
+        "items": [
+          { "assetId": "label-lab-package-1500", "alt": "Label Lab thumbnail for a 1500 ml bottle preset" },
+          { "assetId": "label-lab-package-500-short", "alt": "Label Lab thumbnail for a short-label 500 ml bottle preset" },
+          { "assetId": "label-lab-package-500-long", "alt": "Label Lab thumbnail for a long-label 500 ml bottle preset" }
+        ]
+      },
+      {
+        "id": "label-lab-workflow-steps",
+        "type": "columns",
+        "style": { "width": "wide" },
+        "columns": [
+          [
+            { "id": "label-lab-step-1-title", "type": "heading", "level": 3, "text": "Select a package" },
+            { "id": "label-lab-step-1-copy", "type": "text", "paragraphs": [{ "spans": [{ "text": "Browse structured bottle, can, tray and podium variants without rebuilding the scene." }] }] }
+          ],
+          [
+            { "id": "label-lab-step-2-title", "type": "heading", "level": 3, "text": "Apply the artwork" },
+            { "id": "label-lab-step-2-copy", "type": "text", "paragraphs": [{ "spans": [{ "text": "Import, crop, zoom and offset label artwork while retaining the state of each customizable part." }] }] }
+          ],
+          [
+            { "id": "label-lab-step-3-title", "type": "heading", "level": 3, "text": "Shape the scene" },
+            { "id": "label-lab-step-3-copy", "type": "text", "paragraphs": [{ "spans": [{ "text": "Adjust materials, colors, HDRI environments, lighting and product framing before export." }] }] }
+          ]
+        ]
+      },
+      { "id": "label-lab-space-2", "type": "spacer", "size": "md" },
+      {
+        "id": "label-lab-render-label",
+        "type": "text",
+        "paragraphs": [{ "spans": [{ "text": "02 / Rendering system", "italic": true }] }]
+      },
+      {
+        "id": "label-lab-render-title",
+        "type": "heading",
+        "level": 2,
+        "text": "A controlled visual pipeline inside Unity"
+      },
+      {
+        "id": "label-lab-render-copy",
+        "type": "text",
+        "paragraphs": [
+          { "spans": [{ "text": "Label Lab uses Unity 6 and HDRP as the rendering foundation. Product and environment resources are loaded through Addressables, while dedicated capture tools handle standard screenshots, tiled high-resolution output, transparent composition and video recording." }] },
+          { "spans": [{ "text": "The result is a reusable studio where presentation quality comes from repeatable controls instead of a one-off scene setup." }] }
+        ]
+      },
+      {
+        "id": "label-lab-icon",
+        "type": "image",
+        "assetId": "label-lab-app-icon",
+        "alt": "Label Lab application icon made from stacked geometric planes",
+        "fit": "contain",
+        "style": { "width": "reading", "background": "accent", "accentColor": "#252328", "padding": "lg" }
+      },
+      { "id": "label-lab-space-3", "type": "spacer", "size": "md" },
+      {
+        "id": "label-lab-delivery-label",
+        "type": "text",
+        "paragraphs": [{ "spans": [{ "text": "03 / Product delivery", "italic": true }] }]
+      },
+      {
+        "id": "label-lab-delivery-title",
+        "type": "heading",
+        "level": 2,
+        "text": "Built as a maintained product"
+      },
+      {
+        "id": "label-lab-delivery-copy",
+        "type": "text",
+        "paragraphs": [{ "spans": [{ "text": "The application is packaged as a Windows x64 product with versioned releases, signed update manifests and downloadable builds delivered through Cloudflare R2. The current audited build is Label Lab 1.1.5, produced from a repeatable release pipeline rather than an editor-only prototype." }] }]
+      }
+    ]
+  }
+}
