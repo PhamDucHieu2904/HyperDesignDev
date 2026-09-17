@@ -1,0 +1,267 @@
+{
+  "version": 1,
+  "default": "Idle",
+  "clips": {
+    "Idle": {
+      "duration": 4,
+      "label": "Đứng vẫy đuôi",
+      "loop": true,
+      "faceCues": [
+        {
+          "time": 0,
+          "expression": "happy"
+        },
+        {
+          "time": 2.4,
+          "expression": "closed"
+        },
+        {
+          "time": 2.55,
+          "expression": "happy"
+        }
+      ]
+    },
+    "LookAround": {
+      "duration": 3.6,
+      "label": "Nghe ngóng",
+      "loop": false,
+      "faceCues": [
+        {
+          "time": 0,
+          "expression": "open"
+        },
+        {
+          "time": 0.8,
+          "expression": "curious"
+        },
+        {
+          "time": 3,
+          "expression": "happy"
+        }
+      ]
+    },
+    "Curious": {
+      "duration": 2.8,
+      "label": "Nghiêng đầu tò mò",
+      "loop": false,
+      "faceCues": [
+        {
+          "time": 0,
+          "expression": "curious"
+        },
+        {
+          "time": 2.3,
+          "expression": "happy"
+        }
+      ]
+    },
+    "Greet": {
+      "duration": 3.2,
+      "label": "Giơ chân chào",
+      "loop": false,
+      "faceCues": [
+        {
+          "time": 0,
+          "expression": "happy"
+        },
+        {
+          "time": 1.3,
+          "expression": "wink"
+        },
+        {
+          "time": 1.7,
+          "expression": "happy"
+        }
+      ]
+    },
+    "Affection": {
+      "duration": 3.2,
+      "label": "Thích được vuốt ve",
+      "loop": false,
+      "faceCues": [
+        {
+          "time": 0,
+          "expression": "happy"
+        },
+        {
+          "time": 0.35,
+          "expression": "love"
+        },
+        {
+          "time": 2.7,
+          "expression": "happy"
+        }
+      ]
+    },
+    "Boop": {
+      "duration": 1.6,
+      "label": "Chạm mũi",
+      "loop": false,
+      "faceCues": [
+        {
+          "time": 0,
+          "expression": "surprised"
+        },
+        {
+          "time": 0.5,
+          "expression": "closed"
+        },
+        {
+          "time": 0.7,
+          "expression": "wink"
+        },
+        {
+          "time": 1.3,
+          "expression": "happy"
+        }
+      ]
+    },
+    "EarTwitch": {
+      "duration": 2.0,
+      "label": "Giật mình khi chạm tai",
+      "loop": false,
+      "faceCues": [
+        {
+          "time": 0,
+          "expression": "open"
+        },
+        {
+          "time": 0.3,
+          "expression": "surprised"
+        },
+        {
+          "time": 0.8,
+          "expression": "curious"
+        },
+        {
+          "time": 1.6,
+          "expression": "happy"
+        }
+      ]
+    },
+    "TailChase": {
+      "duration": 7.6,
+      "label": "Ủa, đuôi của ai?",
+      "loop": false,
+      "faceCues": [
+        {
+          "time": 0,
+          "expression": "curious"
+        },
+        {
+          "time": 1.3,
+          "expression": "focused"
+        },
+        {
+          "time": 5.7,
+          "expression": "dizzy"
+        },
+        {
+          "time": 6.8,
+          "expression": "wink"
+        },
+        {
+          "time": 7.2,
+          "expression": "happy"
+        }
+      ]
+    },
+    "Stretch": {
+      "duration": 4,
+      "label": "Vươn vai",
+      "loop": false,
+      "faceCues": [
+        {
+          "time": 0,
+          "expression": "sleepy"
+        },
+        {
+          "time": 1,
+          "expression": "closed"
+        },
+        {
+          "time": 3.2,
+          "expression": "happy"
+        }
+      ]
+    },
+    "Drowsy": {
+      "duration": 6,
+      "label": "Gật gù buồn ngủ",
+      "loop": false,
+      "faceCues": [
+        {
+          "time": 0,
+          "expression": "sleepy"
+        },
+        {
+          "time": 1.8,
+          "expression": "closed"
+        },
+        {
+          "time": 4.8,
+          "expression": "sleepy"
+        },
+        {
+          "time": 5.5,
+          "expression": "happy"
+        }
+      ]
+    },
+    "WakeUp": {
+      "duration": 2.0,
+      "label": "Tỉnh giấc",
+      "loop": false,
+      "faceCues": [
+        {
+          "time": 0,
+          "expression": "closed"
+        },
+        {
+          "time": 0.25,
+          "expression": "surprised"
+        },
+        {
+          "time": 1.2,
+          "expression": "happy"
+        }
+      ]
+    },
+    "PlayfulHop": {
+      "duration": 2.4,
+      "label": "Nhún nhảy vui vẻ",
+      "loop": false,
+      "faceCues": [
+        {
+          "time": 0,
+          "expression": "happy"
+        },
+        {
+          "time": 0.6,
+          "expression": "surprised"
+        },
+        {
+          "time": 1,
+          "expression": "happy"
+        }
+      ]
+    }
+  },
+  "expressions": [
+    "happy",
+    "open",
+    "curious",
+    "sleepy",
+    "closed",
+    "surprised",
+    "love",
+    "dizzy",
+    "focused",
+    "wink"
+  ],
+  "idleDelay": [
+    4.5,
+    8
+  ],
+  "notes": "Rigid mechanical animations. Face cues are synchronized in the web controller."
+}

@@ -202,7 +202,7 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, openP
   </aside>;
 }
 
-function DesktopWallpaper({ workspace }: { workspace: number }) {
+function DesktopWallpaper({ workspace, active }: { workspace: number; active: boolean }) {
   const wallpaperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -295,7 +295,7 @@ function DesktopWallpaper({ workspace }: { workspace: number }) {
     </div>
     <div className="paper-light" />
     <div className="layout-texture" aria-hidden="true" />
-    <PortfolioScene workspace={workspace} />
+    <PortfolioScene workspace={workspace === 3 && !active ? 0 : workspace} />
   </div>;
 }
 
@@ -579,7 +579,7 @@ export default function HomePage() {
     <LeftRail now={now} workspace={workspace} setWorkspace={selectLayout} view={view} overlay={overlay}
       openView={openView} openPortfolio={openPortfolio} toggleOverlay={toggleOverlay} />
     <section className="desktop-surface" aria-label="Caelestia desktop">
-      <DesktopWallpaper workspace={workspace} />
+      <DesktopWallpaper workspace={workspace} active={view === "desktop"} />
       {view === "desktop" && <PortfolioIntro onOpenAbout={() => openView("about")} onOpenPortfolio={() => openPortfolio("all")} />}
       {view === "about" && <AboutPage onClose={() => openView("desktop")} />}
       {view === "portfolio" && <PortfolioApp key={portfolioEntry.request} initialCategory={portfolioEntry.category}

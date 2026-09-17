@@ -1,5 +1,6 @@
 import { Box, Braces, Cpu, Layers3, MousePointer2, PenTool, Scissors, Smartphone, Square, WandSparkles } from "lucide-react";
 import androidMatte from "../public/hieu-android-mask.png";
+import { RobotCat } from "./robot-cat/RobotCat";
 
 const designStudies = [
   { id: "label", app: "Ai", file: "Vinut coco boba.ai", tool: "Illustrator", title: "Packaging & labels", image: "vinut-coco-boba-label.webp", alt: "Vinut Coco Boba coconut milk tea label artwork" },
@@ -53,6 +54,7 @@ function DeveloperPanels() {
 
 export function PortfolioScene({ workspace }: { workspace: number }) {
   if (workspace === 4) return <DesignShowcase />;
+  if (workspace === 3) return <RobotCat />;
   if (workspace !== 3 && workspace !== 5) return null;
   return <div className={`technology-scene ${workspace === 5 ? "technology-scene--developer" : "technology-scene--android"}`}>
     {workspace === 5 && <DeveloperAtmosphere />}

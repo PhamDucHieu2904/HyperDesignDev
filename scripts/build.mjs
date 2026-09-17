@@ -37,6 +37,11 @@ export async function buildSite() {
   const html = renderDocument(markup, site);
 
   await mkdir(new URL("../assets/", import.meta.url), { recursive: true });
+  await build({
+    ...options, entryPoints: ["app/robot-cat/runtime.mjs"], platform: "browser",
+    format: "iife", target: "es2022", minify: true, write: true,
+    outfile: "assets/robot-cat.js", loader: { ".png": "dataurl", ".glb": "binary" },
+  });
   await Promise.all([
     writeFile(new URL("../assets/app.js", import.meta.url), browser.outputFiles[0].contents),
     writeFile(new URL("../assets/app.css", import.meta.url), css.code),

@@ -147,7 +147,12 @@
 .pf-overview { max-width: 1320px; margin: 0 auto; }
 .pf-feature {
   position: relative;
-  min-height: clamp(260px, 35cqh, 345px);
+  /* Keep the featured viewport stable while the carousel swaps projects.
+     A min-height lets long copy resize the whole section and causes the
+     content below it to jump. The viewport height is now independent from
+     the active project's title/summary. */
+  height: clamp(260px, 35svh, 345px);
+  min-height: 0;
   padding: clamp(28px, 4cqw, 54px);
   border: 1px solid var(--pf-line);
   border-radius: 14px;
@@ -174,7 +179,14 @@
   box-shadow: 0 14px 34px rgba(0, 0, 0, .09);
 }
 .pf-feature-cover img { width: 100%; height: 100%; display: block; }
-.pf-feature-copy { position: relative; z-index: 1; max-width: 670px; }
+.pf-feature-copy {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  min-height: 0;
+  max-width: 670px;
+  overflow: hidden;
+}
 .pf-feature-copy small { color: var(--pf-accent); font-size: 13px; }
 .pf-feature-copy h1 {
   margin: 8px 0 10px;
@@ -182,8 +194,21 @@
   font-size: clamp(32px, 4.5cqw, 52px);
   line-height: 1;
   letter-spacing: -.035em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.pf-feature-copy p { max-width: 58ch; margin: 0; color: var(--hero-muted); font-size: 16px; line-height: 1.5; }
+.pf-feature-copy p {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--hero-muted);
+  font-size: 16px;
+  line-height: 1.5;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
 .pf-feature-copy > span { display: block; width: max-content; margin-top: 12px; padding: 4px 11px; border-radius: 999px; color: var(--on-accent); background: var(--pf-accent); font-size: 12px; }
 .pf-feature-copy > button { min-height: 42px; margin-top: 14px; padding: 0 17px; border: 1px solid var(--pf-line); border-radius: 14px; background: color-mix(in srgb, var(--surface) 72%, transparent); }
 .pf-feature-placeholder svg { width: 42px; height: 42px; color: var(--pf-accent); }
@@ -505,6 +530,7 @@ h3.pf-block-heading { font-size: clamp(21px, 2.7cqw, 30px); }
   .pf-index li { flex: 0 0 190px; }
   .pf-index button { min-height: 44px; grid-template-columns: 24px 36px minmax(0, 1fr); padding: 3px 7px; }
   .pf-index button img, .pf-index-art { width: 36px; height: 36px; }
+  .pf-feature { height: 286px; }
 }
 
 @media (max-width: 820px) {
@@ -521,7 +547,7 @@ h3.pf-block-heading { font-size: clamp(21px, 2.7cqw, 30px); }
   .pf-overview-head { margin-bottom: 32px; }
   .pf-overview-head h1 { font-size: clamp(38px, 12cqw, 58px); }
   .pf-overview-head > span { font-size: 16px; }
-  .pf-feature { min-height: 0; padding: 18px; align-items: flex-start; gap: 16px; }
+  .pf-feature { height: 236px; padding: 18px; align-items: flex-start; gap: 16px; }
   .pf-feature-cover { width: min(132px, 38%); }
   .pf-feature-copy h1 { font-size: clamp(26px, 8cqw, 38px); }
   .pf-feature-copy p { display: -webkit-box; overflow: hidden; font-size: 14px; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
@@ -597,7 +623,7 @@ h3.pf-block-heading { font-size: clamp(21px, 2.7cqw, 30px); }
 }
 
 @media (max-width: 480px) {
-  .pf-feature { display: grid; grid-template-columns: 98px minmax(0, 1fr); padding: 12px; gap: 12px; }
+  .pf-feature { height: 208px; display: grid; grid-template-columns: 98px minmax(0, 1fr); padding: 12px; gap: 12px; }
   .pf-feature-cover { width: 98px; }
   .pf-feature-copy small { font-size: 11px; }
   .pf-feature-copy h1 { margin-block: 5px 7px; font-size: 25px; }
