@@ -22,6 +22,11 @@ import wink from './source/face_wink.png';
 window.HyperDRobotCat = { mount(canvas, ready, fail) {
   let disposed = false, frame = 0, last = 0, hold, down, model, mixer, director, action;
   let renderer, controls, environment;
+  // One horizontal orbit phase is shared by autoplay and manual dragging.
+  // Dragging changes the phase in place; it never gets eased back to a home
+  // direction.
+  let orbitAngle = 0;
+  const guideSpeed = Math.PI * 2 / 34;
   const cleanups = [], materials = new Set(), textures = new Set(), geometries = new Set();
   const stale = [], scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(34, 1, .05, 30);
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
@@ -76,7 +81,19 @@ window.HyperDRobotCat = { mount(canvas, ready, fail) {
     raycaster.setFromCamera(new THREE.Vector2((event.clientX-r.left)/r.width*2-1, -(event.clientY-r.top)/r.height*2+1), camera);
     return raycaster.intersectObject(model, true).find(hit => hit.object.userData.region)?.object.userData.region;
   }
-  function cancel() { clearTimeout(hold); down = null; }
+  function cancel() {
+    clearTimeout(hold);
+    const pointerId = down?.id;
+    if (pointerId !== undefined && canvas.hasPointerCapture?.(pointerId)) canvas.releasePointerCapture(pointerId);
+    down = null;
+  }
+  function updateFollower(dt) {
+    if (!model || reduced.matches) return;
+    // The orbit has one degree of freedom: horizontal phase around the Y axis.
+    // The current phase is preserved when a user releases the drag.
+    orbitAngle = (orbitAngle + dt * guideSpeed) % (Math.PI * 2);
+    model.rotation.y = orbitAngle;
+  }
   function tick(time) {
     if (disposed) return;
     frame = requestAnimationFrame(tick);
@@ -86,13 +103,17 @@ window.HyperDRobotCat = { mount(canvas, ready, fail) {
       director.update(dt); mixer.update(dt);
       for (let i=stale.length-1; i>=0; i--) if ((stale[i].time -= dt) <= 0) { stale[i].action.stop(); stale.splice(i,1); }
     }
-    updateFace(dt); controls.update(); renderer.render(scene, camera);
+    updateFace(dt);
+    controls.update();
+    updateFollower(dt);
+    renderer.render(scene, camera);
   }
   async function init() {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
     renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
-    renderer.setClearColor(0, 0); renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+    renderer.setClearColor(0, 0); renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = .85;
     controls = new OrbitControls(camera, canvas); controls.enableDamping = true; controls.enablePan = false; controls.enableZoom = false;
+    controls.enableRotate = false;
     controls.minPolarAngle = .35; controls.maxPolarAngle = 1.58;
     controls.target.set(.04, .8, .05);
     function resize() {
@@ -102,14 +123,16 @@ window.HyperDRobotCat = { mount(canvas, ready, fail) {
       // Leave room for the baked chase/hop envelope on narrow displays.
       const distance = Math.max(1, .92/camera.aspect);
       camera.position.set(2.1*distance, .8+.7*distance, 3.75*distance);
+      // OrbitControls used to orient the camera toward the cat. The custom
+      // follower no longer owns the camera, so preserve that orientation here.
       camera.updateProjectionMatrix(); controls.update();
     }
     const observer = new ResizeObserver(resize); observer.observe(canvas.parentElement); cleanups.push(() => observer.disconnect()); resize();
     const room = new RoomEnvironment(), pmrem = new THREE.PMREMGenerator(renderer);
-    environment = pmrem.fromScene(room, .05); scene.environment = environment.texture; room.dispose(); pmrem.dispose();
-    scene.add(new THREE.HemisphereLight(0xe7f6ff, 0x9d9d7e, 2));
-    const key = new THREE.DirectionalLight(0xfff2df, 3); key.position.set(2,4,3); scene.add(key);
-    const fill = new THREE.DirectionalLight(0xb5ddff, 1); fill.position.set(-2,1,-1); scene.add(fill);
+    environment = pmrem.fromScene(room, .05); scene.environment = environment.texture; scene.environmentIntensity = .65; room.dispose(); pmrem.dispose();
+    scene.add(new THREE.HemisphereLight(0xd9f0ff, 0x182b43, .85));
+    const key = new THREE.DirectionalLight(0xfff2df, 2.1); key.position.set(2,4,3); scene.add(key);
+    const fill = new THREE.DirectionalLight(0x74d9ff, 1.4); fill.position.set(-2,1,-1); scene.add(fill);
     await Promise.all(Object.entries({happy,open,curious,sleepy,closed,surprised,love,dizzy,focused,wink}).map(async ([name,src]) => {
       const image = new Image(); image.src = src; await image.decode(); images[name] = image;
     }));
@@ -119,6 +142,16 @@ window.HyperDRobotCat = { mount(canvas, ready, fail) {
     if (disposed) { disposeResources(); return; }
     model.animations = gltf.animations; model.position.y = .213; scene.add(model);
     model.traverse(o => {
+      for (const material of [o.material].flat().filter(Boolean)) {
+        if (/^Led(?:\s|$)/i.test(material.name)) {
+          // Display-referred LED color: preserve cyan instead of letting ACES
+          // desaturate high source emission to white. Blender/GLB retain HDR.
+          material.color.setRGB(0, 0, 0);
+          material.emissive.setRGB(.008, .64, 1);
+          material.emissiveIntensity = 1;
+          material.toneMapped = false;
+        }
+      }
       if (o.isMesh && o.userData.region === 'screen') {
         o.material = new THREE.MeshPhysicalMaterial({color:0x030812,roughness:.2,metalness:.25,clearcoat:1,clearcoatRoughness:.15,emissive:0x29dfff,emissiveIntensity:2.5,emissiveMap:face});
         materials.add(o.material);
@@ -127,10 +160,20 @@ window.HyperDRobotCat = { mount(canvas, ready, fail) {
     mixer = new THREE.AnimationMixer(model);
     director = new CatDirector(manifest, {onPlay:play,reducedMotion:reduced.matches}); director.play('Idle'); mixer.update(0);
     listen(canvas, 'pointerdown', e => {
-      down = {x:e.clientX,y:e.clientY,id:e.pointerId,moved:false,held:false};
+      down = {x:e.clientX,y:e.clientY,lastX:e.clientX,id:e.pointerId,moved:false,held:false};
+      canvas.setPointerCapture?.(e.pointerId);
       if (regionAt(e) === 'head') hold = setTimeout(() => { if (down && !down.moved) { down.held=true; director.touch('head'); } },550);
     });
-    listen(canvas, 'pointermove', e => { if (down && Math.hypot(e.clientX-down.x,e.clientY-down.y)>8) {down.moved=true;clearTimeout(hold);} });
+    listen(canvas, 'pointermove', e => {
+      if (!down) return;
+      const distance = Math.hypot(e.clientX-down.x,e.clientY-down.y);
+      if (distance > 8) { down.moved=true; clearTimeout(hold); }
+      if (down.moved) {
+        // Only horizontal movement changes the single Y-axis orbit phase.
+        orbitAngle = (orbitAngle + (e.clientX - down.lastX) * .012) % (Math.PI * 2);
+        down.lastX = e.clientX;
+      }
+    });
     listen(canvas, 'pointerup', e => { if (down && e.pointerId===down.id && !down.moved && !down.held) {const region=regionAt(e);if(region)director.touch(region);} cancel(); });
     listen(canvas, 'pointercancel', cancel); listen(canvas, 'lostpointercapture', cancel);
     listen(canvas, 'keydown', e => {

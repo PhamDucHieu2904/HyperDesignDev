@@ -110,7 +110,7 @@ for (const mode of ["file", "github-subpath"]) {
       fetch(url) {
         requests.push(url);
         assert.ok(url.startsWith(base), `Unexpected external dependency: ${url}`);
-        const relative = url.slice(base.length);
+        const relative = url.slice(base.length).split(/[?#]/, 1)[0];
         // jsdom has no GPU. Exercise lazy-loading/lifecycle with a runtime stub;
         // real model rendering is verified in a WebGL browser.
         if (relative === "assets/robot-cat.js") return Promise.resolve(Buffer.from('window.HyperDRobotCat={mount(canvas,ready){ready();return ()=>{};}};'));

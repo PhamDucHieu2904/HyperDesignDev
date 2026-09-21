@@ -6,7 +6,7 @@ let runtime: Promise<CatRuntime> | undefined;
 function loadRuntime() {
   return runtime ??= new Promise<CatRuntime>((resolve, reject) => {
     const script = document.createElement("script");
-    script.src = new URL("./assets/robot-cat.js", document.baseURI).href;
+    script.src = new URL("./assets/robot-cat.js?v=20260918-body-led", document.baseURI).href;
     script.onload = () => window.HyperDRobotCat ? resolve(window.HyperDRobotCat) : reject(new Error("Missing cat runtime"));
     script.onerror = () => { runtime = undefined; script.remove(); reject(new Error("Cat runtime unavailable")); };
     document.head.append(script);

@@ -34,9 +34,9 @@
   --rose: #153453; --rose-strong: #93dce9; --on-accent: #102b42;
   --hero-ink: #edf6fa; --hero-muted: #c2d9e7;
   --logo-filter: brightness(0) invert(.97);
-  --wall-color: #143e6b; --wall-filter: none;
+  --wall-color: #102f55; --wall-filter: none;
   --wall-blend: normal; --wall-opacity: 1;
-  --wall-veil: none;
+  --wall-veil: linear-gradient(90deg, #0a2346c9 0%, #123b60a8 42%, #2c7a9542 78%, transparent 100%);
   --frame-radius: 29px; --button-radius: 10px;
 }
 .shell[data-layout="sage"] {
