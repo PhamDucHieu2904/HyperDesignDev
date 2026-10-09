@@ -93,13 +93,35 @@ test("shell form preserves draft, disables duplicate sends, retries errors and r
   };
   try {
     await until(() => document.querySelector('.rail-calendar time').dateTime, "Hydration failed");
+    assert.equal(document.querySelector('[data-open-project] span').textContent, 'Create');
     click('[data-open-project]');
     await until(() => document.querySelector('.project-form'), "Project form did not open");
+    assert.equal(document.querySelector('[data-open-project] span').textContent, 'New project');
     assert.equal(document.activeElement.textContent, "What would you like to create?");
+    assert.equal(document.querySelector('#project-help'), null, "Help should be hidden initially");
+    click('.project-help-toggle');
+    await until(() => document.querySelector('#project-help'), "Help did not open");
+    assert.equal(document.querySelector('.project-help-toggle').getAttribute('aria-expanded'), 'true');
+    click('.project-help-toggle');
+    await until(() => !document.querySelector('#project-help'), "Help did not close");
+    assert.equal(document.querySelector('.project-help-toggle').getAttribute('aria-expanded'), 'false');
     click('.project-primary');
     await until(() => document.querySelector('[aria-invalid="true"]'), "Idea validation failed");
     fill('#project-idea', validDraft().projectDescription);
     await until(() => document.querySelector('#project-idea').value.includes('showcase'), "Idea did not update");
+    click('[data-open-project]');
+    await until(() => !document.querySelector('.project-window'), "Create button did not minimize the form");
+    assert.equal(document.querySelector('[data-open-project] span').textContent, 'Create');
+    click('[data-open-project]');
+    await until(() => document.querySelector('#project-idea'), "Create button did not reopen the form");
+    assert.equal(document.querySelector('#project-idea').value, validDraft().projectDescription, "Create toggle cleared the draft");
+    for (const [width, height, mode] of [[1140, 590, 'desktop'], [390, 844, 'responsive']]) {
+      window.innerWidth = width;
+      window.innerHeight = height;
+      window.dispatchEvent(new window.Event('resize'));
+      await until(() => document.querySelector('.desktop-canvas').getAttribute('data-mode') === mode, "Viewport did not adapt");
+      assert.equal(document.querySelector('#project-idea').value, validDraft().projectDescription, "Resizing cleared the open draft");
+    }
     click('.project-primary');
     await until(() => document.querySelector('.project-budget-options'), "Budget did not open");
     click('.project-text-button');

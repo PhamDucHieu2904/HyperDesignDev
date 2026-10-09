@@ -66,7 +66,6 @@ function Overview({ projects, category, query, featureIndex, onFeatureChange, on
           <h1>{feature.shortTitle}</h1>
           <p>{feature.summary}</p>
           <span>{feature.year}</span>
-          <button type="button" onClick={() => onOpen(feature)}>View project</button>
         </div>
       </> : <>
         <div className="pf-feature-cover pf-feature-placeholder" aria-hidden="true"><Grid3X3 /></div>
@@ -75,10 +74,13 @@ function Overview({ projects, category, query, featureIndex, onFeatureChange, on
           <p>{categoryDescriptions[category]}</p><span>Coming soon</span>
         </div>
       </>}
+      <div className="pf-feature-footer">
+      {feature && <button type="button" className="pf-feature-open" onClick={() => onOpen(feature)}>View project</button>}
       {projects.length > 1 && <div className="pf-feature-arrows">
         <button type="button" aria-label="Previous featured project" onClick={() => onFeatureChange(-1)}><ChevronLeft aria-hidden="true" /></button>
         <button type="button" aria-label="Next featured project" onClick={() => onFeatureChange(1)}><ChevronRight aria-hidden="true" /></button>
       </div>}
+      </div>
     </section>
     {design.length > 0 && <section className="pf-project-section" aria-labelledby="hyper-design-title">
       <div className="pf-section-heading"><span>01</span><h2 id="hyper-design-title">Hyper Design</h2><small>{design.length} projects</small></div>

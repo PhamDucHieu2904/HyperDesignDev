@@ -10,6 +10,7 @@ import { PortfolioScene } from "./portfolio-scenes";
 import { PortfolioApp } from "./portfolio/PortfolioApp";
 import type { Filter } from "./portfolio/types";
 import { DesktopWindow } from "./desktop/DesktopWindow";
+import { DesktopViewport } from "./desktop/DesktopViewport";
 import { ProjectLauncher } from "./project-launcher/ProjectLauncher";
 
 type View = "desktop" | "about" | "portfolio" | "terminal" | "files" | "new-project";
@@ -178,12 +179,16 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, openP
       </div>
     </div>
     <div className="rail-center">
-      <button type="button" className="rail-new-project" data-open-project aria-label="Start a new project" title="New Project"
-        aria-pressed={view === "new-project"} onClick={() => openView("new-project")}>
-        <FilePlus2 aria-hidden="true" /><span>New Project</span>
+      <button type="button" className="rail-new-project" data-open-project
+        aria-label={view === "new-project" ? "Minimize new project" : "Create a new project"}
+        title={view === "new-project" ? "New project" : "Create"}
+        aria-pressed={view === "new-project"} onClick={() => openView(view === "new-project" ? "desktop" : "new-project")}>
+        {view === "new-project" ? <FilePlus2 aria-hidden="true" /> : <Square aria-hidden="true" />}
+        <span>{view === "new-project" ? "New project" : "Create"}</span>
       </button>
     </div>
     <div className="rail-bottom">
+      <div className="rail-shortcuts" role="group" aria-label="Portfolio shortcuts">
       <IconButton label="Adobe Photoshop — open Visual portfolio" icon={ImageIcon} className="rail-shortcut" onClick={() => openPortfolio("photoshop")} />
       <IconButton label="Adobe Illustrator — open Brand portfolio" icon={PenTool} className="rail-shortcut" onClick={() => openPortfolio("illustrator")} />
       <IconButton label="Blender — open 3D portfolio" icon={Box} className="rail-shortcut" onClick={() => openPortfolio("blender")} />
@@ -198,6 +203,7 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, openP
       <IconButton label="Unity — open Game portfolio" icon={Gamepad2} className="rail-shortcut" onClick={() => openPortfolio("game")} />
       <IconButton label="Visual Studio Code — open Web portfolio" icon={Code2} className="rail-shortcut" onClick={() => openPortfolio("web")} />
       <IconButton label="Codex — coming soon" icon={Bot} className="rail-shortcut rail-shortcut-pending" disabled />
+      </div>
       <IconButton label="Power menu" icon={Power} className="power" active={overlay === "session"} onClick={() => toggleOverlay("session")} />
     </div>
   </aside>;
@@ -309,11 +315,10 @@ function PortfolioIntro({ onOpenAbout, onOpenPortfolio }: { onOpenAbout: () => v
       width={743}
       height={147}
     />
+    <div className="portfolio-copy">
     <h1 id="portfolio-title">Hieu Pham - Designer x Developer</h1>
     <p className="portfolio-manifesto">I don’t just design ideas. I engineer how they work.</p>
-    <p className="portfolio-summary">{`Where a Developer's logic meets a Designer's aesthetic. From high-end
-commercial packaging and realistic 3D environments to automated workflows and
-seamless database systems. Beautiful on the surface, robust under the hood.`}</p>
+    <p className="portfolio-summary">Where a Developer's logic meets a Designer's aesthetic. From high-end commercial packaging and realistic 3D environments to automated workflows and seamless database systems. Beautiful on the surface, robust under the hood.</p>
     <nav className="portfolio-actions" aria-label="Portfolio navigation">
       <button type="button" className="portfolio-action" data-action="about" onClick={onOpenAbout}>
         <span className="portfolio-index" aria-hidden="true">01</span><span className="portfolio-action-label">About Hyper D²</span>
@@ -322,6 +327,7 @@ seamless database systems. Beautiful on the surface, robust under the hood.`}</p
         <span className="portfolio-index" aria-hidden="true">02</span><span className="portfolio-action-label">Portfolio</span>
       </button>
     </nav>
+    </div>
   </section>;
 }
 
@@ -579,7 +585,7 @@ export default function HomePage() {
     if (overlay === next) closeOverlay();
     else showOverlay(next);
   };
-  return <main className="shell" data-layout={layouts.find(layout => layout.id === workspace)?.theme}>
+  return <DesktopViewport><main className="shell" data-layout={layouts.find(layout => layout.id === workspace)?.theme}>
     <LeftRail now={now} workspace={workspace} setWorkspace={selectLayout} view={view} overlay={overlay}
       openView={openView} openPortfolio={openPortfolio} toggleOverlay={toggleOverlay} />
     <section className="desktop-surface" aria-label="Caelestia desktop">
@@ -598,5 +604,5 @@ export default function HomePage() {
       {view === "desktop" && !overlay && <button type="button" className="explore-pill" onClick={() => showOverlay("launcher")}>
         <Sparkles /> Explore the shell <kbd>Ctrl K</kbd></button>}
     </section>
-  </main>;
+  </main></DesktopViewport>;
 }

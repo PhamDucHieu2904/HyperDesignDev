@@ -35,6 +35,7 @@ npm test
 ```
 
 - `app/page.tsx`: nội dung và tương tác.
+- `app/desktop/DesktopViewport.tsx` và `viewport.ts`: scale toàn bộ bố cục PC theo canvas tối thiểu 1920 × 1000; giữ tỷ lệ chữ, nút, thanh bên và khoảng cách khi cửa sổ nhỏ.
 - `app/project-launcher/`: cửa sổ New Project, validation và adapter gửi form.
 - `app/project-launcher/config.ts`: endpoint Formspree công khai (để trống thì UI báo `not-configured`, không giả lập thành công).
 - `app/globals.css`: giao diện và responsive.
@@ -56,6 +57,10 @@ preview tại `http://127.0.0.1:3000`; refresh trình duyệt để thấy thay 
 `npm run check` kiểm tra TypeScript và import thừa; `npm run lint` là alias tương thích.
 `npm test` kiểm tra HTML, tài nguyên, metadata, các tương tác trong DOM mô phỏng
 với URL file/GitHub subpath và preview HTTP; không phải kiểm thử bố cục bằng trình duyệt thật.
+
+Các breakpoint bố cục dùng `@container desktop` theo kích thước canvas trước khi
+scale. Vì vậy laptop nhỏ giữ các cột của bản PC; màn hình điện thoại vẫn dùng
+bố cục responsive. Các query về pointer, hover và reduced motion vẫn theo thiết bị.
 
 ### Bật nhận yêu cầu Project Launcher
 

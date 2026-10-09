@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { ArrowLeft, ArrowRight, Check, CheckCheck, CircleAlert, FilePlus2, LoaderCircle, Send, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, CheckCheck, CircleAlert, CircleHelp, FilePlus2, LoaderCircle, Send, ShieldCheck } from "lucide-react";
 import { DesktopWindow } from "../desktop/DesktopWindow";
 import { projectRequestEndpoint } from "./config";
 import { budgetOptions, budgetSummary, categories, emptyDraft, isRequestConfigured, ProjectRequestError,
@@ -32,6 +32,7 @@ export function ProjectLauncher({ active, covered, onClose, onPortfolio }: {
   const [errors, setErrors] = useState<DraftErrors>({});
   const [status, setStatus] = useState<RequestStatus>("idle");
   const [message, setMessage] = useState("");
+  const [helpOpen, setHelpOpen] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
@@ -45,7 +46,7 @@ export function ProjectLauncher({ active, covered, onClose, onPortfolio }: {
     return () => { mountedRef.current = false; };
   }, []);
   useEffect(() => {
-    if (!active) return;
+    if (!active) { setHelpOpen(false); return; }
     openerRef.current = document.activeElement as HTMLElement | null;
     return () => {
       const opener = openerRef.current;
@@ -60,6 +61,9 @@ export function ProjectLauncher({ active, covered, onClose, onPortfolio }: {
     titleRef.current?.focus();
     formRef.current?.querySelector('.project-scroll')?.scrollTo?.({ top: 0 });
   }, [active, covered, step, status === "success"]);
+  useEffect(() => {
+    formRef.current?.querySelector('.project-scroll')?.scrollTo?.({ top: 0 });
+  }, [helpOpen]);
 
   const update = <K extends keyof ProjectDraft>(field: K, value: ProjectDraft[K]) => {
     setDraft(current => ({ ...current, [field]: value }));
@@ -93,7 +97,12 @@ export function ProjectLauncher({ active, covered, onClose, onPortfolio }: {
   };
 
   if (!active) return null;
-  return <DesktopWindow className="project-window" label="Hyper D² / new-project" icon={FilePlus2} onClose={onClose} inert={covered}>
+  return <DesktopWindow className="project-window" label="Hyper D² / new-project" icon={FilePlus2} onClose={onClose} inert={covered}
+    headerActions={status !== "success" && <button type="button" className="icon-button project-help-toggle"
+      aria-label="Project request help" title={helpOpen ? "Hide help" : "Project request help"}
+      aria-expanded={helpOpen} aria-controls="project-help" onClick={() => setHelpOpen(current => !current)}>
+      <CircleHelp aria-hidden="true" />
+    </button>}>
     {status === "success" ? <div className="project-success" role="status">
       <span className="project-success-mark"><CheckCheck aria-hidden="true" /></span>
       <span className="project-eyebrow">Project request received</span>
@@ -112,7 +121,7 @@ export function ProjectLauncher({ active, covered, onClose, onPortfolio }: {
         </li>)}
       </ol>
       <div className="project-scroll">
-        <div className={`project-columns ${step === 2 ? "project-columns-review" : ""}`}>
+        <div className={`project-columns ${helpOpen ? "project-columns-help" : ""} ${step === 2 ? "project-columns-review" : ""}`}>
           <div className="project-step" key={step}>
             <span className="project-eyebrow">A new collaboration / 0{step + 1}</span>
             <h1 ref={titleRef} tabIndex={-1}>{headings[step]}</h1>
@@ -164,12 +173,14 @@ export function ProjectLauncher({ active, covered, onClose, onPortfolio }: {
             {step === 2 && !configured && !message && <p className="project-notice"><CircleAlert aria-hidden="true" />Project requests aren’t available just yet. You can prepare your idea here, but it can’t be sent at the moment.</p>}
             {message && <p className="project-notice" role="alert"><CircleAlert aria-hidden="true" />{message}</p>}
           </div>
-          {step < 2 && <aside className="project-preview" aria-label="Live project summary">
-            <FilePlus2 className="project-preview-icon" aria-hidden="true" />
-            <span className="project-eyebrow">Your next chapter</span>
-            <h2>Good work starts<br />with a conversation.</h2>
-            <p>An early thought. A tricky problem.<br />Something you’ve been meaning to make.</p>
-            <ProjectSummary draft={draft} />
+          {helpOpen && <aside id="project-help" className="project-preview" aria-label="Project request help">
+            <div className="project-preview-label">
+              <FilePlus2 className="project-preview-icon" aria-hidden="true" />
+              <span className="project-eyebrow">Your next chapter</span>
+            </div>
+            <h2>Good work starts with a conversation.</h2>
+            <p>An early thought. A tricky problem. Something you’ve been meaning to make.</p>
+            {step < 2 && <ProjectSummary draft={draft} />}
             <span className="project-preview-note">Let’s give it a place to begin.</span>
           </aside>}
         </div>

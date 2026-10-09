@@ -36,10 +36,12 @@ body, button, input { font-family: "Google Sans Flex", "Segoe UI", sans-serif; }
 button { color: inherit; }
 button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong); outline-offset: 2px; }
 
+.desktop-viewport { width: 100%; height: 100svh; overflow: clip; }
+.desktop-canvas { width: 100%; height: 100%; container: desktop / size; transform: scale(var(--desktop-scale, 1)); transform-origin: top left; }
 .shell {
   position: relative;
-  width: 100vw;
-  height: 100svh;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   color: var(--ink);
   background: radial-gradient(circle at 20% 18%, rgba(255,255,255,.8), transparent 34%), var(--paper);
@@ -92,7 +94,18 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
   position: absolute;
   z-index: 2;
   inset: 0;
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
   pointer-events: none;
+}
+.portfolio-copy {
+  position: relative;
+  width: 42cqw;
+  margin: 44.8cqh 0 0 7.6cqw;
+  padding-bottom: 64px;
+  pointer-events: auto;
 }
 .portfolio-logo {
   position: absolute;
@@ -113,42 +126,37 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
 .portfolio-intro h1,
 .portfolio-manifesto,
 .portfolio-summary {
-  position: absolute;
-  left: 7.6cqw;
+  position: static;
   margin: 0;
   font-family: "Designer", "Segoe UI", sans-serif;
 }
 .portfolio-intro h1 {
-  top: 44.8cqh;
   color: #504c47;
-  font-size: clamp(20px, min(1.95cqw, 3.85cqh), 38px);
+  font-size: clamp(22px, min(1.95cqw, 3.85cqh), 38px);
   font-style: normal;
   font-weight: 400;
-  line-height: 1;
-  white-space: nowrap;
+  line-height: 1.15;
+  margin-bottom: clamp(16px, 3cqh, 30px);
+  text-wrap: balance;
   animation: intro-rise 340ms 420ms var(--ease) both;
 }
 .portfolio-manifesto {
-  top: 52.85cqh;
   color: #504c47;
-  font-size: clamp(11px, min(.93cqw, 1.83cqh), 18px);
+  font-size: clamp(12px, min(.93cqw, 1.83cqh), 18px);
   font-style: normal;
   font-weight: 300;
-  line-height: 1;
+  line-height: 1.35;
   text-transform: uppercase;
-  white-space: nowrap;
+  margin-bottom: 8px;
   animation: intro-rise 320ms 500ms var(--ease) both;
 }
 .portfolio-summary {
-  top: 55.9cqh;
-  width: 42cqw;
   color: #79726b;
   font-family: "Google Sans Flex", "Segoe UI", sans-serif;
-  font-size: clamp(12px, min(1.02cqw, 1.98cqh), 19px);
+  font-size: clamp(14px, min(1.02cqw, 1.98cqh), 19px);
   font-style: italic;
   font-weight: 300;
-  line-height: 1.27;
-  white-space: pre-line;
+  line-height: 1.4;
   animation: intro-rise 340ms 570ms var(--ease) both;
 }
 @keyframes intro-rise {
@@ -157,22 +165,21 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
 }
 
 .portfolio-actions {
-  position: absolute;
-  top: 64.1cqh;
-  left: 7.6cqw;
   display: flex;
   align-items: stretch;
-  gap: 12px;
-  margin: 0;
+  gap: clamp(8px, 1cqw, 18px);
+  margin: clamp(12px, 1.6cqh, 18px) 0 0;
   pointer-events: auto;
   animation: intro-rise 340ms 650ms var(--ease) both;
 }
 .portfolio-action {
   position: relative;
   width: min(16cqw, 300px);
-  min-width: 170px;
-  min-height: 52px;
-  padding: 0 24px 0 42px;
+  min-width: 0;
+  min-height: clamp(44px, 5.6cqh, 52px);
+  flex: 1 1 0;
+  max-width: 300px;
+  padding: 10px 12px 10px clamp(28px, 2.2cqw, 42px);
   border: 1px solid rgba(80,76,71,.35);
   border-radius: 3px;
   color: #504c47;
@@ -180,7 +187,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
   box-shadow: inset 3px 0 0 rgba(180,98,81,.72);
   cursor: pointer;
   font-family: "Designer", "Segoe UI", sans-serif;
-  font-size: clamp(12px, min(1.03cqw, 1.95cqh), 19px);
+  font-size: clamp(14px, min(1.03cqw, 1.95cqh), 19px);
   font-weight: 400;
   letter-spacing: .02em;
   text-align: left;
@@ -335,7 +342,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
   padding-right: 120px;
   color: var(--hero-ink);
   font-family: "Designer", "Segoe UI", sans-serif;
-  font-size: clamp(2.5rem, 3.3vw, 4rem);
+  font-size: clamp(2.5rem, 3.3cqw, 4rem);
   font-weight: 400;
   line-height: 1.08;
 }
@@ -462,10 +469,10 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
   font-weight: 610;
   line-height: 1.28;
 }
-@media (min-width: 1501px) {
+@container desktop (min-width: 1501px) {
   .about-id-strip p:last-child strong { white-space: nowrap; }
 }
-@media (max-width: 1500px) {
+@container desktop (max-width: 1500px) {
   .about-id-strip { grid-template-columns: 1fr 1fr; }
   .about-id-strip p:last-child { grid-column: 1 / -1; }
 }
@@ -673,7 +680,9 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
 .rail {
   position: absolute; z-index: 80; inset: 0 auto 0 0; width: 59px;
   display: flex; align-items: center; flex-direction: column; color: #332a27;
+  padding-bottom: 7px;
 }
+.rail > :not(.rail-center):not(.rail-bottom) { flex-shrink: 0; }
 .arch-mark {
   width: 42px; height: 43px; padding: 7px; border: 0; display: grid; place-items: center; color: #483c34;
   background: transparent; cursor: pointer;
@@ -707,8 +716,10 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--rose-strong
 .workspaces .icon-button.active { color: #6f3125; background: #fff8f3; }
 
 .rail-bottom {
-  position: absolute; bottom: 7px; left: 0; width: 59px; display: flex; align-items: center; flex-direction: column;
+  width: 100%; min-height: 51px; display: flex; align-items: center; flex-direction: column;
 }
+.rail-shortcuts { width: 100%; min-height: 0; overflow: hidden auto; display: flex; align-items: center; flex-direction: column; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.rail-shortcuts > * { flex-shrink: 0; }
 .rail-bottom > svg.muted { width: 16px; margin-bottom: 2px; color: #bfb6ae; }
 .rail-bottom .icon-button { width: 36px; height: 29px; }
 .rail-bottom .spotify { color: #17271b; }
@@ -824,7 +835,7 @@ kbd {
 .book-cover small { font-size: 12px; font-weight: 750; letter-spacing: .12em; }
 .book-cover i { position: absolute; top: 23px; right: 18px; width: 9px; height: 9px; border-radius: 50%; background: #161412; }
 .hero-copy { position: relative; z-index: 1; }
-.hero-copy h1 { margin: 0; font-size: clamp(34px,3vw,55px); font-weight: 820; letter-spacing: -.045em; }
+.hero-copy h1 { margin: 0; font-size: clamp(34px,3cqw,55px); font-weight: 820; letter-spacing: -.045em; }
 .hero-copy h2 { margin: 10px 0 13px; font-size: 22px; }
 .hero-copy span { display: block; width: max-content; padding: 4px 14px; border-radius: 15px; color: white; background: #57544f; font-size: 12px; font-weight: 700; }
 .hero-copy button { height: 42px; margin-top: 14px; padding: 0 20px; border: 1px solid #8d8880; border-radius: 16px; background: rgba(255,255,255,.48); cursor: pointer; font-size: 16px; font-weight: 680; }
@@ -844,7 +855,7 @@ kbd {
   box-shadow: inset 0 0 0 1px rgba(0,0,0,.05); transition: transform 260ms var(--ease), border-radius 260ms var(--ease);
 }
 .album-card:hover .album-cover { border-radius: 13px; transform: translateY(-3px); }
-.album-cover b { font-size: clamp(13px,1.25vw,22px); line-height: .9; }
+.album-cover b { font-size: clamp(13px,1.25cqw,22px); line-height: .9; }
 .album-cover.rose { color: #542f27; background: linear-gradient(135deg,#fff0ec,#be746a 55%,#9d4746); }
 .album-cover.ink { color: #171717; background: repeating-linear-gradient(65deg,#fafafa 0 12px,#dadada 12px 17px); }
 .album-cover.field { justify-content: flex-end; background: linear-gradient(180deg,#91af7b,#e6d2ac 55%,#554b3c); }
@@ -919,32 +930,33 @@ kbd {
 
 /* Secondary app windows */
 .terminal-window, .files-window {
-  position: absolute; z-index: 12; top: 50%; left: 50%; width: min(880px,calc(100% - 100px)); min-height: 510px;
+  position: absolute; z-index: 12; top: 50%; left: 50%; width: min(880px,calc(100% - 24px)); max-height: calc(100% - 24px);
+  display: flex; flex-direction: column;
   overflow: hidden; border: 1px solid rgba(35,31,29,.72); border-radius: 21px; background: rgba(252,248,241,.92);
   box-shadow: 0 30px 90px rgba(46,38,33,.23); backdrop-filter: blur(24px); transform: translate(-50%,-50%);
   animation: center-window-in 440ms var(--ease) both;
 }
 @keyframes center-window-in { from { opacity: 0; transform: translate(-50%,-46%) scale(.95); } }
 .terminal-window > header, .files-window > header {
-  height: 47px; padding: 0 8px 0 16px; border-bottom: 1px solid rgba(50,44,40,.13);
+  min-height: 47px; flex-shrink: 0; padding: 0 8px 0 16px; border-bottom: 1px solid rgba(50,44,40,.13);
   display: flex; align-items: center; justify-content: space-between; background: rgba(250,245,239,.82);
 }
 .terminal-window > header > span { display: flex; align-items: center; gap: 8px; font-size: 10px; }
 .terminal-window > header svg { width: 15px; }
 .terminal-window > header > div, .files-window > header > div { display: flex; }
 .terminal-body {
-  min-height: 463px; padding: 54px 60px; color: #ece5dc;
+  min-height: 0; overflow: auto; padding: clamp(24px, 5cqh, 54px) clamp(18px, 5cqw, 60px); color: #ece5dc;
   background: linear-gradient(rgba(17,15,14,.94),rgba(24,20,19,.95)), #171413;
   font-family: "Cascadia Code",Consolas,monospace;
 }
-.terminal-body pre { margin: 0 0 35px; color: #d8a99d; font-size: clamp(9px,1.3vw,15px); line-height: 1.25; }
+.terminal-body pre { margin: 0 0 35px; color: #d8a99d; font-size: clamp(9px,1.3cqw,15px); line-height: 1.25; }
 .terminal-body p { margin: 12px 0; font-size: 13px; }
 .terminal-body p span, .terminal-body p b { color: #d8a99d; }
 .terminal-body .terminal-muted { color: #928a83; }
 .cursor { display: inline-block; width: 8px; height: 15px; margin-left: 8px; vertical-align: middle; background: #ddd5cc; animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 .files-window > header > span { font-size: 11px; font-weight: 600; }
-.files-body { min-height: 463px; padding: 42px; display: grid; align-content: start; grid-template-columns: repeat(4,1fr); gap: 18px; }
+.files-body { min-height: 0; overflow: auto; padding: clamp(18px, 4cqh, 42px); display: grid; align-content: start; grid-template-columns: repeat(4,1fr); gap: 18px; }
 .files-body button { min-height: 150px; padding: 20px; border: 0; display: grid; justify-items: center; align-content: center; gap: 8px; border-radius: 20px; background: rgba(226,217,208,.62); cursor: pointer; }
 .files-body button:hover { background: #eadbd5; }
 .files-body svg { width: 43px; height: 43px; color: #9c665b; }
@@ -983,7 +995,8 @@ kbd {
 .scrim.closing { pointer-events: none; animation: fade-out 480ms ease forwards; }
 @keyframes fade-out { to { opacity: 0; } }
 .session-drawer {
-  position: absolute; z-index: 55; top: 50%; right: -2px; width: 119px; min-height: 510px; padding: 17px;
+  position: absolute; z-index: 55; top: 50%; right: -2px; width: 119px; min-height: min(510px, calc(100% - 24px)); padding: 17px;
+  max-height: calc(100% - 24px); overflow-y: auto;
   display: flex; align-items: center; gap: 12px; flex-direction: column; border-radius: 28px 0 0 28px;
   background: var(--paper); transform: translate3d(0,-50%,0); will-change: transform, opacity;
   backface-visibility: hidden; animation: session-in 480ms var(--ease) both;
@@ -1003,6 +1016,7 @@ kbd {
 
 .dashboard-drawer {
   position: absolute; z-index: 45; top: -1px; left: 50%; width: min(720px,calc(100% - 180px)); padding: 19px;
+  max-height: calc(100% - 24px); overflow-y: auto;
   border-radius: 0 0 30px 30px; background: rgba(250,246,239,.985); box-shadow: 0 17px 42px rgba(60,49,42,.16);
   transform: translate3d(-50%,0,0); will-change: transform, opacity; backface-visibility: hidden;
   animation: dashboard-in 470ms var(--ease) both;
@@ -1074,7 +1088,7 @@ kbd {
 .launcher-project strong { overflow: hidden; max-width: 100%; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
 .launcher-project small { color: var(--muted); font-size: 8px; line-height: 1.3; }
 
-@media (max-width: 1250px) {
+@container desktop (max-width: 1250px) {
   .about-hero {
     grid-template-columns: minmax(285px, 34%) minmax(0, 1fr);
   }
@@ -1101,7 +1115,7 @@ kbd {
   .player-bar { grid-template-columns: 250px 1fr 180px; }
   .volume { gap: 8px; }
 }
-@media (max-width: 820px) {
+@container desktop (max-width: 820px) {
   .desktop-surface { inset: 6px 5px 6px 52px; border-radius: 24px; }
   .rail, .rail-bottom { width: 52px; }
   .workspaces { width: 43px; }
@@ -1123,7 +1137,7 @@ kbd {
   }
   .about-header h1 {
     padding-right: 0;
-    font-size: clamp(2rem, 7.5vw, 3.25rem);
+    font-size: clamp(2rem, 7.5cqw, 3.25rem);
     line-height: 1.1;
   }
   .about-role {
@@ -1214,14 +1228,22 @@ kbd {
   .system-card { display: none; }
   .session-drawer { width: 104px; }
   .session-drawer .icon-button, .session-gif { width: 70px; height: 70px; }
-  .media-popout { left: 51px; width: min(390px,calc(100vw - 58px)); }
+  .media-popout { left: 51px; width: min(390px,calc(100cqw - 58px)); }
   .files-body { grid-template-columns: repeat(2,1fr); }
   .portfolio-logo { top: 12cqh; width: min(54cqw,70cqh); }
+  /* Preserve the established mobile composition independently of PC scaling. */
+  .portfolio-intro { overflow: hidden; }
+  .portfolio-copy {
+    position: absolute; top: 44cqh; left: 7.6cqw;
+    width: 58cqw; height: calc(56cqh - 18px);
+    display: flex; flex-direction: column;
+    margin: 0; padding: 0;
+  }
   .portfolio-intro h1 { display: none; }
-  .portfolio-manifesto { top: 44cqh; font-size: clamp(9px,1.75cqw,12px); white-space: normal; width: 58cqw; }
-  .portfolio-summary { top: 48.5cqh; width: 58cqw; font-size: clamp(10px,1.8cqw,13px); white-space: normal; }
-  .portfolio-actions { top: 63.5cqh; left: 7.6cqw; gap: 8px; flex-direction: column; }
-  .portfolio-action { width: min(48cqw, 300px); min-width: 0; min-height: 46px; padding-left: 39px; font-size: clamp(11px,2.1cqw,15px); }
+  .portfolio-manifesto { font-size: clamp(9px,1.75cqw,12px); line-height: 1; margin-bottom: 0; }
+  .portfolio-summary { margin-top: max(8px, 1.8cqh); margin-bottom: 12px; font-size: clamp(10px,1.8cqw,13px); line-height: 1.27; white-space: normal; }
+  .portfolio-actions { gap: 8px; margin: auto 0 0; flex-direction: column; flex-shrink: 0; }
+  .portfolio-action { flex: none; width: min(48cqw,300px); min-height: 46px; padding: 0 24px 0 39px; font-size: clamp(11px,2.1cqw,15px); }
   .explore-pill { display: none; }
   .launcher-drawer {
     width: calc(100% - 16px); padding: 14px; border-radius: 24px 24px 0 0;
@@ -1233,52 +1255,47 @@ kbd {
   .launcher-project strong { font-size: 12px; }
   .launcher-project small { font-size: 10px; }
 }
-@media (max-width: 820px) and (max-height: 500px) {
-  .portfolio-intro h1 { font-size: clamp(14px,3.2cqw,22px); }
-  .portfolio-manifesto { top: 46.5cqh; }
-  .portfolio-summary { top: 51cqh; font-size: clamp(10px,1.65cqw,12px); }
-  .portfolio-actions { top: 68cqh; flex-direction: row; }
-  .portfolio-action { width: min(21cqw,190px); font-size: clamp(11px,1.6cqw,13px); }
-}
-@media (max-width: 500px) and (orientation: portrait) {
+@container desktop (max-width: 500px) and (orientation: portrait) {
   .portfolio-logo {
     top: 3.5cqh;
     left: 4.8cqw;
     width: min(38cqw,30cqh);
   }
-  .portfolio-manifesto {
-    top: 57.5cqh;
-    left: 7.6cqw;
-    width: 54cqw;
-    font-size: clamp(9px,1.75cqw,12px);
-    white-space: normal;
-  }
-  .portfolio-summary {
-    top: 61.5cqh;
-    left: 7.6cqw;
-    width: 54cqw;
-    font-size: clamp(10px,1.8cqw,13px);
-    white-space: normal;
-  }
-  .portfolio-actions {
-    top: calc(100cqh - 112px);
-    left: 7.6cqw;
-    flex-direction: column;
-    gap: 8px;
-  }
+  .portfolio-copy { top: 57.5cqh; width: 54cqw; height: calc(42.5cqh - 12px); }
   .portfolio-action {
-    width: min(48cqw,300px);
+    max-width: none;
     background: rgba(248,244,237,.7);
     border-color: rgba(80,76,71,.48);
   }
 }
-@media (max-height: 760px) {
+@container desktop (max-width: 500px) and (max-height: 650px) and (orientation: portrait) {
+  .portfolio-copy { top: 47cqh; height: calc(53cqh - 12px); }
+}
+@container desktop (min-width: 821px) and (max-height: 700px) {
+  .portfolio-copy { margin-top: 42cqh; }
+  .about-hero { grid-template-columns: minmax(200px, 27%) minmax(0, 1fr); gap: 28px; }
+  .about-profile-card { max-width: 260px; }
+  .about-header h1 { font-size: clamp(30px, 3cqw, 40px); padding-right: 56px; }
+  .about-role { font-size: 22px; }
+  .about-lead { font-size: 16px; }
+  .about-id-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .about-id-strip p:last-child { grid-column: auto; }
+  .about-id-strip p { padding: 8px 10px; }
+  .about-metrics span { min-height: 50px; padding: 8px 10px; }
+}
+@container desktop (max-width: 820px) and (max-height: 500px) and (orientation: landscape) {
+  .portfolio-copy { top: 46.5cqh; width: 58cqw; height: calc(53.5cqh - 18px); }
+  .portfolio-summary { margin-top: 8px; font-size: clamp(10px,1.65cqw,12px); }
+  .portfolio-actions { flex-direction: row; }
+  .portfolio-action { width: min(21cqw,190px); font-size: clamp(11px,1.6cqw,13px); }
+}
+@container desktop (max-height: 760px) {
   .rail-bottom .icon-button:not(.power) { height: 25px; }
   .rail-music-accent { height: 25px; }
   .rail-calendar time { font-size: 11px; }
   .clock { margin: 1px 0; }
   .status-stack { padding: 5px 0; gap: 4px; }
-  .session-drawer { min-height: 455px; gap: 8px; }
+  .session-drawer { min-height: min(455px, calc(100% - 24px)); gap: 8px; }
   .session-drawer .icon-button, .session-gif { width: 70px; height: 70px; }
 }
 @media (prefers-reduced-motion: reduce) {
