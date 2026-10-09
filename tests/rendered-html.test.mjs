@@ -138,7 +138,7 @@ for (const mode of ["file", "github-subpath"]) {
     };
     const key = (value, ctrlKey = false) => window.dispatchEvent(new window.KeyboardEvent("keydown", { key: value, ctrlKey }));
     try {
-      await until(() => document.querySelector('[data-action="about"]'), "Application did not hydrate");
+      await until(() => document.querySelector('[data-action="about"]') && document.querySelector('.shell[data-hydrated="true"]'), "Application did not hydrate");
       assert.equal(document.querySelectorAll(".shell").length, 1);
       assert.ok(document.querySelector(".dashboard-toggle"));
       assert.equal(document.querySelector(".workspaces .icon-button"), null);

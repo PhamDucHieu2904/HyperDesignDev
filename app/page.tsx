@@ -1,16 +1,18 @@
 import {
   BadgeCheck, Bot, Box, BriefcaseBusiness, CalendarDays, ChevronLeft, ChevronRight, Code2, Command,
   Folder, Gamepad2, Feather, Leaf, Grid2X2, Frame, Image as ImageIcon, LogOut, MapPin, PenTool,
-  Moon, Music2, Power, RefreshCw,
-  Sparkles, Square, Terminal, TimerReset, UsersRound,
+  Moon, Music2, Power, RefreshCw, FilePlus2,
+  Sparkles, Square, Terminal, TimerReset,
   X, type LucideIcon, type LucideProps,
 } from "lucide-react";
 import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import { PortfolioScene } from "./portfolio-scenes";
 import { PortfolioApp } from "./portfolio/PortfolioApp";
 import type { Filter } from "./portfolio/types";
+import { DesktopWindow } from "./desktop/DesktopWindow";
+import { ProjectLauncher } from "./project-launcher/ProjectLauncher";
 
-type View = "desktop" | "about" | "portfolio" | "terminal" | "files";
+type View = "desktop" | "about" | "portfolio" | "terminal" | "files" | "new-project";
 type Overlay = "dashboard" | "launcher" | "session" | null;
 
 const layouts = [
@@ -95,8 +97,6 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, openP
   const suppressClickRef = useRef(false);
   const [previewLayout, setPreviewLayout] = useState<number | null>(null);
   const [isLayoutDragging, setIsLayoutDragging] = useState(false);
-  const label = view === "portfolio" ? "Portfolio"
-    : view === "terminal" ? "Terminal" : view === "files" ? "Files" : view === "about" ? "About Hyper D²" : "Desktop";
   const layoutAtPoint = (clientX: number, clientY: number) => {
     const target = document.elementFromPoint(clientX, clientY)?.closest<HTMLButtonElement>(".layout-option");
     if (!target || !layoutPickerRef.current?.contains(target)) return null;
@@ -177,11 +177,12 @@ function LeftRail({ now, workspace, setWorkspace, view, overlay, openView, openP
         </button>)}
       </div>
     </div>
-    <button type="button" className="active-window" onClick={() => openView(view === "desktop" ? "terminal" : "desktop")}
-      aria-label={`Active window: ${label}`}>
-      {view === "desktop" ? <Square /> : view === "portfolio" ? <Frame /> : view === "files" ? <Folder /> : view === "about" ? <UsersRound /> : <Terminal />}
-      <span>{label}</span>
-    </button>
+    <div className="rail-center">
+      <button type="button" className="rail-new-project" data-open-project aria-label="Start a new project" title="New Project"
+        aria-pressed={view === "new-project"} onClick={() => openView("new-project")}>
+        <FilePlus2 aria-hidden="true" /><span>New Project</span>
+      </button>
+    </div>
     <div className="rail-bottom">
       <IconButton label="Adobe Photoshop — open Visual portfolio" icon={ImageIcon} className="rail-shortcut" onClick={() => openPortfolio("photoshop")} />
       <IconButton label="Adobe Illustrator — open Brand portfolio" icon={PenTool} className="rail-shortcut" onClick={() => openPortfolio("illustrator")} />
@@ -254,7 +255,7 @@ function DesktopWallpaper({ workspace, active }: { workspace: number; active: bo
       queueRender();
     };
     const onPointerMove = (event: PointerEvent) => {
-      if (reducedMotion.matches || !finePointer.matches) return;
+      if (!active || reducedMotion.matches || !finePointer.matches) return;
       const pointerX = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width));
       const pointerY = Math.min(1, Math.max(0, (event.clientY - bounds.top) / bounds.height));
       targetX = (0.5 - pointerX) * 8;
@@ -283,9 +284,9 @@ function DesktopWallpaper({ workspace, active }: { workspace: number; active: bo
       finePointer.removeEventListener("change", onPreferenceChange);
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [active]);
 
-  return <div ref={wallpaperRef} className={`wallpaper workspace-${workspace}`}>
+  return <div ref={wallpaperRef} className={`wallpaper workspace-${workspace}`} data-paused={!active || undefined} inert={!active}>
     <div className="wallpaper-motion">
       {(workspace === 1 || workspace === 2) && <img
         src="./public/hieu-wallpaper.png"
@@ -403,9 +404,7 @@ function AboutPage({ onClose }: { onClose: () => void }) {
 }
 
 function TerminalApp({ onClose }: { onClose: () => void }) {
-  return <section className="terminal-window" aria-label="Terminal window"><header>
-    <span><Terminal /> hieu@caelestia: ~</span><div><IconButton label="Minimize terminal" icon={Square} />
-      <IconButton label="Close terminal" icon={X} onClick={onClose} /></div></header>
+  return <DesktopWindow className="terminal-window" label="Terminal" icon={Terminal} onClose={onClose}>
     <div className="terminal-body"><pre aria-label="Caelestia terminal banner">{`   ______          __          __  _
   / ____/___ _____/ /__  _____/ /_(_)___ _
  / /   / __ \`/ __  / _ \\/ ___/ __/ / __ \`/
@@ -414,7 +413,7 @@ function TerminalApp({ onClose }: { onClose: () => void }) {
       <p><span>hieu@caelestia</span> portfolio shell</p>
       <p className="terminal-muted">A faithful web translation of the original QML desktop.</p><p><b>❯</b><i className="cursor" /></p>
     </div>
-  </section>;
+  </DesktopWindow>;
 }
 
 function FilesApp({ onClose }: { onClose: () => void }) {
@@ -477,7 +476,7 @@ const TamAnTuMark: LucideIcon = forwardRef<SVGSVGElement, LucideProps>(function 
     dangerouslySetInnerHTML={{ __html: tamAnTuEmblemMarkup }} />;
 });
 
-function LauncherDrawer({ close, closing }: { close: () => void; closing: boolean }) {
+function LauncherDrawer({ close, closing, openView }: { close: () => void; closing: boolean; openView: (view: View) => void }) {
   const projects: { name: string; detail: string; href?: string; icon: LucideIcon }[] = [
     { name: "Design Forge", detail: "Design system tool", href: "https://phamduchieu2904.github.io/DesignForge/", icon: DesignForgeMark },
     { name: "Tam An Tu", detail: "Project website", href: "https://phamduchieu2904.github.io/tamantu/", icon: TamAnTuMark },
@@ -486,6 +485,10 @@ function LauncherDrawer({ close, closing }: { close: () => void; closing: boolea
   ];
   return <section className={`launcher-drawer ${closing ? "closing" : ""}`} aria-label="Application launcher"><header><Command /><span>Applications</span>
     <IconButton label="Close launcher" icon={X} onClick={close} /></header>
+    <div className="launcher-shell-apps" aria-label="Desktop applications">
+      <button type="button" onClick={() => openView("new-project")}><FilePlus2 aria-hidden="true" /><span><strong>New Project</strong><small>Let’s start a conversation</small></span><ChevronRight aria-hidden="true" /></button>
+      <button type="button" onClick={() => openView("terminal")}><Terminal aria-hidden="true" /><span><strong>Terminal</strong><small>Explore the portfolio shell</small></span><ChevronRight aria-hidden="true" /></button>
+    </div>
     <div className="launcher-apps">{projects.map(({ name, detail, href, icon: Icon }) => href
       ? <a className="launcher-project" href={href} target="_blank" rel="noopener noreferrer" key={name}
           aria-label={`Open ${name} in a new tab`}>
@@ -519,6 +522,7 @@ export default function HomePage() {
     try { window.localStorage.setItem(layoutStorageKey, String(id)); } catch { /* The layout still works in memory. */ }
   };
   useEffect(() => {
+    document.querySelector(".shell")?.setAttribute("data-hydrated", "true");
     setNow(new Date());
     const timer = window.setInterval(() => setNow(new Date()), 10_000);
     return () => window.clearInterval(timer);
@@ -586,8 +590,10 @@ export default function HomePage() {
         onClose={() => openView("desktop")} />}
       {view === "terminal" && <TerminalApp onClose={() => openView("desktop")} />}
       {view === "files" && <FilesApp onClose={() => openView("desktop")} />}
+      <ProjectLauncher active={view === "new-project"} covered={overlay !== null}
+        onClose={() => openView("desktop")} onPortfolio={() => openPortfolio("all")} />
       {overlay === "dashboard" && now && <DashboardDrawer now={now} close={closeOverlay} closing={overlayClosing} />}
-      {overlay === "launcher" && <LauncherDrawer close={closeOverlay} closing={overlayClosing} />}
+      {overlay === "launcher" && <LauncherDrawer close={closeOverlay} closing={overlayClosing} openView={openView} />}
       {overlay === "session" && <SessionDrawer close={closeOverlay} closing={overlayClosing} />}
       {view === "desktop" && !overlay && <button type="button" className="explore-pill" onClick={() => showOverlay("launcher")}>
         <Sparkles /> Explore the shell <kbd>Ctrl K</kbd></button>}

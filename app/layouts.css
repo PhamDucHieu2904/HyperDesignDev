@@ -180,19 +180,16 @@
 }
 @media (pointer: coarse) and (min-height: 650px), (max-width: 820px) and (min-height: 650px) {
   .layout-option { height: 44px; }
-  .active-window { top: calc(50% + 25px); height: 100px; }
 }
 @media (max-height: 600px) {
   .layout-option { height: 27px; }
   .layout-option:is(:hover, :focus-visible, [aria-pressed="true"]) .layout-orb { transform: scale(.78); }
-  .active-window, .rail-bottom > :not(.power):not(.spotify) { display: none; }
+  .rail-bottom > :not(.power):not(.spotify) { display: none; }
 }
 @media (max-width: 820px) and (max-height: 500px) {
   .portfolio-actions { top: auto; bottom: 18px; }
 }
 @media (max-width: 820px) and (max-height: 700px) {
-  .active-window { height: 40px; }
-  .active-window span { display: none; }
 }
 @media (hover: none) {
   .layout-option:hover:not(:focus-visible) .layout-tooltip { visibility: hidden; opacity: 0; }

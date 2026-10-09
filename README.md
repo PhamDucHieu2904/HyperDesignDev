@@ -35,6 +35,8 @@ npm test
 ```
 
 - `app/page.tsx`: nội dung và tương tác.
+- `app/project-launcher/`: cửa sổ New Project, validation và adapter gửi form.
+- `app/project-launcher/config.ts`: endpoint Formspree công khai (để trống thì UI báo `not-configured`, không giả lập thành công).
 - `app/globals.css`: giao diện và responsive.
 - `site.config.mjs`: tiêu đề, mô tả và URL xuất bản.
 - `public/`: tài nguyên gốc.
@@ -54,6 +56,14 @@ preview tại `http://127.0.0.1:3000`; refresh trình duyệt để thấy thay 
 `npm run check` kiểm tra TypeScript và import thừa; `npm run lint` là alias tương thích.
 `npm test` kiểm tra HTML, tài nguyên, metadata, các tương tác trong DOM mô phỏng
 với URL file/GitHub subpath và preview HTTP; không phải kiểm thử bố cục bằng trình duyệt thật.
+
+### Bật nhận yêu cầu Project Launcher
+
+Tạo một form và kích hoạt inbox trong Formspree, sau đó ghi endpoint dạng
+`https://formspree.io/f/FORM_ID` vào `app/project-launcher/config.ts` rồi chạy lại
+`npm run build`. Endpoint là thông tin công khai cần có trong bundle tĩnh; không đặt
+API key riêng tư trong frontend. Form gửi JSON, có trường `_gotcha` chống bot và chỉ
+hiện trạng thái thành công khi provider trả về HTTP success với phản hồi JSON.
 
 ## Đưa lên GitHub Pages
 
