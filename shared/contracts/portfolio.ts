@@ -10,6 +10,7 @@ export const categoryDefinitions = [
 export type CategoryId = typeof categoryDefinitions[number]["id"];
 export type Discipline = typeof categoryDefinitions[number]["discipline"];
 export type ContentState = "empty" | "ready";
+export type MediaAssetState = "pending" | "ready" | "failed";
 
 const categoryIds = new Set<string>(categoryDefinitions.map(category => category.id));
 export const isCategoryId = (value: unknown): value is CategoryId => typeof value === "string" && categoryIds.has(value);

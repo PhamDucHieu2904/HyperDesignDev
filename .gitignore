@@ -44,6 +44,9 @@ next-env.d.ts
 **/.dev.vars
 /outputs/
 /work/
+/.tmp/admin-integration/
+/workers/*/dist/
+/workers/*/.wrangler/
 
 # Local 3D/Blender work (large generated and backup files)
 /artifacts/

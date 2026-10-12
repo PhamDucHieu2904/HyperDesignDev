@@ -1,8 +1,42 @@
-# Hieu Pham — static portfolio
+# Hyper D² — profile và admin
 
-Website tĩnh HTML/CSS/JavaScript. Không cần backend, database, Cloudflare Worker,
-Next.js hay Node.js khi **xem website**. React chỉ chạy trong trình duyệt để giữ
-các tương tác của giao diện Caelestia hiện tại.
+Repository chứa trang profile và trang quản trị nội dung, dùng chung contracts,
+schema và migration database. Hai giao diện có bundle, Worker và cách triển khai riêng.
+
+Bản profile tĩnh vẫn là HTML/CSS/JavaScript, mở trực tiếp mà không cần backend,
+database, Cloudflare Worker, Next.js hay Node.js khi **xem website**. React chạy
+trong trình duyệt để giữ các tương tác của giao diện Caelestia hiện tại. Bản profile
+Cloudflare dùng thêm public API để đọc nội dung đã xuất bản từ D1/R2.
+
+## Cấu trúc chung
+
+```text
+app/                     Giao diện profile hiện có
+app/admin/               Giao diện admin
+workers/public/          Public API, media đã xuất bản và profile assets
+workers/admin/           Admin API và assets, có xác thực Cloudflare Access
+shared/contracts/        Cấu trúc dữ liệu và validation dùng chung
+db/                      Một bộ migration và seed chính thức
+dist/public/             Bản triển khai Cloudflare của profile
+dist/admin/              Bản triển khai admin
+```
+
+Giữ nguyên đường dẫn source profile để tránh thay đổi import, CSS và tài nguyên.
+Admin được đưa vào repository này từ `AdministratorHyperDesignDev`; hướng dẫn
+chạy và dữ liệu local ở [workers/admin/README.md](workers/admin/README.md).
+
+```sh
+npm run build:all
+npm test
+```
+
+`build:all` dựng cả hai bản Cloudflare. `npm run build` vẫn chỉ dựng profile tĩnh;
+`npm run build:admin` chỉ dựng admin. Các lệnh build không triển khai website.
+
+Portfolio Quencha Beverage đã được thêm làm bài Brand đầu tiên theo template
+được cung cấp, với thumbnail lon dưa hấu. Nội dung có trong bản tĩnh và đã được
+nhập vào dữ liệu local của profile/admin. Xem [hướng dẫn nội dung](db/content/README.md)
+để cập nhật bài hoặc nhập lại trên máy mới; dữ liệu remote chưa được thay đổi.
 
 ## Mở ngay trên Windows
 
@@ -56,7 +90,9 @@ preview tại `http://127.0.0.1:3000`; refresh trình duyệt để thấy thay 
 `npm start` chỉ phục vụ các tệp đã build. Ctrl+C để dừng preview.
 `npm run check` kiểm tra TypeScript và import thừa; `npm run lint` là alias tương thích.
 `npm test` kiểm tra HTML, tài nguyên, metadata, các tương tác trong DOM mô phỏng
-với URL file/GitHub subpath và preview HTTP; không phải kiểm thử bố cục bằng trình duyệt thật.
+với URL file/GitHub subpath và preview HTTP, cùng contracts/API admin, publish/unpublish
+qua database dùng chung và sự tách biệt của hai bản triển khai. Các test DOM không
+thay thế kiểm thử bố cục bằng trình duyệt thật.
 
 Các breakpoint bố cục dùng `@container desktop` theo kích thước canvas trước khi
 scale. Vì vậy laptop nhỏ giữ các cột của bản PC; màn hình điện thoại vẫn dùng
@@ -110,7 +146,7 @@ Thời tiết, CPU/RAM, danh sách nhạc và tệp là **dữ liệu mô phỏn
 Chưa có âm thanh thật hay file `Resume.pdf` để tải; chuyển sang tĩnh không tự tạo
 CV hoặc thêm chức năng tải CV. Có thể bổ sung PDF thật và link tương đối sau.
 
-Đã bỏ bộ khung server, xác thực ChatGPT, D1/Drizzle và cấu hình Sites không được
-giao diện này sử dụng. Các file cũ đã theo dõi vẫn có thể lấy lại trong lịch sử Git.
-Việc đổi source không tắt hay thay đổi website đã triển khai trước đây.
+Profile tĩnh không cần server. Public Worker và Admin Worker dùng chung D1/R2
+trên staging; admin giữ xác thực Cloudflare Access, kiểm tra identity và CSRF.
+Việc gom mã nguồn không tự triển khai hoặc thay đổi website đang chạy.
 Tài nguyên gốc và giấy phép được giữ trong `public/CAELESTIA-LICENSE.txt`.

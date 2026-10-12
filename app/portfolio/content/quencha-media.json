@@ -1,0 +1,11 @@
+[
+  { "id": "quencha-thumbnail", "url": "./public/portfolio/quencha/thumbnail.webp", "alt": "Quencha watermelon juice can surrounded by watermelon slices on a coral pink background", "mime": "image/webp", "width": 301, "height": 301 },
+  { "id": "quencha-hero", "url": "./public/portfolio/quencha/hero.webp", "alt": "Quencha Fresh Juice campaign featuring six tropical beverage cans and fresh fruit", "mime": "image/webp", "width": 1380, "height": 1035 },
+  { "id": "quencha-banner", "url": "./public/portfolio/quencha/banner.webp", "alt": "Pink and white Quencha Beverage brand ribbon", "mime": "image/webp", "width": 1380, "height": 74 },
+  { "id": "quencha-labels", "url": "./public/portfolio/quencha/labels.webp", "alt": "Quencha six-flavour packaging label production sheets", "mime": "image/webp", "width": 1380, "height": 1951 },
+  { "id": "quencha-mango-catalogue", "url": "./public/portfolio/quencha/mango-catalogue.webp", "alt": "Quencha mango product catalogue and nutrition panels", "mime": "image/webp", "width": 1380, "height": 1951 },
+  { "id": "quencha-cans", "url": "./public/portfolio/quencha/cans.webp", "alt": "Complete six-flavour Quencha can range", "mime": "image/webp", "width": 1380, "height": 770 },
+  { "id": "quencha-watermelon-poster", "url": "./public/portfolio/quencha/watermelon-poster.webp", "alt": "Quencha Sip Fresh, Enjoy watermelon campaign poster", "mime": "image/webp", "width": 1380, "height": 1713 },
+  { "id": "quencha-storefront", "url": "./public/portfolio/quencha/storefront.webp", "alt": "Quencha Store illuminated signage", "mime": "image/webp", "width": 1380, "height": 460 },
+  { "id": "quencha-brand-mockups", "url": "./public/portfolio/quencha/brand-mockups.webp", "alt": "Quencha staff polo shirts, takeaway cup and shopping bag mockups", "mime": "image/webp", "width": 1380, "height": 777 }
+]

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "blocks": [
+    { "id": "quencha-hero", "type": "image", "assetId": "quencha-hero", "alt": "Quencha Fresh Juice campaign featuring six tropical beverage cans, fresh fruit and a mango splash", "fit": "contain", "style": { "width": "full" } },
+    { "id": "quencha-banner-opening", "type": "image", "assetId": "quencha-banner", "alt": "Pink and white Quencha Beverage brand ribbon", "fit": "contain", "style": { "width": "full" } },
+    { "id": "quencha-title", "type": "heading", "level": 2, "text": "QUENCHA BEVERAGE", "style": { "width": "full" } },
+    { "id": "quencha-positioning-label", "type": "text", "paragraphs": [{ "spans": [{ "text": "Brand Positioning" }] }], "style": { "width": "full" } },
+    { "id": "quencha-positioning-copy", "type": "text", "paragraphs": [{ "spans": [{ "text": "Quencha is a tropical beverage and hydration brand. The brand projects a trendy, energetic, and fashion-forward identity, utilizing phrases like \"Quencha Couture,\" \"flex for your fit,\" and \"slay your style\" in its marketing" }] }], "style": { "width": "full" } },
+    { "id": "quencha-label-system", "type": "image", "assetId": "quencha-labels", "alt": "Six Quencha packaging label production sheets for watermelon, coconut, passion fruit, mango, soursop and pineapple", "fit": "contain", "style": { "width": "full" } },
+    { "id": "quencha-mango-catalogue", "type": "image", "assetId": "quencha-mango-catalogue", "alt": "Quencha Pure Mango Refreshment catalogue page with campaign artwork, brand system and nutrition panels", "fit": "contain", "style": { "width": "full" } },
+    { "id": "quencha-can-lineup", "type": "image", "assetId": "quencha-cans", "alt": "The complete six-flavour Quencha can range arranged together on a stone ledge", "fit": "contain", "style": { "width": "full" } },
+    { "id": "quencha-watermelon-campaign", "type": "image", "assetId": "quencha-watermelon-poster", "alt": "Quencha watermelon campaign poster with the headline Sip Fresh, Enjoy, watermelon slices and a pink poolside scene", "fit": "contain", "style": { "width": "full" } },
+    { "id": "quencha-store-sign", "type": "image", "assetId": "quencha-storefront", "alt": "Quencha Store illuminated signage mockup with the orange and yellow brand mark", "fit": "contain", "style": { "width": "full" } },
+    { "id": "quencha-banner-closing", "type": "image", "assetId": "quencha-banner", "alt": "Pink and white Quencha Beverage brand ribbon", "fit": "contain", "style": { "width": "full" } },
+    { "id": "quencha-brand-applications", "type": "image", "assetId": "quencha-brand-mockups", "alt": "Quencha brand applications across staff polo shirts, a takeaway cup and a shopping bag", "fit": "contain", "style": { "width": "full" } },
+    { "id": "quencha-thanks-title", "type": "heading", "level": 2, "text": "Thank you for watching", "style": { "width": "full" } },
+    { "id": "quencha-thanks-copy", "type": "text", "paragraphs": [
+      { "spans": [{ "text": "If you want to build your own brand, please click the Create button on the left side of the screen." }] },
+      { "spans": [{ "text": "Wishing you good health!" }] }
+    ], "style": { "width": "full" } }
+  ]
+}

@@ -2,10 +2,12 @@ import {
   ArrowLeft, Box, ChevronLeft, ChevronRight, Gamepad2, Globe2, Grid3X3, Image as ImageIcon,
   PenTool, Search, Smartphone, X, type LucideIcon,
 } from "lucide-react";
-import { useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useReducer, useRef, useState } from "react";
 import { ArticleRenderer } from "./ArticleRenderer";
-import { categoryDescriptions, categoryLabels, portfolioProjects } from "./data";
+import { FeaturedCarousel } from "./FeaturedCarousel";
+import { categoryLabels, portfolioProjects } from "./data";
 import { initialPortfolioState, portfolioReducer } from "./navigation";
+import { isArtboardDocument } from "./presentation";
 import {
   canUsePortfolioApi, getCloudAdjacent, getCloudProject, listCloudProjects, listLocalProjects,
 } from "./repository";
@@ -25,7 +27,7 @@ const developmentCategories: { id: Filter; icon: LucideIcon; title?: string }[] 
 
 function ProjectCard({ project, onOpen }: { project: PortfolioProject; onOpen: (project: PortfolioProject) => void }) {
   return <button type="button" className={`pf-project-card ${project.status === "placeholder" ? "pf-project-placeholder" : ""}`} onClick={() => onOpen(project)}>
-    <span className={`pf-card-media pf-media-${project.primaryCategory}`}>
+    <span className={`pf-card-media pf-media-${project.primaryCategory}${project.primaryCategory === "illustrator" && project.thumbnail.fit === "contain" ? " pf-card-media-inset" : ""}`}>
       <img src={project.thumbnail.src} alt="" width={project.thumbnail.width} height={project.thumbnail.height}
         loading="lazy" style={{ objectFit: project.thumbnail.fit ?? "cover" }} />
       <span className="pf-card-arrow" aria-hidden="true"><ChevronRight /></span>
@@ -38,14 +40,12 @@ function ProjectCard({ project, onOpen }: { project: PortfolioProject; onOpen: (
   </button>;
 }
 
-function Overview({ projects, category, query, featureIndex, onFeatureChange, onOpen, onReset }: {
+function Overview({ projects, category, query, onOpen, onReset }: {
   projects: PortfolioProject[]; category: Filter; query: string;
-  featureIndex: number; onFeatureChange: (offset: number) => void;
   onOpen: (project: PortfolioProject) => void; onReset: () => void;
 }) {
   const design = projects.filter(project => project.discipline === "design");
   const development = projects.filter(project => project.discipline === "development");
-  const feature = projects.length ? projects[featureIndex % projects.length] : null;
 
   if (!projects.length) return <section className="pf-empty" aria-live="polite">
     <span>00 / No results</span>
@@ -55,33 +55,7 @@ function Overview({ projects, category, query, featureIndex, onFeatureChange, on
   </section>;
 
   return <div className="pf-overview">
-    <section className="pf-feature" aria-label="Featured portfolio project">
-      {feature ? <>
-        <figure className={`pf-feature-cover pf-media-${feature.primaryCategory}`}>
-          <img src={feature.cover.src} alt={feature.cover.alt} width={feature.cover.width} height={feature.cover.height}
-            style={{ objectFit: feature.cover.fit ?? "cover" }} />
-        </figure>
-        <div className="pf-feature-copy">
-          <small>Featured / {categoryLabels[feature.primaryCategory]}</small>
-          <h1>{feature.shortTitle}</h1>
-          <p>{feature.summary}</p>
-          <span>{feature.year}</span>
-        </div>
-      </> : <>
-        <div className="pf-feature-cover pf-feature-placeholder" aria-hidden="true"><Grid3X3 /></div>
-        <div className="pf-feature-copy">
-          <small>Portfolio preview</small><h1>{categoryLabels[category]}</h1>
-          <p>{categoryDescriptions[category]}</p><span>Coming soon</span>
-        </div>
-      </>}
-      <div className="pf-feature-footer">
-      {feature && <button type="button" className="pf-feature-open" onClick={() => onOpen(feature)}>View project</button>}
-      {projects.length > 1 && <div className="pf-feature-arrows">
-        <button type="button" aria-label="Previous featured project" onClick={() => onFeatureChange(-1)}><ChevronLeft aria-hidden="true" /></button>
-        <button type="button" aria-label="Next featured project" onClick={() => onFeatureChange(1)}><ChevronRight aria-hidden="true" /></button>
-      </div>}
-      </div>
-    </section>
+    <FeaturedCarousel projects={projects} onOpen={onOpen} />
     {design.length > 0 && <section className="pf-project-section" aria-labelledby="hyper-design-title">
       <div className="pf-section-heading"><span>01</span><h2 id="hyper-design-title">Hyper Design</h2><small>{design.length} projects</small></div>
       <div className="pf-project-grid">{design.map(project => <ProjectCard key={project.id} project={project} onOpen={onOpen} />)}</div>
@@ -98,10 +72,11 @@ function CaseStudy({ project, loading, nextBusy, error, onRetry, onBack, onOpenN
   onBack: () => void; onOpenNext: () => void;
 }) {
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const isArtboard = project.id === "quencha-beverage" || project.id === "vinut-corporate-uniform" || isArtboardDocument(project.document);
   useEffect(() => { titleRef.current?.focus(); }, [project.id]);
   return <article className={`pf-case pf-case-${project.primaryCategory}`}>
     <button type="button" className="pf-back" onClick={onBack}><ArrowLeft aria-hidden="true" />Back to all projects</button>
-    <header className="pf-case-header">
+    <header className={`pf-case-header${isArtboard ? " pf-case-header-artboard" : ""}`}>
       <p>{categoryLabels[project.primaryCategory]} / {project.year}</p>
       <h1 ref={titleRef} tabIndex={-1}>{project.title}</h1>
       <span>{project.summary}</span>
@@ -110,10 +85,10 @@ function CaseStudy({ project, loading, nextBusy, error, onRetry, onBack, onOpenN
         <div><dt>Tools</dt><dd>{project.tools.join(" · ")}</dd></div>
       </dl>
     </header>
-    <figure className="pf-case-cover">
+    {!isArtboard && <figure className="pf-case-cover">
       <img src={project.cover.src} alt={project.cover.alt} width={project.cover.width} height={project.cover.height}
         style={{ objectFit: project.cover.fit ?? "contain" }} />
-    </figure>
+    </figure>}
     {loading && <div className="pf-content-state" role="status"><span className="pf-spinner" aria-hidden="true" />Loading project story…</div>}
     {error && <div className="pf-content-state pf-content-error" role="alert"><span>{error}</span><button type="button" onClick={onRetry}>Retry</button></div>}
     {!loading && !error && project.document
@@ -140,8 +115,8 @@ function stateForInitialCategory(category: Filter) {
 
 export function PortfolioApp({ onClose, initialCategory = "all" }: { onClose: () => void; initialCategory?: Filter }) {
   const [state, dispatch] = useReducer(portfolioReducer, initialCategory, stateForInitialCategory);
+  const indexListId = useId();
   const [searchFocused, setSearchFocused] = useState(false);
-  const [featureIndex, setFeatureIndex] = useState(0);
   const [projects, setProjects] = useState<PortfolioProject[]>(portfolioProjects);
   const [source, setSource] = useState<"probing" | "local" | "cloud">("probing");
   const [listStatus, setListStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
@@ -165,6 +140,7 @@ export function PortfolioApp({ onClose, initialCategory = "all" }: { onClose: ()
     projects, source === "cloud" ? "all" : currentProject ? currentProject.primaryCategory : state.category,
     source === "cloud" ? "" : currentProject ? "" : state.query,
   ), [currentProject, projects, source, state.category, state.query]);
+  const indexCollapsed = Boolean(currentProject) && !state.indexExpanded;
   const scrollViewer = (top: number) => {
     const viewer = viewerRef.current;
     if (!viewer) return;
@@ -175,9 +151,12 @@ export function PortfolioApp({ onClose, initialCategory = "all" }: { onClose: ()
   const openProject = (project: PortfolioProject) => {
     dispatch({ type: "open", project, scrollTop: viewerRef.current?.scrollTop ?? 0 });
     scrollViewer(0);
+    // Selecting the current item also hides its index button; keep focus in the story.
+    if (project.id === state.projectId) window.requestAnimationFrame(() => {
+      viewerRef.current?.querySelector<HTMLElement>(".pf-case-header h1")?.focus();
+    });
   };
   const selectCategory = (category: Filter) => {
-    setFeatureIndex(0);
     if (source === "cloud") {
       pendingOpenCategory.current = category === "all" ? null : category;
       dispatch({ type: "category", value: category });
@@ -298,6 +277,7 @@ export function PortfolioApp({ onClose, initialCategory = "all" }: { onClose: ()
   }, [onClose, state.query]);
 
   return <section className="pf-window" aria-label="Portfolio" data-searching={searchFocused ? "true" : undefined}
+    data-index-collapsed={indexCollapsed ? "true" : "false"}
     data-source={source} aria-busy={listStatus === "loading" || detailStatus === "loading"}>
     <header className="pf-header">
       <label className="pf-search">
@@ -340,14 +320,24 @@ export function PortfolioApp({ onClose, initialCategory = "all" }: { onClose: ()
       {currentProject
         ? <CaseStudy project={currentProject} loading={detailStatus === "loading"} nextBusy={navigationBusy} error={detailError}
           onRetry={() => setReloadDetail(value => value + 1)} onBack={backToProjects} onOpenNext={openNext} />
-        : <Overview projects={visibleProjects} category={state.category} query={state.query} featureIndex={featureIndex}
-          onFeatureChange={offset => setFeatureIndex(current => (current + offset + visibleProjects.length) % visibleProjects.length)}
+        : <Overview projects={visibleProjects} category={state.category} query={state.query}
           onOpen={openProject} onReset={() => selectCategory("all")} />}
     </main>
 
     <aside className="pf-index" aria-label="Project list">
-      <header><span>Project index</span><strong>{String(visibleProjects.length).padStart(2, "0")}</strong></header>
-      {visibleProjects.length > 0 ? <ul>
+      <header>
+        <span>Project index</span><strong>{String(visibleProjects.length).padStart(2, "0")}</strong>
+        {currentProject && <button type="button" className="pf-index-toggle"
+          aria-label={indexCollapsed ? "Expand project index" : "Collapse project index"}
+          title={indexCollapsed ? "Expand project index" : "Collapse project index"}
+          aria-expanded={!indexCollapsed} aria-controls={indexListId}
+          onClick={() => dispatch({ type: "toggle-index" })}>
+          {indexCollapsed ? <ChevronLeft aria-hidden="true" /> : <ChevronRight aria-hidden="true" />}
+          <span className="pf-index-rail-label" aria-hidden="true">Project index</span>
+          <strong className="pf-index-rail-count" aria-hidden="true">{String(visibleProjects.length).padStart(2, "0")}</strong>
+        </button>}
+      </header>
+      {visibleProjects.length > 0 ? <ul id={indexListId}>
         {visibleProjects.map((project, index) => <li key={project.id}>
           <button type="button" aria-current={currentProject?.id === project.id ? "true" : undefined} onClick={() => openProject(project)}>
             <span className="pf-index-number">{String(index + 1).padStart(2, "0")}</span>
@@ -355,7 +345,7 @@ export function PortfolioApp({ onClose, initialCategory = "all" }: { onClose: ()
             <span><strong>{project.shortTitle}</strong><small>{categoryLabels[project.primaryCategory]}</small></span>
           </button>
         </li>)}
-      </ul> : <p className="pf-index-empty">No published projects</p>}
+      </ul> : <p id={indexListId} className="pf-index-empty">No published projects</p>}
     </aside>
   </section>;
 }

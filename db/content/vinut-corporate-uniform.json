@@ -1,0 +1,243 @@
+{
+  "id": "vinut-corporate-uniform",
+  "slug": "vinut-corporate-uniform",
+  "revisionId": "uniform-revision-v1",
+  "createdAt": "2026-10-12T02:00:00.000Z",
+  "metadata": {
+    "categoryId": "photoshop",
+    "title": "Vinut — Corporate Uniform Collection",
+    "shortTitle": "Corporate Uniform",
+    "subtitle": "A coordinated corporate uniform collection presented through polo shirts, office wear, quality assurance blouses and safety workwear.",
+    "thumbnailAssetId": "uniform-thumbnail",
+    "coverAssetId": "uniform-artboard-1",
+    "tags": [
+      "vinut",
+      "uniform",
+      "corporate",
+      "collection",
+      "visual",
+      "polo",
+      "workwear",
+      "đồng phục",
+      "áo"
+    ],
+    "tools": [],
+    "role": "Uniform collection & visual presentation",
+    "year": "Selected work",
+    "isFeatured": false,
+    "sortOrder": 1
+  },
+  "document": {
+    "schemaVersion": 1,
+    "blocks": [
+      {
+        "id": "uniform-page-1",
+        "type": "image",
+        "assetId": "uniform-artboard-1",
+        "alt": "Vinut corporate uniform collection cover featuring navy polo shirts with cream collars and two office models",
+        "fit": "contain",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "uniform-page-2",
+        "type": "image",
+        "assetId": "uniform-artboard-2",
+        "alt": "Vinut navy office polo shirt details, embroidered logo, fabric specifications and cream collar trim",
+        "fit": "contain",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "uniform-page-3",
+        "type": "image",
+        "assetId": "uniform-artboard-3",
+        "alt": "Vinut corporate polo uniform shown from the front and back on male and female models",
+        "fit": "contain",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "uniform-page-4",
+        "type": "image",
+        "assetId": "uniform-artboard-4",
+        "alt": "Vinut office polo shirt colour collection with ten options and matching lanyard and employee badge",
+        "fit": "contain",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "uniform-page-5",
+        "type": "image",
+        "assetId": "uniform-artboard-5",
+        "alt": "Vinut sales team uniform options with grey shirts, tailoring details and coordinated navy office suits",
+        "fit": "contain",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "uniform-page-6",
+        "type": "image",
+        "assetId": "uniform-artboard-6",
+        "alt": "Vinut quality assurance blouse collection with colour options, work caps and a laboratory staff model",
+        "fit": "contain",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "uniform-page-7",
+        "type": "image",
+        "assetId": "uniform-artboard-7",
+        "alt": "Vinut safety workwear collection with protective jacket, trousers, safety helmet, shoes and gloves",
+        "fit": "contain",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "uniform-thanks-title",
+        "type": "heading",
+        "level": 2,
+        "text": "Thank you for watching",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "uniform-thanks-copy",
+        "type": "text",
+        "style": {
+          "width": "full"
+        },
+        "paragraphs": [
+          {
+            "spans": [
+              {
+                "text": "If you want to build your own brand, please click the Create button on the left side of the screen."
+              }
+            ]
+          },
+          {
+            "spans": [
+              {
+                "text": "Wishing you good health!"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "media": [
+    {
+      "id": "uniform-thumbnail",
+      "url": "./public/portfolio/uniform/thumbnail.webp",
+      "alt": "Vinut Corporate Uniform thumbnail featuring two models in navy polo shirts against a collection collage",
+      "mime": "image/webp",
+      "width": 301,
+      "height": 301,
+      "sourcePath": "./public/portfolio/uniform/thumbnail.webp",
+      "originalName": "thumbnail.webp",
+      "bytes": 30662,
+      "checksum": "67b774a081adddc6521d3f1ae782dd7d7040a9571f7867b9019b25fe2f84f188",
+      "objectKey": "portfolio/uniform/uniform-thumbnail-67b774a081adddc6.webp"
+    },
+    {
+      "id": "uniform-artboard-1",
+      "url": "./public/portfolio/uniform/artboard-1.webp",
+      "alt": "Vinut corporate uniform collection cover featuring navy polo shirts with cream collars and two office models",
+      "mime": "image/webp",
+      "width": 1400,
+      "height": 1867,
+      "sourcePath": "./public/portfolio/uniform/artboard-1.webp",
+      "originalName": "artboard-1.webp",
+      "bytes": 249950,
+      "checksum": "8a812552109523835cde9652c574a639a8980c38585620555a2260b8c634ab2b",
+      "objectKey": "portfolio/uniform/uniform-artboard-1-8a81255210952383.webp"
+    },
+    {
+      "id": "uniform-artboard-2",
+      "url": "./public/portfolio/uniform/artboard-2.webp",
+      "alt": "Vinut navy office polo shirt details, embroidered logo, fabric specifications and cream collar trim",
+      "mime": "image/webp",
+      "width": 1400,
+      "height": 1866,
+      "sourcePath": "./public/portfolio/uniform/artboard-2.webp",
+      "originalName": "artboard-2.webp",
+      "bytes": 249048,
+      "checksum": "cfb47181b65d999b5a4d1223897e42482716206558de4e140031ee9e7ee76acf",
+      "objectKey": "portfolio/uniform/uniform-artboard-2-cfb47181b65d999b.webp"
+    },
+    {
+      "id": "uniform-artboard-3",
+      "url": "./public/portfolio/uniform/artboard-3.webp",
+      "alt": "Vinut corporate polo uniform shown from the front and back on male and female models",
+      "mime": "image/webp",
+      "width": 1400,
+      "height": 1866,
+      "sourcePath": "./public/portfolio/uniform/artboard-3.webp",
+      "originalName": "artboard-3.webp",
+      "bytes": 240914,
+      "checksum": "4b84b67f214c6ba7ae7701984a41aa0b82dadf4c8c4e69a089aae64301187725",
+      "objectKey": "portfolio/uniform/uniform-artboard-3-4b84b67f214c6ba7.webp"
+    },
+    {
+      "id": "uniform-artboard-4",
+      "url": "./public/portfolio/uniform/artboard-4.webp",
+      "alt": "Vinut office polo shirt colour collection with ten options and matching lanyard and employee badge",
+      "mime": "image/webp",
+      "width": 1400,
+      "height": 1867,
+      "sourcePath": "./public/portfolio/uniform/artboard-4.webp",
+      "originalName": "artboard-4.webp",
+      "bytes": 214020,
+      "checksum": "d0ddd6b0e9334369c6a7b4196b2fb17ad5e5cb4475287b7beb0068dcc83881b7",
+      "objectKey": "portfolio/uniform/uniform-artboard-4-d0ddd6b0e9334369.webp"
+    },
+    {
+      "id": "uniform-artboard-5",
+      "url": "./public/portfolio/uniform/artboard-5.webp",
+      "alt": "Vinut sales team uniform options with grey shirts, tailoring details and coordinated navy office suits",
+      "mime": "image/webp",
+      "width": 1400,
+      "height": 1867,
+      "sourcePath": "./public/portfolio/uniform/artboard-5.webp",
+      "originalName": "artboard-5.webp",
+      "bytes": 237906,
+      "checksum": "9f276d4af9382fc81cb6cd5baa50f86bbb9d019f882686a62381d1398a0e61e2",
+      "objectKey": "portfolio/uniform/uniform-artboard-5-9f276d4af9382fc8.webp"
+    },
+    {
+      "id": "uniform-artboard-6",
+      "url": "./public/portfolio/uniform/artboard-6.webp",
+      "alt": "Vinut quality assurance blouse collection with colour options, work caps and a laboratory staff model",
+      "mime": "image/webp",
+      "width": 1400,
+      "height": 1867,
+      "sourcePath": "./public/portfolio/uniform/artboard-6.webp",
+      "originalName": "artboard-6.webp",
+      "bytes": 219976,
+      "checksum": "bd713c8a76282a3ea9758716b893bebb863a3a49938828131945ac616993d7fd",
+      "objectKey": "portfolio/uniform/uniform-artboard-6-bd713c8a76282a3e.webp"
+    },
+    {
+      "id": "uniform-artboard-7",
+      "url": "./public/portfolio/uniform/artboard-7.webp",
+      "alt": "Vinut safety workwear collection with protective jacket, trousers, safety helmet, shoes and gloves",
+      "mime": "image/webp",
+      "width": 1400,
+      "height": 1867,
+      "sourcePath": "./public/portfolio/uniform/artboard-7.webp",
+      "originalName": "artboard-7.webp",
+      "bytes": 195566,
+      "checksum": "b66455dbe883d5431e410bea70a15a52d1e0217aac8f20607b9bfb1d0e5bce75",
+      "objectKey": "portfolio/uniform/uniform-artboard-7-b66455dbe883d543.webp"
+    }
+  ]
+}

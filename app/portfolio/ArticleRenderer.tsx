@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { ArticleBlock, ArticleDocument, MediaDescriptor, RichSpan } from "../../shared/contracts";
+import { isArtboardDocument } from "./presentation";
 
 type ArticleStyle = CSSProperties & { "--pf-block-accent"?: string };
 
@@ -17,6 +18,7 @@ function blockProps(block: ArticleBlock) {
     ? { "--pf-block-accent": blockStyle.accentColor }
     : undefined;
   return {
+    "data-block-id": block.id,
     className: ["pf-article-block", `pf-block-${block.type}`, `pf-block-width-${blockStyle?.width ?? "reading"}`,
       `pf-block-bg-${blockStyle?.background ?? "transparent"}`, `pf-block-pad-${blockStyle?.padding ?? "none"}`].join(" "),
     style,
@@ -67,6 +69,6 @@ export function ArticleRenderer({ document, media }: { document: ArticleDocument
     <small>Portfolio story</small><h2>Content is being prepared.</h2>
     <p>This project is published, but its detailed presentation has not been added yet.</p>
   </section>;
-  return <div className="pf-article">{document.blocks.map(block =>
+  return <div className={`pf-article${isArtboardDocument(document) ? " portfolio-artboard" : ""}`}>{document.blocks.map(block =>
     <ArticleBlockView key={block.id} block={block} media={mediaById} />)}</div>;
 }

@@ -58,7 +58,8 @@ const registerMedia = async media => {
 };
 
 const projects = [];
-for (const [projectIndex, project] of portfolioProjects.entries()) {
+// Keep the legacy seed stable; authored documents have their own content imports.
+for (const [projectIndex, project] of portfolioProjects.filter(project => !project.document).entries()) {
   const thumbnail = await registerMedia(project.thumbnail);
   const cover = await registerMedia(project.cover);
   const isPlaceholder = project.status === "placeholder";

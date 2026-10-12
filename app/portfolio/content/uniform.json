@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "blocks": [
+    {
+      "id": "uniform-page-1",
+      "type": "image",
+      "assetId": "uniform-artboard-1",
+      "alt": "Vinut corporate uniform collection cover featuring navy polo shirts with cream collars and two office models",
+      "fit": "contain",
+      "style": {
+        "width": "full"
+      }
+    },
+    {
+      "id": "uniform-page-2",
+      "type": "image",
+      "assetId": "uniform-artboard-2",
+      "alt": "Vinut navy office polo shirt details, embroidered logo, fabric specifications and cream collar trim",
+      "fit": "contain",
+      "style": {
+        "width": "full"
+      }
+    },
+    {
+      "id": "uniform-page-3",
+      "type": "image",
+      "assetId": "uniform-artboard-3",
+      "alt": "Vinut corporate polo uniform shown from the front and back on male and female models",
+      "fit": "contain",
+      "style": {
+        "width": "full"
+      }
+    },
+    {
+      "id": "uniform-page-4",
+      "type": "image",
+      "assetId": "uniform-artboard-4",
+      "alt": "Vinut office polo shirt colour collection with ten options and matching lanyard and employee badge",
+      "fit": "contain",
+      "style": {
+        "width": "full"
+      }
+    },
+    {
+      "id": "uniform-page-5",
+      "type": "image",
+      "assetId": "uniform-artboard-5",
+      "alt": "Vinut sales team uniform options with grey shirts, tailoring details and coordinated navy office suits",
+      "fit": "contain",
+      "style": {
+        "width": "full"
+      }
+    },
+    {
+      "id": "uniform-page-6",
+      "type": "image",
+      "assetId": "uniform-artboard-6",
+      "alt": "Vinut quality assurance blouse collection with colour options, work caps and a laboratory staff model",
+      "fit": "contain",
+      "style": {
+        "width": "full"
+      }
+    },
+    {
+      "id": "uniform-page-7",
+      "type": "image",
+      "assetId": "uniform-artboard-7",
+      "alt": "Vinut safety workwear collection with protective jacket, trousers, safety helmet, shoes and gloves",
+      "fit": "contain",
+      "style": {
+        "width": "full"
+      }
+    },
+    {
+      "id": "uniform-thanks-title",
+      "type": "heading",
+      "level": 2,
+      "text": "Thank you for watching",
+      "style": {
+        "width": "full"
+      }
+    },
+    {
+      "id": "uniform-thanks-copy",
+      "type": "text",
+      "paragraphs": [
+        {
+          "spans": [
+            {
+              "text": "If you want to build your own brand, please click the Create button on the left side of the screen."
+            }
+          ]
+        },
+        {
+          "spans": [
+            {
+              "text": "Wishing you good health!"
+            }
+          ]
+        }
+      ],
+      "style": {
+        "width": "full"
+      }
+    }
+  ]
+}

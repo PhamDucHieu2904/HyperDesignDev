@@ -1,0 +1,10 @@
+DEPLOY_ENV=local
+LOCAL_ADMIN_BYPASS=true
+LOCAL_CSRF_TOKEN=local-dev-csrf
+ADMIN_EMAIL=hieuphamdesdev@gmail.com
+
+# Deployed authentication also requires these values. Store CSRF_SECRET with
+# `wrangler secret put`, never in wrangler.jsonc or a committed file.
+ADMIN_ORIGIN=https://hyperd-admin-staging.hieu-caelestia-portfolio.workers.dev
+ACCESS_AUD=replace-with-access-application-audience
+CSRF_SECRET=replace-with-a-long-random-value-for-local-testing-only

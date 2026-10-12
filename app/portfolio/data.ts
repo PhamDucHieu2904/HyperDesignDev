@@ -1,5 +1,9 @@
 import type { ArticleDocument, MediaDescriptor } from "../../shared/contracts";
 import labelLabDocument from "./content/label-lab.json";
+import quenchaDocument from "./content/quencha.json";
+import quenchaMedia from "./content/quencha-media.json";
+import uniformDocument from "./content/uniform.json";
+import uniformMedia from "./content/uniform-media.json";
 import type { Filter, PortfolioProject } from "./types";
 
 export const categoryLabels: Record<Filter, string> = {
@@ -104,6 +108,27 @@ const labelLabIcon = {
 
 export const portfolioProjects: PortfolioProject[] = [
   {
+    id: "quencha-beverage",
+    title: "Quencha Beverage — Brand Identity",
+    shortTitle: "Quencha Beverage",
+    summary: "A tropical beverage brand brought to life through six-flavour packaging, campaign visuals and brand applications.",
+    primaryCategory: "illustrator",
+    discipline: "design",
+    tags: ["quencha", "brand identity", "packaging", "beverage", "label", "campaign", "watermelon"],
+    status: "published",
+    order: 0,
+    thumbnail: { src: quenchaMedia[0].url, alt: quenchaMedia[0].alt, width: 301, height: 301, fit: "cover" },
+    cover: { src: quenchaMedia[1].url, alt: quenchaMedia[1].alt, width: 1380, height: 1035, fit: "contain" },
+    role: "Brand identity & packaging design",
+    year: "Selected work",
+    tools: [],
+    sections: [],
+    revisionId: "quencha-revision-v1",
+    contentState: "ready",
+    document: quenchaDocument as ArticleDocument,
+    media: quenchaMedia,
+  },
+  {
     id: "vinut-coco-boba-label",
     title: "Vinut Coco Boba — Label System",
     shortTitle: "Coco Boba Label",
@@ -133,6 +158,27 @@ export const portfolioProjects: PortfolioProject[] = [
         copy: "Color channels, dimensions, print status and artwork variants are presented as part of the working file rather than hidden behind a decorative mockup.",
       },
     ],
+  },
+  {
+    id: "vinut-corporate-uniform",
+    title: "Vinut — Corporate Uniform Collection",
+    shortTitle: "Corporate Uniform",
+    summary: "A coordinated corporate uniform collection presented through polo shirts, office wear, quality assurance blouses and safety workwear.",
+    primaryCategory: "photoshop",
+    discipline: "design",
+    tags: ["vinut", "uniform", "corporate", "collection", "visual", "polo", "workwear", "đồng phục", "áo"],
+    status: "published",
+    order: 1,
+    thumbnail: { src: uniformMedia[0].url, alt: uniformMedia[0].alt, width: 301, height: 301, fit: "cover" },
+    cover: { src: uniformMedia[1].url, alt: uniformMedia[1].alt, width: 1400, height: 1867, fit: "contain" },
+    role: "Uniform collection & visual presentation",
+    year: "Selected work",
+    tools: [],
+    sections: [],
+    revisionId: "uniform-revision-v1",
+    contentState: "ready",
+    document: uniformDocument as ArticleDocument,
+    media: uniformMedia,
   },
   {
     id: "coco-boba-tini-world",

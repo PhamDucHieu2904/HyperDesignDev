@@ -105,6 +105,8 @@ for (const mode of ["file", "github-subpath"]) {
   test(`interactive shell hydrates and works using only static files (${mode})`, async () => {
     const errors = [];
     const requests = [];
+    const rotationTimers = new Map();
+    let rotationTimerId = -1;
     const base = mode === "file" ? root.href : "https://example.github.io/my-cv/";
     class OfflineAssets extends ResourceLoader {
       fetch(url) {
@@ -127,6 +129,17 @@ for (const mode of ["file", "github-subpath"]) {
       pretendToBeVisual: true, virtualConsole,
       beforeParse(window) {
         window.fetch = () => { assert.fail("The static CV must not call an API"); };
+        const nativeInterval = window.setInterval.bind(window);
+        const nativeClearInterval = window.clearInterval.bind(window);
+        window.setInterval = (callback, delay, ...args) => {
+          if (delay !== 5000) return nativeInterval(callback, delay, ...args);
+          const id = rotationTimerId--;
+          rotationTimers.set(id, () => callback(...args));
+          return id;
+        };
+        window.clearInterval = id => {
+          if (!rotationTimers.delete(id)) nativeClearInterval(id);
+        };
       },
     });
     const { window } = dom;
@@ -157,6 +170,31 @@ for (const mode of ["file", "github-subpath"]) {
       await until(() => !document.querySelector(".about-page"), "About page did not close");
       click('[data-action="portfolio"]');
       await until(() => document.querySelector(".pf-window"), "Hero Portfolio action did not open Portfolio");
+      assert.equal(document.querySelector('.pf-feature-cover img').getAttribute('src'), './public/portfolio/quencha/thumbnail.webp');
+      assert.equal(window.getComputedStyle(document.querySelector('.pf-feature-cover')).padding, '0px');
+      assert.equal(window.getComputedStyle(document.querySelector('.pf-feature-cover img')).objectFit, 'cover');
+      assert.equal(rotationTimers.size, 1, "Featured banner should schedule a five-second rotation");
+      const firstFeatured = document.querySelector('.pf-feature').dataset.projectId;
+      [...rotationTimers.values()][0]();
+      await until(() => document.querySelector('.pf-feature').dataset.projectId !== firstFeatured, "Random rotation repeated the current portfolio");
+      assert.equal(document.querySelector('.pf-feature').dataset.sliding, 'true');
+      assert.equal(document.querySelector('.pf-feature-previous').getAttribute('aria-hidden'), 'true');
+      assert.equal(document.querySelector('.pf-feature-previous img').getAttribute('src'), './public/portfolio/quencha/thumbnail.webp');
+      click('[aria-label="Pause automatic portfolio rotation"]');
+      await until(() => rotationTimers.size === 0, "Pause did not stop automatic rotation");
+      click('[aria-label="Resume automatic portfolio rotation"]');
+      await until(() => rotationTimers.size === 1, "Resume did not restart automatic rotation");
+      const randomFeatured = document.querySelector('.pf-feature').dataset.projectId;
+      click('[aria-label="Next featured project"]');
+      await until(() => document.querySelector('.pf-feature').dataset.projectId !== randomFeatured, "Manual next did not change featured portfolio");
+      click('[aria-label="Previous featured project"]');
+      await until(() => document.querySelector('.pf-feature').dataset.projectId === randomFeatured, "Manual previous did not return to featured portfolio");
+      const randomFeaturedTitle = document.querySelector('.pf-feature > .pf-feature-copy h1').textContent;
+      click('.pf-feature-open');
+      await until(() => document.querySelector(`.pf-index button[aria-current="true"]`), "Featured project did not open its own story");
+      assert.equal(document.querySelector('.pf-index button[aria-current="true"] strong').textContent, randomFeaturedTitle,
+        "View project should open the currently displayed banner project");
+      assert.equal(rotationTimers.size, 0, "Rotation should stop while reading a project");
       click(".pf-close");
       await until(() => !document.querySelector(".pf-window"), "Hero-opened Portfolio did not close");
       key("k", true);
@@ -229,27 +267,57 @@ for (const mode of ["file", "github-subpath"]) {
 
       click('[aria-label="Adobe Illustrator — open Brand portfolio"]');
       await until(() => document.querySelector(".pf-case"), "Brand shortcut did not open its first project");
-      assert.match(document.querySelector(".pf-case-header h1").textContent, /Label System/);
+      assert.match(document.querySelector(".pf-case-header h1").textContent, /Quencha Beverage/);
+      assert.ok(document.querySelector(".portfolio-artboard"));
+      assert.equal(document.querySelectorAll(".portfolio-artboard img").length, 9);
+      assert.equal(document.querySelector(".pf-case-cover"), null, "Quencha should show its template hero once");
+      click('.pf-nav-history [aria-label="Next project"]');
+      await until(() => /Label System/.test(document.querySelector(".pf-case-header h1").textContent), "Quencha should lead to the existing Brand project");
+      assert.equal(document.querySelector(".pf-window").dataset.indexCollapsed, "true", "Direct category entry should minimize the desktop index");
+      click('[aria-label="Expand project index"]');
+      await until(() => document.querySelector(".pf-window").dataset.indexCollapsed === "false", "Project index did not expand");
+      const indexToggle = document.querySelector('[aria-label="Collapse project index"]');
+      assert.equal(indexToggle.getAttribute("aria-expanded"), "true");
+      assert.equal(document.getElementById(indexToggle.getAttribute("aria-controls")).tagName, "UL");
+      click('.pf-nav-history [aria-label="Next project"]');
+      await until(() => /Corporate Uniform/.test(document.querySelector(".pf-case-header h1").textContent),
+        "Next project did not reach the new Visual uniform collection");
+      assert.equal(document.querySelectorAll(".portfolio-artboard img").length, 7);
+      assert.equal(document.querySelector(".pf-case-cover"), null, "Uniform should show each supplied page once");
+      assert.match(document.querySelector(".portfolio-artboard").textContent, /Thank you for watching/);
       click('.pf-nav-history [aria-label="Next project"]');
       await until(() => /Tini World/.test(document.querySelector(".pf-case-header h1").textContent),
         "Next project did not follow Brand → Visual order");
+      assert.equal(document.querySelector(".pf-window").dataset.indexCollapsed, "true", "Opening another project should minimize the index again");
       click('.pf-nav-history [aria-label="Next project"]');
       await until(() => /Exhibition Booth/.test(document.querySelector(".pf-case-header h1").textContent),
         "Next project did not follow Visual → 3D order");
       click('[data-category="all"]');
       await until(() => document.querySelector(".pf-overview"), "All category did not open the overview");
       assert.match(document.querySelector(".pf-overview").textContent, /Hyper Design/);
+      assert.equal(document.querySelector(".pf-window").dataset.indexCollapsed, "false", "The overview should retain its full project index");
       assert.equal(document.querySelector(".player-bar"), null);
       click(".pf-project-card");
       await until(() => document.querySelector(".pf-case"), "Case study did not open");
       assert.ok(document.querySelector('.pf-index [aria-current="true"]'));
+      assert.equal(document.querySelector(".pf-window").dataset.indexCollapsed, "true");
+      click('[aria-label="Expand project index"]');
+      await until(() => document.querySelector('[aria-label="Collapse project index"]'), "Index toggle did not update");
+      click('[aria-label="Collapse project index"]');
+      await until(() => document.querySelector(".pf-window").dataset.indexCollapsed === "true", "Project index did not minimize again");
+      click('[aria-label="Expand project index"]');
+      await until(() => document.querySelector('[aria-label="Collapse project index"]'), "Index did not reopen");
+      click('.pf-index [aria-current="true"]');
+      await until(() => document.querySelector(".pf-window").dataset.indexCollapsed === "true"
+        && document.activeElement === document.querySelector(".pf-case-header h1"),
+        "Reopening the current project should minimize the index and keep keyboard focus in the story");
       assert.ok(document.querySelector('.pf-nav [aria-pressed="true"]:not([data-category="all"])'));
       click(".pf-back");
       await until(() => document.querySelector(".pf-overview"), "Portfolio overview did not return");
       click('[data-category="photoshop"]');
       await until(() => document.querySelector(".pf-case"), "Photoshop category did not open its first project directly");
-      assert.match(document.querySelector(".pf-case-header h1").textContent, /Tini World/);
-      assert.equal(document.querySelectorAll(".pf-index li").length, 1);
+      assert.match(document.querySelector(".pf-case-header h1").textContent, /Corporate Uniform/);
+      assert.equal(document.querySelectorAll(".pf-index li").length, 2);
       click('[data-category="all"]');
       await until(() => document.querySelector(".pf-overview"), "All category did not return to the overview");
       const portfolioSearch = document.querySelector('[aria-label="Search portfolio"]');
@@ -258,7 +326,7 @@ for (const mode of ["file", "github-subpath"]) {
       await until(() => document.querySelectorAll(".pf-project-card").length === 1, "Portfolio search did not filter projects");
       assert.match(document.querySelector(".pf-project-card").textContent, /Tini World/);
       key("Escape");
-      await until(() => portfolioSearch.value === "" && document.querySelectorAll(".pf-project-card:not(.pf-project-placeholder)").length === 4,
+      await until(() => portfolioSearch.value === "" && document.querySelectorAll(".pf-project-card:not(.pf-project-placeholder)").length === 6,
         "Escape did not clear portfolio search");
       assert.ok(document.querySelector(".pf-window"), "Clearing search unexpectedly closed Portfolio");
       click('[data-category="game"]');
@@ -274,7 +342,7 @@ for (const mode of ["file", "github-subpath"]) {
       await until(() => !document.querySelector(".pf-window"), "Portfolio did not close");
 
       const shortcutCases = [
-        ["Adobe Photoshop — open Visual portfolio", /Tini World/],
+        ["Adobe Photoshop — open Visual portfolio", /Corporate Uniform/],
         ["Blender — open 3D portfolio", /Exhibition Booth/],
         ["Unity — open Game portfolio", /Game Systems/],
         ["Visual Studio Code — open Web portfolio", /Web Experiences/],
