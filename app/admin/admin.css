@@ -5,23 +5,24 @@
 }
 
 :root {
-  color-scheme: dark;
-  --admin-bg: #151719;
-  --admin-panel: #202426;
-  --admin-elevated: #2a3032;
-  --admin-elevated-2: #323a3c;
-  --admin-border: #4b5554;
-  --admin-border-soft: #34403f;
-  --admin-ink: #f3eee6;
-  --admin-muted: #b9bdb7;
-  --admin-subtle: #858d88;
-  --admin-accent: #d6a575;
-  --admin-accent-strong: #e6b784;
-  --admin-accent-ink: #231a12;
-  --admin-danger: #e98a84;
-  --admin-success: #8ad0a4;
-  --admin-radius: 4px;
-  --admin-shadow: 0 16px 38px rgba(0, 0, 0, .2);
+  color-scheme: light;
+  --admin-bg: #d5d5d3;
+  --admin-panel: #f1f1ef;
+  --admin-elevated: #e6e6e3;
+  --admin-elevated-2: #dcdcd8;
+  --admin-border: #b7b9b1;
+  --admin-border-soft: #d6d7d0;
+  --admin-ink: #151712;
+  --admin-muted: #54584f;
+  --admin-subtle: #606459;
+  --admin-accent: #36580f;
+  --admin-accent-strong: #294a08;
+  --admin-accent-ink: #141811;
+  --admin-lime: #b1ff5c;
+  --admin-danger: #a42c24;
+  --admin-success: #2d5918;
+  --admin-radius: 16px;
+  --admin-shadow: 0 8px 26px rgba(17, 20, 10, .08);
   font-family: "Google Sans Flex", "Segoe UI", sans-serif;
   background: var(--admin-bg);
   color: var(--admin-ink);

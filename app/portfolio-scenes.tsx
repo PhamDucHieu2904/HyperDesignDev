@@ -3,7 +3,7 @@ import androidMatte from "../public/hieu-android-mask.png";
 import { RobotCat } from "./robot-cat/RobotCat";
 
 const designStudies = [
-  { id: "label", app: "Ai", file: "Vinut coco boba.ai", tool: "Illustrator", title: "Packaging & labels", image: "vinut-coco-boba-label.webp", alt: "Vinut Coco Boba coconut milk tea label artwork" },
+  { id: "label", app: "Ai", file: "Quencha beverage.ai", tool: "Illustrator", title: "Packaging & labels", image: "portfolio/quencha/labels.webp", alt: "Quencha beverage six-flavour packaging label artwork" },
   { id: "retouch", app: "Ps", file: "Coco boba tini world.psd", tool: "Photoshop", title: "Retouch & composite", image: "coco-boba-poster.webp", alt: "Vinut Coco Boba tiny world advertising poster" },
   { id: "motion", app: "Pr", file: "launch-film.prproj", tool: "Video & exhibition", title: "From product to space", image: "nam-viet-group-booth.webp", alt: "Nam Viet Group beverage exhibition booth" },
 ];
@@ -14,7 +14,7 @@ function DesignShowcase() {
       <div className="editor-topbar" aria-hidden="true"><b>{study.app}</b><span>{study.file}</span><i /><i /><i /></div>
       <div className="editor-canvas">
         <div className="editor-tools" aria-hidden="true"><MousePointer2 /><PenTool /><Square /><WandSparkles /><Layers3 /></div>
-        <img src={`./public/${study.image}`} alt={study.alt} width={1086} height={1448} />
+        <img src={`./public/${study.image}`} alt={study.alt} width={study.id === "label" ? 1380 : 1086} height={study.id === "label" ? 1951 : 1448} />
         {study.id === "label" && <span className="artwork-selection" aria-hidden="true"><i /><i /><i /><i /></span>}
         {study.id === "retouch" && <span className="layer-indicator" aria-hidden="true"><Layers3 /> 08 layers</span>}
       </div>

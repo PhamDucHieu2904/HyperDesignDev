@@ -1,9 +1,13 @@
 import {
-  Archive, ArrowLeft, BookOpen, Check, CheckCircle2, ChevronDown, CircleAlert, Clock3, Copy,
+  ArrowLeft, BookOpen, Check, CheckCircle2, ChevronDown, CircleAlert, Clock3, Copy,
   FilePlus2, FolderOpen, Grid2X2, Image as ImageIcon, LayoutList, LoaderCircle, MoreHorizontal,
   Pencil, Plus, RefreshCw, RotateCcw, Search, Settings2, Tag, Trash2, Upload, X,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { AnalyticsPage } from './AnalyticsPage';
+import { AdminShell, sectionFromHash, type AdminSection } from './AdminShell';
+import { HomePage } from './HomePage';
+import { OrdersPage } from './OrdersPage';
 import {
   categoryDefinitions, emptyArticleDocument, type AdminIdentity, type AdminMediaAsset,
   type AdminProject, type AdminProjectSummary, type ArticleDocument,
@@ -18,7 +22,7 @@ import { ArticleEditor } from "./ArticleEditor";
 type LibraryStatus = "all" | ProjectAdminState;
 type DisciplineFilter = "all" | "design" | "development";
 type ViewMode = "grid" | "table";
-type Page = "library" | "metadata" | "content";
+type Page = AdminSection | "metadata" | "content";
 type FormMode = "create" | "edit";
 
 const categoryLabels: Record<CategoryId, string> = Object.fromEntries(
@@ -205,7 +209,8 @@ export function AdminApp() {
   const [identity, setIdentity] = useState<AdminIdentity | null>(null);
   const [projects, setProjects] = useState<AdminProjectSummary[]>([]);
   const [media, setMedia] = useState<AdminMediaAsset[]>([]);
-  const [page, setPage] = useState<Page>("library");
+  const [page, setPageState] = useState<Page>(sectionFromHash);
+  const [contentDirty, setContentDirty] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   const [statusFilter, setStatusFilter] = useState<LibraryStatus>("all");
   const [disciplineFilter, setDisciplineFilter] = useState<DisciplineFilter>("all");
@@ -226,6 +231,30 @@ export function AdminApp() {
   const [formError, setFormError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
   const requestRef = useRef(0);
+
+  const setPage = (next: Page) => {
+    if (next !== 'content') setContentDirty(false);
+    setPageState(next);
+    const section = next === 'metadata' || next === 'content' ? 'library' : next;
+    if (next === 'metadata' || next === 'content') window.history.replaceState(null, '', `#${section}`);
+    else if (window.location.hash !== `#${section}`) window.location.hash = section;
+  };
+  const canLeave = () => {
+    if (formBusy) return false;
+    const metadataDirty = page === 'metadata' && JSON.stringify(form) !== JSON.stringify(formMode === 'create' ? initialMetadata() : activeProject?.metadata) || page === 'metadata' && formMode === 'create' && Boolean(slug);
+    if ((contentDirty || metadataDirty) && !window.confirm('This draft has unsaved changes. Leave this page?')) return false;
+    setContentDirty(false); return true;
+  };
+  const navigate = (next: AdminSection) => { if (next === page || !canLeave()) return; setActiveProject(null); setMenuOpenId(null); setPage(next); };
+  const hashHandler = useRef<() => void>(() => {});
+  hashHandler.current = () => {
+    if (window.location.hash === '#admin-content') return;
+    const next = sectionFromHash();
+    if (next === page) return;
+    if (!canLeave()) { window.history.replaceState(null, '', `#${page === 'metadata' || page === 'content' ? 'library' : page}`); return; }
+    setActiveProject(null); setPageState(next);
+  };
+  useEffect(() => { const handler = () => hashHandler.current(); window.addEventListener('hashchange', handler); return () => window.removeEventListener('hashchange', handler); }, []);
 
   const mediaById = useMemo(() => new Map(media.map(asset => [asset.id, asset])), [media]);
   const refreshLibrary = useCallback(async (showSpinner = true) => {
@@ -351,22 +380,23 @@ export function AdminApp() {
     catch (nextError) { setError(errorMessage(nextError, "The project could not be restored.")); }
   };
 
-  if (page === "metadata") return <main className="admin-app"><AdminBrand identity={identity} /><div className="admin-main">{formLoading ? <LoadingState label="Loading project details" /> : <MetadataForm mode={formMode} form={form} slug={slug} project={activeProject} media={media} busy={formBusy} error={formError} fieldErrors={fieldErrors} onChange={updateForm} onSlugChange={setSlug} onSubmit={submitForm} onCancel={() => { setPage("library"); setActiveProject(null); }} onUpload={uploadForForm} />}</div></main>;
-  if (page === "content") return <main className="admin-app"><AdminBrand identity={identity} /><div className="admin-main admin-main-editor">{formLoading ? <LoadingState label="Loading content editor" /> : formError || !activeProject ? <section className="admin-editor-load-error" role="alert"><CircleAlert aria-hidden="true" /><h1>Content editor unavailable</h1><p>{formError ?? "The project could not be loaded."}</p><button type="button" className="admin-button admin-button-quiet" onClick={() => { setPage("library"); setFormError(null); }}>Back to library</button></section> : <ArticleEditor key={activeProject.id} initialProject={activeProject} initialMedia={media} onBack={() => { setPage("library"); setActiveProject(null); void refreshLibrary(false); }} onEditDetails={() => void openEdit(activeProject)} onProjectChange={updated => { setActiveProject(updated); setProjects(current => current.map(item => item.id === updated.id ? updated : item)); }} />}</div></main>;
+  const shell = { identity, section: page === 'content' || page === 'metadata' ? 'library' as const : page, onNavigate: navigate, onCreate: () => { if (canLeave()) openCreate(); } };
+  if (!identity) return <AdminShell {...shell}>{error ? <div className="admin-alert admin-alert-error" role="alert"><CircleAlert aria-hidden="true" /><span>{error}</span></div> : <LoadingState label="Verifying admin access" />}</AdminShell>;
+  if (page === "metadata") return <AdminShell {...shell}>{formLoading ? <LoadingState label="Loading project details" /> : <MetadataForm mode={formMode} form={form} slug={slug} project={activeProject} media={media} busy={formBusy} error={formError} fieldErrors={fieldErrors} onChange={updateForm} onSlugChange={setSlug} onSubmit={submitForm} onCancel={() => { setPage("library"); setActiveProject(null); }} onUpload={uploadForForm} />}</AdminShell>;
+  if (page === "content") return <AdminShell {...shell} editor>{formLoading ? <LoadingState label="Loading content editor" /> : formError || !activeProject ? <section className="admin-editor-load-error" role="alert"><CircleAlert aria-hidden="true" /><h1>Content editor unavailable</h1><p>{formError ?? "The project could not be loaded."}</p><button type="button" className="admin-button admin-button-quiet" onClick={() => { setPage("library"); setFormError(null); }}>Back to library</button></section> : <ArticleEditor key={activeProject.id} initialProject={activeProject} initialMedia={media} onDirtyChange={setContentDirty} onBack={() => { setPage("library"); setActiveProject(null); void refreshLibrary(false); }} onEditDetails={() => void openEdit(activeProject)} onProjectChange={updated => { setActiveProject(updated); setProjects(current => current.map(item => item.id === updated.id ? updated : item)); }} />}</AdminShell>;
 
-  return <main className="admin-app"><AdminBrand identity={identity} /><div className="admin-main"><header className="admin-page-header"><div><p className="admin-eyebrow">Content operations</p><h1>Project library</h1><p className="admin-page-lead">Manage the cards that power Hyper D².</p></div><button type="button" className="admin-button admin-button-primary" onClick={openCreate}><Plus aria-hidden="true" />Add project</button></header>
-    <nav className="admin-library-nav" aria-label="Admin sections"><button type="button" className="is-active"><Archive aria-hidden="true" />Library</button><button type="button" disabled><ImageIcon aria-hidden="true" />Media</button><button type="button" disabled><Settings2 aria-hidden="true" />Settings</button></nav>
+
+  if (page === 'home') return <AdminShell {...shell}><HomePage onNavigate={navigate} onCreate={openCreate} onOpen={project => void openContent(project)} /></AdminShell>;
+  if (page === 'analytics') return <AdminShell {...shell}><AnalyticsPage /></AdminShell>;
+  if (page === 'orders') return <AdminShell {...shell}><OrdersPage /></AdminShell>;
+  return <AdminShell {...shell}><header className="admin-page-header"><div><p className="admin-eyebrow">Content operations</p><h1>Project library<span className="admin-heading-dot">.</span></h1><p className="admin-page-lead">A home for everything you make.</p></div><button type="button" className="admin-button admin-button-primary" onClick={openCreate}><Plus aria-hidden="true" />Add project</button></header>
     {notice && <div className="admin-alert admin-alert-success" role="status"><CheckCircle2 aria-hidden="true" /><span>{notice}</span><button type="button" className="admin-alert-close" aria-label="Dismiss notification" onClick={() => setNotice(null)}><X aria-hidden="true" /></button></div>}
     {error && <div className="admin-alert admin-alert-error" role="alert"><CircleAlert aria-hidden="true" /><span>{error}</span><button type="button" className="admin-alert-close" aria-label="Dismiss error" onClick={() => setError(null)}><X aria-hidden="true" /></button></div>}
     <section className="admin-library-toolbar" aria-label="Project filters"><div className="admin-search-field"><Search aria-hidden="true" /><input type="search" value={search} onChange={event => setSearch(event.target.value)} placeholder="Search title, tag or tool" aria-label="Search projects" /></div><div className="admin-toolbar-actions"><button type="button" className="admin-icon-button" aria-label="Refresh library" title="Refresh library" onClick={() => void refreshLibrary()}><RefreshCw className={loading ? "admin-spin" : ""} aria-hidden="true" /></button><span className="admin-view-toggle" role="group" aria-label="Project view"><button type="button" className={viewMode === "grid" ? "is-active" : ""} aria-label="Grid view" title="Grid view" aria-pressed={viewMode === "grid"} onClick={() => setViewMode("grid")}><Grid2X2 aria-hidden="true" /></button><button type="button" className={viewMode === "table" ? "is-active" : ""} aria-label="Table view" title="Table view" aria-pressed={viewMode === "table"} onClick={() => setViewMode("table")}><LayoutList aria-hidden="true" /></button></span></div></section>
     <section className="admin-filter-row" aria-label="Filter projects"><div className="admin-filter-tabs" role="group" aria-label="Project status"><button type="button" className={statusFilter === "all" ? "is-active" : ""} aria-pressed={statusFilter === "all"} onClick={() => setStatusFilter("all")}>All</button>{(["draft", "published", "unpublished-changes", "trash"] as ProjectAdminState[]).map(state => <button type="button" key={state} className={statusFilter === state ? "is-active" : ""} aria-pressed={statusFilter === state} onClick={() => setStatusFilter(state)}>{stateLabels[state]}</button>)}</div><label className="admin-filter-select"><span>Discipline</span><select value={disciplineFilter} onChange={event => { const value = event.target.value as DisciplineFilter; setDisciplineFilter(value); if (value !== "all" && categoryFilter !== "all" && !categoryGroups[value].includes(categoryFilter)) setCategoryFilter("all"); }}>{["all", "design", "development"].map(value => <option key={value} value={value}>{value === "all" ? "All disciplines" : value === "design" ? "Design" : "Development"}</option>)}</select><ChevronDown aria-hidden="true" /></label><label className="admin-filter-select"><span>Category</span><select value={categoryFilter} onChange={event => setCategoryFilter(event.target.value as "all" | CategoryId)}><option value="all">All categories</option>{categoryGroups[disciplineFilter].map(id => <option key={id} value={id}>{categoryLabels[id]}</option>)}</select><ChevronDown aria-hidden="true" /></label></section>
     <div className="admin-library-summary"><span>{loading ? "Updating library" : `${filteredProjects.length} ${filteredProjects.length === 1 ? "project" : "projects"}`}</span><span className="admin-summary-rule" aria-hidden="true" /><span>{statusFilter === "trash" ? "Trash" : "Active library"}</span></div>
     {loading && !projects.length ? <LoadingState label="Loading project library" /> : filteredProjects.length === 0 ? <EmptyState trash={statusFilter === "trash"} search={search} hasFilters={hasLibraryFilters} onReset={resetLibraryFilters} onCreate={openCreate} /> : viewMode === "grid" ? <div className="admin-project-grid">{filteredProjects.map(project => <ProjectCard key={project.id} project={project} media={mediaById.get(project.metadata.thumbnailAssetId)} menuOpen={menuOpenId === project.id} onToggleMenu={() => setMenuOpenId(menuOpenId === project.id ? null : project.id)} onOpen={() => void openContent(project)} onEdit={() => void openEdit(project)} onDuplicate={() => void duplicateProject(project)} onTrash={() => void moveToTrash(project)} onRestore={() => void restoreProject(project)} />)}</div> : <ProjectTable projects={filteredProjects} mediaById={mediaById} menuOpenId={menuOpenId} onToggleMenu={id => setMenuOpenId(menuOpenId === id ? null : id)} onOpen={project => void openContent(project)} onEdit={project => void openEdit(project)} onDuplicate={project => void duplicateProject(project)} onTrash={project => void moveToTrash(project)} onRestore={project => void restoreProject(project)} />}
-  </div></main>;
-}
-
-function AdminBrand({ identity }: { identity: AdminIdentity | null }) {
-  return <header className="admin-topbar"><a className="admin-brand" href="/" aria-label="Hyper D home"><span className="admin-brand-mark">H</span><span><strong>Hyper D²</strong><small>Admin console</small></span></a>{identity && <div className="admin-identity"><span className="admin-identity-avatar">{identity.email.slice(0, 1).toUpperCase()}</span><span>{identity.email}</span></div>}</header>;
+  </AdminShell>;
 }
 
 function LoadingState({ label }: { label: string }) {

@@ -62,7 +62,7 @@ export type AdminIdentity = {
   email: string;
   capabilities: Array<
     "project:read" | "project:write" | "project:trash" | "project:publish" |
-    "revision:read" | "revision:restore" | "media:read" | "media:write" | "media:delete"
+    "revision:read" | "revision:restore" | "media:read" | "media:write" | "media:delete" | "analytics:read"
   >;
   csrfToken: string;
 };

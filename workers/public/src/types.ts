@@ -3,8 +3,9 @@ export type D1Statement = {
   bind(...values: unknown[]): D1Statement;
   first<T = Record<string, unknown>>(columnName?: string): Promise<T | null>;
   all<T = Record<string, unknown>>(): Promise<D1Result<T>>;
+  run<T = Record<string, unknown>>(): Promise<D1Result<T>>;
 };
-export type D1Database = { prepare(query: string): D1Statement };
+export type D1Database = { prepare(query: string): D1Statement; batch<T = Record<string, unknown>>(statements: D1Statement[]): Promise<D1Result<T>[]> };
 export type AssetFetcher = { fetch(request: Request): Promise<Response> };
 export type R2Object = { size: number; httpEtag?: string; body?: ReadableStream<Uint8Array> };
 export type R2Bucket = {
@@ -18,4 +19,14 @@ export type PublicEnv = {
   MEDIA: R2Bucket;
   DEPLOY_ENV?: string;
   PUBLIC_CORS_ORIGINS?: string;
+  ANALYTICS_ENABLED?: string;
+  ANALYTICS_HASH_SECRET?: string;
+  TURNSTILE_SITE_KEY?: string;
+  TURNSTILE_SECRET_KEY?: string;
+  TURNSTILE_HOSTNAMES?: string;
+  REQUESTS_ENABLED?: string;
+  REQUEST_EMAIL_ENABLED?: string;
+  RESEND_API_KEY?: string;
+  REQUEST_EMAIL_FROM?: string;
+  REQUEST_EMAIL_TO?: string;
 };

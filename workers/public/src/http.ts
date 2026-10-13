@@ -13,8 +13,9 @@ export function corsHeaders(request: Request, env: PublicEnv): HeadersInit | nul
   const origin = request.headers.get("Origin");
   if (!origin) return {};
   const allowed = new Set((env.PUBLIC_CORS_ORIGINS ?? "").split(",").map(value => value.trim()).filter(Boolean));
-  if (!allowed.has(origin)) return null;
-  return { "Access-Control-Allow-Origin": origin, "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS", Vary: "Origin" };
+  if (origin !== new URL(request.url).origin && !allowed.has(origin)) return null;
+  return { "Access-Control-Allow-Origin": origin, "Access-Control-Allow-Methods": "GET, HEAD, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type", Vary: "Origin" };
 }
 
 export function publicError(error: PublicApiException, requestId: string, headers: HeadersInit = {}) {

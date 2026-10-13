@@ -2,6 +2,8 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowLeft, ArrowRight, Check, CheckCheck, CircleAlert, CircleHelp, FilePlus2, LoaderCircle, Send, ShieldCheck } from "lucide-react";
 import { DesktopWindow } from "../desktop/DesktopWindow";
 import { projectRequestEndpoint } from "./config";
+import { Verification } from './Verification';
+import type { RequestPublicConfig } from '../../shared/contracts/analytics';
 import { budgetOptions, budgetSummary, categories, emptyDraft, isRequestConfigured, ProjectRequestError,
   sendProjectRequest, validateDraft, type DraftErrors, type ProjectDraft, type RequestStatus } from "./request";
 
@@ -38,7 +40,21 @@ export function ProjectLauncher({ active, covered, onClose, onPortfolio }: {
   const openerRef = useRef<HTMLElement | null>(null);
   const submittingRef = useRef(false);
   const mountedRef = useRef(true);
-  const configured = isRequestConfigured(projectRequestEndpoint);
+  const [connection, setConnection] = useState<{ endpoint: string; config: RequestPublicConfig } | null>(null);
+  const [token, setToken] = useState(''); const [verificationReset, setVerificationReset] = useState(0);
+  const requestIdRef = useRef<string | null>(null);
+  const endpoint = projectRequestEndpoint || connection?.endpoint || '';
+  const configured = isRequestConfigured(endpoint) && (Boolean(projectRequestEndpoint) || connection?.config.enabled === true);
+  useEffect(() => {
+    if (!active || !/^https?:$/.test(window.location.protocol)) return;
+    const controller = new AbortController();
+    const url = new URL(projectRequestEndpoint || './api/v1/project-requests', document.baseURI);
+    void fetch(`${url.href}/config`, { signal: controller.signal }).then(async response => {
+      if (!response.ok) return; const config = await response.json() as RequestPublicConfig;
+      if (!controller.signal.aborted) setConnection({ endpoint: url.href, config });
+    }).catch(() => {});
+    return () => controller.abort();
+  }, [active]);
   const busy = status === "submitting";
 
   useEffect(() => {
@@ -66,6 +82,7 @@ export function ProjectLauncher({ active, covered, onClose, onPortfolio }: {
   }, [helpOpen]);
 
   const update = <K extends keyof ProjectDraft>(field: K, value: ProjectDraft[K]) => {
+    requestIdRef.current = null;
     setDraft(current => ({ ...current, [field]: value }));
     setErrors(current => ({ ...current, [field]: undefined }));
     if (status !== "submitting") { setStatus("idle"); setMessage(""); }
@@ -86,14 +103,15 @@ export function ProjectLauncher({ active, covered, onClose, onPortfolio }: {
     submittingRef.current = true;
     setErrors({}); setMessage(""); setStatus("submitting");
     try {
-      await sendProjectRequest(draft, projectRequestEndpoint);
+      requestIdRef.current ??= crypto.randomUUID();
+      await sendProjectRequest(draft, endpoint, fetch, { requestId: requestIdRef.current, turnstileToken: token });
       if (mountedRef.current) { setDraft(current => ({ ...current, email: current.email.trim() })); setStatus("success"); }
     } catch (error) {
       if (mountedRef.current) {
         setStatus(error instanceof ProjectRequestError ? error.status : "server-error");
         setMessage(error instanceof ProjectRequestError ? error.message : "Your request wasn’t sent. Please try again.");
       }
-    } finally { submittingRef.current = false; }
+    } finally { submittingRef.current = false; setToken(''); setVerificationReset(value => value + 1); }
   };
 
   if (!active) return null;
@@ -112,7 +130,7 @@ export function ProjectLauncher({ active, covered, onClose, onPortfolio }: {
       <code>request.status = "received"</code>
       <div className="project-success-actions">
         <button type="button" className="project-primary" onClick={onPortfolio}>Back to Portfolio <ArrowRight aria-hidden="true" /></button>
-        <button type="button" className="project-secondary" onClick={() => { setDraft(emptyDraft()); edit(0); }}>Start another idea</button>
+        <button type="button" className="project-secondary" onClick={() => { requestIdRef.current = null; setDraft(emptyDraft()); edit(0); }}>Start another idea</button>
       </div>
     </div> : <form ref={formRef} className="project-form" onSubmit={submit} noValidate aria-busy={busy}>
       <ol className="project-stepper" aria-label="Project request progress">
@@ -166,6 +184,7 @@ export function ProjectLauncher({ active, covered, onClose, onPortfolio }: {
                 <p className="project-error" id="project-email-error" role="alert">{errors.email}</p>
                 <ProjectSummary draft={draft} onEdit={edit} />
                 <p className="project-privacy"><ShieldCheck aria-hidden="true" />Your details are only used to review and respond to this request.</p>
+                {connection?.config.turnstileSiteKey && <Verification siteKey={connection.config.turnstileSiteKey} reset={verificationReset} onToken={setToken} />}
               </>}
             </fieldset>
             <div className="project-honeypot" aria-hidden="true"><label htmlFor="project-website">Leave this empty</label>

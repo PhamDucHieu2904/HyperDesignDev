@@ -222,9 +222,9 @@ for (const mode of ["file", "github-subpath"]) {
           for (const image of document.querySelectorAll(".design-card img")) await access(new URL(image.getAttribute("src"), root));
           assert.deepEqual(
             [...document.querySelectorAll(".design-card img")].map((image) => image.getAttribute("src")),
-            ["./public/vinut-coco-boba-label.webp", "./public/coco-boba-poster.webp", "./public/nam-viet-group-booth.webp"],
+            ["./public/portfolio/quencha/labels.webp", "./public/coco-boba-poster.webp", "./public/nam-viet-group-booth.webp"],
           );
-          assert.match(document.querySelector(".design-card--label").textContent, /Vinut coco boba\.ai/);
+          assert.match(document.querySelector(".design-card--label").textContent, /Quencha beverage\.ai/);
           assert.match(document.querySelector(".design-card--retouch").textContent, /Coco boba tini world\.psd/);
           assert.equal(document.querySelector('img[src="./public/sage-studio.png"]'), null);
         }

@@ -49,15 +49,15 @@ export function budgetSummary(draft: ProjectDraft) {
 }
 
 export function isRequestConfigured(endpoint: string) {
-  // Only a public Formspree submission URL is supported in this static integration.
-  return /^https:\/\/formspree\.io\/f\/[a-zA-Z0-9]+$/.test(endpoint.trim());
+  return /^(?:(?:https:\/\/[^/?#]+|http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?))?\/api\/v1\/project-requests$/.test(endpoint.trim());
 }
 
 export class ProjectRequestError extends Error {
   constructor(public status: "not-configured" | "server-error", message: string) { super(message); }
 }
 
-export async function sendProjectRequest(draft: ProjectDraft, endpoint: string, transport: typeof fetch = fetch) {
+export async function sendProjectRequest(draft: ProjectDraft, endpoint: string, transport: typeof fetch = fetch,
+  verification: { requestId?: string; turnstileToken?: string } = {}) {
   if (!isRequestConfigured(endpoint)) {
     throw new ProjectRequestError("not-configured", "Project requests aren’t available just yet. Your draft is still here; please try again later.");
   }
@@ -75,13 +75,19 @@ export async function sendProjectRequest(draft: ProjectDraft, endpoint: string, 
         budgetMode: draft.budgetMode, budgetText: draft.budgetMode === "specified" ? draft.budgetText.trim() : "",
         currency: "VND", email: draft.email.trim(), source: "hyperdesigndev-project-launcher",
         _subject: "Hyper D² — New project request", _gotcha: draft.honeypot,
+        requestId: verification.requestId ?? crypto.randomUUID(), turnstileToken: verification.turnstileToken ?? '',
       }),
     });
-    if (!response.ok) throw new Error("Form provider rejected the request");
+    if (!response.ok) {
+      const body = await response.json().catch(() => null) as { error?: { message?: string } } | null;
+      throw new ProjectRequestError('server-error', body?.error?.message ?? 'Your request could not be sent. Please try again.');
+    }
     // The provider's response must be parseable JSON; this rejects an HTML
     // redirect/captcha page while accepting provider-specific success fields.
-    await response.json();
-  } catch {
+    const body = await response.json() as { ok?: boolean };
+    if (body.ok !== true) throw new Error('Request was not acknowledged.');
+  } catch (error) {
+    if (error instanceof ProjectRequestError) throw error;
     throw new ProjectRequestError("server-error", "Your request wasn’t confirmed. Your draft is safe here. Check your connection and try again.");
   } finally { clearTimeout(timeout); }
 }

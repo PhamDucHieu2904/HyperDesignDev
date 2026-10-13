@@ -71,7 +71,7 @@ npm test
 - `app/page.tsx`: nội dung và tương tác.
 - `app/desktop/DesktopViewport.tsx` và `viewport.ts`: scale toàn bộ bố cục PC theo canvas tối thiểu 1920 × 1000; giữ tỷ lệ chữ, nút, thanh bên và khoảng cách khi cửa sổ nhỏ.
 - `app/project-launcher/`: cửa sổ New Project, validation và adapter gửi form.
-- `app/project-launcher/config.ts`: endpoint Formspree công khai (để trống thì UI báo `not-configured`, không giả lập thành công).
+- `app/project-launcher/config.ts`: endpoint Worker tùy chọn; mặc định tự khám phá API cùng origin. Bản file tĩnh không gửi yêu cầu khi chưa nối backend.
 - `app/globals.css`: giao diện và responsive.
 - `site.config.mjs`: tiêu đề, mô tả và URL xuất bản.
 - `public/`: tài nguyên gốc.
@@ -100,11 +100,11 @@ bố cục responsive. Các query về pointer, hover và reduced motion vẫn t
 
 ### Bật nhận yêu cầu Project Launcher
 
-Tạo một form và kích hoạt inbox trong Formspree, sau đó ghi endpoint dạng
-`https://formspree.io/f/FORM_ID` vào `app/project-launcher/config.ts` rồi chạy lại
-`npm run build`. Endpoint là thông tin công khai cần có trong bundle tĩnh; không đặt
-API key riêng tư trong frontend. Form gửi JSON, có trường `_gotcha` chống bot và chỉ
-hiện trạng thái thành công khi provider trả về HTTP success với phản hồi JSON.
+Create gửi qua Public Worker để kiểm tra Turnstile và quota trước khi lưu yêu cầu.
+Mỗi email tối đa 10 yêu cầu/ngày (UTC+7), kèm giới hạn theo nguồn và toàn site.
+Thông báo mail được xếp hàng; local không gửi email thật. Tab **Analytics** trong
+admin có traffic, xếp hạng thao tác và lịch sử Create theo ngày/tháng/quý/năm.
+Xem [hướng dẫn nối Cloudflare và mail](workers/analytics/README.md).
 
 ## Đưa lên GitHub Pages
 

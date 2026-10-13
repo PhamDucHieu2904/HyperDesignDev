@@ -1014,6 +1014,7 @@ kbd {
 .session-gif { display: grid; place-items: center; }
 .session-gif img { width: 66px; height: 66px; object-fit: contain; }
 
+.dashboard-drawer, .launcher-drawer { overflow-x: hidden; }
 .dashboard-drawer {
   position: absolute; z-index: 45; top: -1px; left: 50%; width: min(720px,calc(100% - 180px)); padding: 19px;
   max-height: calc(100% - 24px); overflow-y: auto;

@@ -5,6 +5,7 @@ import { deleteMedia, getMediaContent, listMedia, updateMedia, uploadMedia } fro
 import { createProject, deleteProject, getProject, listProjects, restoreProject, saveDraft } from "./projects";
 import { getRevisionDetail, listRevisions, publishProject, restoreRevision, unpublishProject } from "./publishing";
 import type { AccessContext, AdminEnv } from "./types";
+import { analyticsReport } from './analytics';
 
 const mutationMethods = new Set(["POST", "PUT", "PATCH", "DELETE"]);
 
@@ -36,6 +37,13 @@ export const adminWorker = {
     try {
       const actor = await authenticate(request, env, context);
       if (mutationMethods.has(request.method)) requireMutationProtection(request, env, actor);
+      if (request.method === 'GET' && url.pathname === '/api/admin/analytics') return json(await analyticsReport(env, url));
+      const intakeDetail = /^\/api\/admin\/requests\/([a-z0-9-]{36})$/i.exec(url.pathname);
+      if (request.method === 'GET' && intakeDetail) {
+        const item = await env.DB.prepare('SELECT id,created_at,email,description,category,budget_mode,budget_text,notification FROM create_requests WHERE id=?').bind(intakeDetail[1]).first();
+        if (!item) throw new ApiException(404, 'NOT_FOUND', 'Request not found.');
+        return json(item);
+      }
 
       if (request.method === "GET" && url.pathname === "/api/admin/me") {
         const identity: AdminIdentity = {
@@ -44,6 +52,7 @@ export const adminWorker = {
           capabilities: [
             "project:read", "project:write", "project:trash", "project:publish",
             "revision:read", "revision:restore", "media:read", "media:write", "media:delete",
+            "analytics:read",
           ],
           csrfToken: actor.csrfToken,
         };

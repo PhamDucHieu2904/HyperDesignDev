@@ -1,11 +1,13 @@
 import { corsHeaders, json, PublicApiException, publicError } from "./http";
 import { getAdjacentProjects, getPublicMedia, getPublicProject, listCategories, listPublicProjects } from "./projects";
 import type { PublicEnv } from "./types";
+import { ingestEvents, recordEdge } from './telemetry';
+import { deliverNotifications, requestConfig, submitRequest } from './requests';
 
 export type { PublicEnv } from "./types";
 
 export const publicWorker = {
-  async fetch(request: Request, env: PublicEnv): Promise<Response> {
+  async fetch(request: Request, env: PublicEnv, context?: { waitUntil(promise: Promise<unknown>): void }): Promise<Response> {
     const url = new URL(request.url);
     const isApi = url.pathname.startsWith("/api/");
     const isMedia = url.pathname.startsWith("/media/");
@@ -25,6 +27,9 @@ export const publicWorker = {
     }
 
     try {
+      if (url.pathname === '/api/v1/events' && request.method === 'POST') return json(await ingestEvents(request, env), 200, cors ?? {});
+      if (url.pathname === '/api/v1/project-requests/config' && request.method === 'GET') return json(requestConfig(env), 200, cors ?? {});
+      if (url.pathname === '/api/v1/project-requests' && request.method === 'POST') return json(await submitRequest(request, env), 201, cors ?? {});
       const cache = "public, max-age=60, stale-while-revalidate=300";
       if (request.method === "GET" && url.pathname === "/api/v1/categories") {
         return json(await listCategories(env.DB), 200, cors ?? {}, "public, max-age=3600, stale-while-revalidate=86400");
@@ -45,12 +50,26 @@ export const publicWorker = {
       }
 
       if (isApi || isMedia) throw new PublicApiException(404, "NOT_FOUND", "Public endpoint not found.");
-      return env.ASSETS.fetch(request);
+      const response = await env.ASSETS.fetch(request);
+      const recording = recordEdge(request, response, env).catch(() => { console.warn('Traffic recording unavailable'); });
+      if (context) context.waitUntil(recording); else await recording;
+      return response;
     } catch (error) {
       if (error instanceof PublicApiException) return publicError(error, requestId, cors ?? {});
       console.error("Public request failed", { requestId, error });
       return publicError(new PublicApiException(503, "SERVICE_UNAVAILABLE", "Public service is temporarily unavailable."), requestId, cors ?? {});
     }
+  },
+  async scheduled(_event: unknown, env: PublicEnv, context: { waitUntil(promise: Promise<unknown>): void }) {
+    context.waitUntil(deliverNotifications(env));
+    context.waitUntil((async () => {
+      await env.DB.batch([
+        env.DB.prepare('DELETE FROM analytics_events WHERE created_at<?').bind(new Date(Date.now() - 90 * 86400000).toISOString()),
+        env.DB.prepare('DELETE FROM create_attempts WHERE created_at<?').bind(new Date(Date.now() - 365 * 86400000).toISOString()),
+        env.DB.prepare('DELETE FROM create_requests WHERE created_at<?').bind(new Date(Date.now() - 365 * 86400000).toISOString()),
+        env.DB.prepare('DELETE FROM request_limits WHERE expires_at<?').bind(new Date().toISOString()),
+      ]);
+    })());
   },
 };
 

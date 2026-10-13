@@ -2,6 +2,7 @@ import type {
   AdminIdentity, AdminMediaAsset, AdminProject, AdminProjectPage, AdminProjectSummary, AdminRevision, AdminRevisionPage,
   ArticleDocument, ProjectMetadata, PublishProjectResult,
 } from "../../shared/contracts";
+import type { AnalyticsReport, ReportingPeriod } from '../../shared/contracts';
 
 export class AdminApiError extends Error {
   constructor(
@@ -55,6 +56,15 @@ export function getAdminIdentity() {
     session = identity;
     return identity;
   });
+}
+export function getAnalyticsReport(period: ReportingPeriod, date: string, trafficCursor?: string, requestCursor?: string, limit = 10) {
+  const query = new URLSearchParams({ period, date, limit: String(limit) });
+  if (trafficCursor) query.set('trafficCursor', trafficCursor);
+  if (requestCursor) query.set('requestCursor', requestCursor);
+  return readResponse<AnalyticsReport>(`/api/admin/analytics?${query}`);
+}
+export function getCreateRequest(id: string) {
+  return readResponse<{ id: string; created_at: string; email: string; description: string; category: string; budget_mode: string; budget_text: string; notification: string }>(`/api/admin/requests/${encodeURIComponent(id)}`);
 }
 
 async function listProjectPage(query: string, state: string | undefined, cursor?: string | null) {

@@ -8,7 +8,7 @@ const compiled = await build({ entryPoints: ["app/project-launcher/request.ts"],
 const requestModule = { exports: {} };
 new Function("module", "exports", compiled.outputFiles[0].text)(requestModule, requestModule.exports);
 const { emptyDraft, validateDraft, sendProjectRequest, isRequestConfigured } = requestModule.exports;
-const endpoint = "https://formspree.io/f/testform";
+const endpoint = "https://worker.example/api/v1/project-requests";
 const validDraft = () => ({ ...emptyDraft(), projectDescription: "  A website to showcase my packaging designs.  ", email: "  customer@example.com  " });
 
 test("validates trimmed idea boundaries, email and optional budget/context", () => {
@@ -82,7 +82,10 @@ test("shell form preserves draft, disables duplicate sends, retries errors and r
   const dom = new JSDOM(html, { url: "https://example.github.io/HyperDesignDev/", runScripts: "outside-only", pretendToBeVisual: true, virtualConsole });
   const { window } = dom;
   const { document } = window;
-  window.fetch = async () => { calls++; return new Promise(resolve => { finish = resolve; }); };
+  window.fetch = async url => {
+    if (String(url).endsWith('/project-requests/config')) return new Response('{"enabled":true,"turnstileSiteKey":"","local":true,"dailyEmailLimit":10}');
+    calls++; return new Promise(resolve => { finish = resolve; });
+  };
   window.eval(browser.outputFiles[0].text);
   const click = selector => { const target = document.querySelector(selector); assert.ok(target, selector); target.click(); };
   const fill = (selector, value) => {

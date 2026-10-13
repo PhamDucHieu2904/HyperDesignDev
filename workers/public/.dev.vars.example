@@ -1,0 +1,6 @@
+DEPLOY_ENV=local
+ANALYTICS_ENABLED=true
+REQUESTS_ENABLED=true
+REQUEST_EMAIL_ENABLED=false
+# Local uses a development-only hash and bypasses Turnstile. Production requires
+# separate secrets. Never use the local bypass outside local development.

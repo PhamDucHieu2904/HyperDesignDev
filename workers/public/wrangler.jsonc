@@ -8,7 +8,7 @@
     "directory": "../../dist/public",
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
-    "run_worker_first": ["/api/*", "/media/*"]
+    "run_worker_first": ["/*", "!/assets/*", "!/public/*"]
   },
   "d1_databases": [{
     "binding": "DB",
@@ -22,6 +22,9 @@
   }],
   "vars": {
     "DEPLOY_ENV": "staging",
+    "ANALYTICS_ENABLED": "true",
+    "REQUESTS_ENABLED": "false",
+    "REQUEST_EMAIL_ENABLED": "false",
     "PUBLIC_CORS_ORIGINS": "http://localhost:3000,http://127.0.0.1:3000,https://phamduchieu2904.github.io"
   },
   "observability": { "enabled": true }

@@ -1,13 +1,23 @@
 import { build, transform } from "esbuild";
-import { copyFile, mkdir, rm, readFile, writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { copyFile, mkdir, readdir, rm, readFile, writeFile } from "node:fs/promises";
+import { resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const projectRoot = fileURLToPath(new URL("../", import.meta.url));
 const destination = resolve(projectRoot, "dist", "admin");
-if (!destination.startsWith(resolve(projectRoot, "dist") + "\\")) throw new Error("Refusing to clean an unsafe admin build path.");
+if (!destination.startsWith(resolve(projectRoot, "dist") + sep)) throw new Error("Refusing to clean an unsafe admin build path.");
 
-await rm(destination, { recursive: true, force: true });
+// Workerd can hold the output directory open on Windows. Clear its generated
+// files without removing watched directories, so a running preview can rebuild.
+async function clearGeneratedFiles(directory) {
+  if (directory !== destination && !directory.startsWith(destination + sep)) throw new Error("Unsafe admin cleanup path.");
+  for (const entry of await readdir(directory, { withFileTypes: true }).catch(error => { if (error.code === 'ENOENT') return []; throw error; })) {
+    const path = resolve(directory, entry.name);
+    if (entry.isDirectory()) await clearGeneratedFiles(path);
+    else await rm(path, { force: true });
+  }
+}
+await clearGeneratedFiles(destination);
 await mkdir(destination, { recursive: true });
 await mkdir(resolve(destination, "public"), { recursive: true });
 const browser = await build({
@@ -22,7 +32,7 @@ const browser = await build({
   jsx: "automatic",
   define: { "process.env.NODE_ENV": '"production"' },
 });
-const styles = await Promise.all(["../app/admin/admin.css", "../app/portfolio/quencha.css"].map(path => readFile(new URL(path, import.meta.url), "utf8")));
+const styles = await Promise.all(["../app/admin/admin.css", "../app/admin/analytics.css", "../app/portfolio/quencha.css", "../app/admin/workspace.css"].map(path => readFile(new URL(path, import.meta.url), "utf8")));
 const css = await transform(styles.join("\n"), {
   loader: "css", minify: true, target: "es2020",
 });

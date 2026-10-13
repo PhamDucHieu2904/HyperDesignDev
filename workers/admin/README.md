@@ -6,6 +6,27 @@ Profile giữ nguyên source, CSS, tài nguyên và lệnh build trước đây.
 
 ## Chạy admin
 
+Admin mở ở **Home**, với bốn mục trên header:
+
+- **Home**: tổng quan thư viện, trạng thái xuất bản, lịch cập nhật và thống kê yêu cầu theo tháng.
+- **Library**: tìm/lọc bài, tạo project, sửa metadata, soạn nội dung và xuất bản.
+- **Analytics**: traffic, xếp hạng thao tác và lịch sử sự kiện.
+- **Orders**: yêu cầu Create, nội dung chi tiết và trạng thái thông báo mail.
+
+Lịch sử Analytics và Orders mặc định **10 dòng/trang**, có Trước/Sau, về trang
+mới nhất và chọn 20 dòng. Đổi kỳ báo cáo hoặc ngày sẽ về trang đầu. Bộ lọc
+ngày/tháng/quý/năm sử dụng UTC+7. Có thể mở trực tiếp `/#library`, `/#analytics`
+hoặc `/#orders`; Home dùng `/#home`. Header và nút Back/Forward của trình duyệt
+cảnh báo khi rời bản nháp chưa lưu. **Compose reply** chỉ mở ứng dụng mail của bạn.
+
+Giao diện dùng xám sáng, đen và xanh lime theo ảnh tham khảo. Trình xem trước
+bài portfolio giữ cách trình bày của website public.
+
+Trên Windows, bấm đúp `Mo-Admin.bat` ở thư mục gốc. Launcher build và chạy
+admin rồi tự mở trình duyệt khi máy chủ sẵn sàng. Giữ cửa sổ lệnh mở trong
+khi dùng admin; nhấn `Ctrl+C` để dừng. Có thể dùng `Mo-Admin.bat --check`
+để kiểm tra Node.js, dependencies và cấu hình local mà không chạy máy chủ.
+
 Từ thư mục gốc repository:
 
 ```powershell
@@ -15,6 +36,9 @@ npm run admin
 
 Mở `http://127.0.0.1:8788`. Lệnh `admin` build giao diện rồi chạy Worker local.
 Port 8788 và inspector port 9230 cho phép chạy cùng Public Worker (port mặc định 8787).
+Tab **Analytics** xem traffic, usage và lịch sử Create. Để dữ liệu local xuất hiện
+ở cả hai trang, chạy Public preview bằng `npm run cf:dev:public:shared` trên port
+8789. Xem [hướng dẫn analytics và chống spam](../analytics/README.md).
 Profile tĩnh vẫn có thể mở bằng `Mo-Website.bat` hoặc `npm run dev` trên port 3000.
 
 Máy mới cần tạo cấu hình local trước khi chạy:

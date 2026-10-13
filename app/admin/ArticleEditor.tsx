@@ -119,9 +119,9 @@ function CanvasBlock({ block, selected, media, index, count, onSelect, onChange,
   </article>;
 }
 
-export function ArticleEditor({ initialProject, initialMedia, onBack, onEditDetails, onProjectChange }: {
+export function ArticleEditor({ initialProject, initialMedia, onBack, onEditDetails, onProjectChange, onDirtyChange }: {
   initialProject: AdminProject; initialMedia: AdminMediaAsset[]; onBack: () => void; onEditDetails: () => void;
-  onProjectChange: (project: AdminProject) => void;
+  onProjectChange: (project: AdminProject) => void; onDirtyChange?: (dirty: boolean) => void;
 }) {
   const [project, setProject] = useState(initialProject);
   const [media, setMedia] = useState(initialMedia);
@@ -147,7 +147,7 @@ export function ArticleEditor({ initialProject, initialMedia, onBack, onEditDeta
   const storageKey = `hyperd-admin-draft:${initialProject.id}`;
 
   useEffect(() => { projectRef.current = project; }, [project]);
-  useEffect(() => { dirtyRef.current = dirty; }, [dirty]);
+  useEffect(() => { dirtyRef.current = dirty; onDirtyChange?.(dirty); }, [dirty, onDirtyChange]);
 
   useEffect(() => {
     try {

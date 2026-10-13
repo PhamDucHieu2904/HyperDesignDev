@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { useEffect, useState } from "react";
+import { desktopViewport } from "../desktop/viewport";
 import { categoryLabels } from "./data";
 import type { PortfolioProject } from "./types";
 
@@ -26,8 +27,21 @@ export function FeaturedCarousel({ projects, onOpen }: {
   const [hovered, setHovered] = useState(false);
   const [keyboardFocused, setKeyboardFocused] = useState(false);
   const [hidden, setHidden] = useState(document.hidden);
+  const [desktop, setDesktop] = useState(() => desktopViewport(window.innerWidth, window.innerHeight,
+    window.matchMedia?.("(pointer: fine)").matches).desktop);
   const feature = projects.find(project => project.id === slide.id) ?? projects[0];
   const projectIds = projects.map(project => project.id).join("|");
+
+  useEffect(() => {
+    const pointer = window.matchMedia?.("(pointer: fine)");
+    const update = () => setDesktop(desktopViewport(window.innerWidth, window.innerHeight, pointer?.matches).desktop);
+    window.addEventListener("resize", update);
+    pointer?.addEventListener("change", update);
+    return () => {
+      window.removeEventListener("resize", update);
+      pointer?.removeEventListener("change", update);
+    };
+  }, []);
 
   useEffect(() => {
     setSlide({ id: projects[0]?.id ?? "", previous: null });
@@ -46,13 +60,13 @@ export function FeaturedCarousel({ projects, onOpen }: {
   };
 
   useEffect(() => {
-    if (!feature || projects.length < 2 || paused || hovered || keyboardFocused || hidden) return;
+    if (!desktop || !feature || projects.length < 2 || paused || hovered || keyboardFocused || hidden) return;
     const timer = window.setInterval(() => {
       const candidates = projects.filter(project => project.id !== feature.id);
       show(candidates[Math.floor(Math.random() * candidates.length)]);
     }, 5000);
     return () => window.clearInterval(timer);
-  }, [projects, feature?.id, paused, hovered, keyboardFocused, hidden]);
+  }, [projects, feature?.id, paused, hovered, keyboardFocused, hidden, desktop]);
 
   useEffect(() => {
     if (!slide.previous) return;
