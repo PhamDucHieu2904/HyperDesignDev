@@ -1,0 +1,9 @@
+[
+  { "id": "exhibition-thumbnail", "url": "./public/portfolio/exhibition-booth-1/Thumbnail (2).webp", "alt": "THAIFEX 2025 Nam Viet Group exhibition booth thumbnail", "mime": "image/webp", "width": 301, "height": 301 },
+  { "id": "exhibition-artboard-3", "url": "./public/portfolio/exhibition-booth-1/Artboard 3-resized.webp", "alt": "Nam Viet Group exhibition booth front and angled views", "mime": "image/webp", "width": 1350, "height": 1150 },
+  { "id": "exhibition-divider", "url": "./public/portfolio/exhibition-booth-1/Artboard 4-resized.webp", "alt": "Nam Viet Group green section divider", "mime": "image/webp", "width": 1350, "height": 57 },
+  { "id": "exhibition-artboard-5", "url": "./public/portfolio/exhibition-booth-1/Artboard 5-resized.webp", "alt": "Detailed dimension drawings and overhead render of the booth", "mime": "image/webp", "width": 1350, "height": 1748 },
+  { "id": "exhibition-artboard-6", "url": "./public/portfolio/exhibition-booth-1/Artboard 6-resized.webp", "alt": "On-site photos of Nam Viet Group at THAIFEX 2025", "mime": "image/webp", "width": 1350, "height": 708 },
+  { "id": "exhibition-ex5", "url": "./public/portfolio/exhibition-booth-1/ex5-resized.webp", "alt": "Close-up of the Nam Viet Group booth centrepiece", "mime": "image/webp", "width": 1350, "height": 1350 },
+  { "id": "exhibition-ex6", "url": "./public/portfolio/exhibition-booth-1/ex6-resized.webp", "alt": "Nam Viet Group exhibition booth perspective render", "mime": "image/webp", "width": 1350, "height": 759 }
+]

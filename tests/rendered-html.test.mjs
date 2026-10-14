@@ -272,7 +272,10 @@ for (const mode of ["file", "github-subpath"]) {
       assert.equal(document.querySelectorAll(".portfolio-artboard img").length, 9);
       assert.equal(document.querySelector(".pf-case-cover"), null, "Quencha should show its template hero once");
       click('.pf-nav-history [aria-label="Next project"]');
-      await until(() => /Label System/.test(document.querySelector(".pf-case-header h1").textContent), "Quencha should lead to the existing Brand project");
+      await until(() => /Corporate Uniform/.test(document.querySelector(".pf-case-header h1").textContent), "Quencha should lead to the next authored project");
+      assert.equal(document.querySelectorAll(".portfolio-artboard img").length, 7);
+      assert.equal(document.querySelector(".pf-case-cover"), null, "Uniform should show each supplied page once");
+      assert.match(document.querySelector(".portfolio-artboard").textContent, /Thank you for watching/);
       assert.equal(document.querySelector(".pf-window").dataset.indexCollapsed, "true", "Direct category entry should minimize the desktop index");
       click('[aria-label="Expand project index"]');
       await until(() => document.querySelector(".pf-window").dataset.indexCollapsed === "false", "Project index did not expand");
@@ -280,18 +283,11 @@ for (const mode of ["file", "github-subpath"]) {
       assert.equal(indexToggle.getAttribute("aria-expanded"), "true");
       assert.equal(document.getElementById(indexToggle.getAttribute("aria-controls")).tagName, "UL");
       click('.pf-nav-history [aria-label="Next project"]');
-      await until(() => /Corporate Uniform/.test(document.querySelector(".pf-case-header h1").textContent),
-        "Next project did not reach the new Visual uniform collection");
+      await until(() => /Exhibition Booth 1/.test(document.querySelector(".pf-case-header h1").textContent),
+        "Next project did not reach Exhibition Booth 1");
       assert.equal(document.querySelectorAll(".portfolio-artboard img").length, 7);
-      assert.equal(document.querySelector(".pf-case-cover"), null, "Uniform should show each supplied page once");
-      assert.match(document.querySelector(".portfolio-artboard").textContent, /Thank you for watching/);
-      click('.pf-nav-history [aria-label="Next project"]');
-      await until(() => /Tini World/.test(document.querySelector(".pf-case-header h1").textContent),
-        "Next project did not follow Brand → Visual order");
-      assert.equal(document.querySelector(".pf-window").dataset.indexCollapsed, "true", "Opening another project should minimize the index again");
-      click('.pf-nav-history [aria-label="Next project"]');
-      await until(() => /Exhibition Booth/.test(document.querySelector(".pf-case-header h1").textContent),
-        "Next project did not follow Visual → 3D order");
+      assert.equal(document.querySelector(".pf-case-cover"), null, "Exhibition Booth 1 should show its template images once");
+      assert.match(document.querySelector(".portfolio-artboard").textContent, /KEY DIFFERENTIATOR/);
       click('[data-category="all"]');
       await until(() => document.querySelector(".pf-overview"), "All category did not open the overview");
       assert.match(document.querySelector(".pf-overview").textContent, /Hyper Design/);
@@ -317,16 +313,16 @@ for (const mode of ["file", "github-subpath"]) {
       click('[data-category="photoshop"]');
       await until(() => document.querySelector(".pf-case"), "Photoshop category did not open its first project directly");
       assert.match(document.querySelector(".pf-case-header h1").textContent, /Corporate Uniform/);
-      assert.equal(document.querySelectorAll(".pf-index li").length, 2);
+      assert.equal(document.querySelectorAll(".pf-index li").length, 1);
       click('[data-category="all"]');
       await until(() => document.querySelector(".pf-overview"), "All category did not return to the overview");
       const portfolioSearch = document.querySelector('[aria-label="Search portfolio"]');
-      Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set.call(portfolioSearch, "poster");
+      Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set.call(portfolioSearch, "thaifex");
       portfolioSearch.dispatchEvent(new window.Event("input", { bubbles: true }));
       await until(() => document.querySelectorAll(".pf-project-card").length === 1, "Portfolio search did not filter projects");
-      assert.match(document.querySelector(".pf-project-card").textContent, /Tini World/);
+      assert.match(document.querySelector(".pf-project-card").textContent, /Exhibition Booth 1/);
       key("Escape");
-      await until(() => portfolioSearch.value === "" && document.querySelectorAll(".pf-project-card:not(.pf-project-placeholder)").length === 6,
+      await until(() => portfolioSearch.value === "" && document.querySelectorAll(".pf-project-card:not(.pf-project-placeholder)").length === 4,
         "Escape did not clear portfolio search");
       assert.ok(document.querySelector(".pf-window"), "Clearing search unexpectedly closed Portfolio");
       click('[data-category="game"]');

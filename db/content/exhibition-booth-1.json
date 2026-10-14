@@ -1,0 +1,324 @@
+{
+  "id": "exhibition-booth-1",
+  "slug": "exhibition-booth-1",
+  "revisionId": "exhibition-booth-1-revision-v1",
+  "createdAt": "2026-10-14T00:00:00.000Z",
+  "metadata": {
+    "categoryId": "blender",
+    "title": "Exhibition Booth 1 - THAIFEX 2025",
+    "shortTitle": "Exhibition Booth 1",
+    "subtitle": "A futuristic Nam Viet Group exhibition booth designed for THAIFEX 2025, combining kinetic product displays with a clear visitor experience.",
+    "thumbnailAssetId": "exhibition-thumbnail",
+    "coverAssetId": "exhibition-ex6",
+    "tags": [
+      "3d",
+      "blender",
+      "booth",
+      "exhibition",
+      "thaifex",
+      "nam viet",
+      "spatial design"
+    ],
+    "tools": [
+      "Blender",
+      "3D visualization",
+      "Spatial design"
+    ],
+    "role": "Exhibition environment & 3D visualization",
+    "year": "2025",
+    "isFeatured": false,
+    "sortOrder": 3
+  },
+  "document": {
+    "schemaVersion": 1,
+    "blocks": [
+      {
+        "id": "exhibition-hero",
+        "type": "image",
+        "assetId": "exhibition-ex6",
+        "alt": "Nam Viet Group exhibition booth perspective render",
+        "fit": "contain",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "exhibition-divider-1",
+        "type": "image",
+        "assetId": "exhibition-divider",
+        "alt": "Nam Viet Group green section divider",
+        "fit": "contain",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "exhibition-intro-title",
+        "type": "heading",
+        "level": 2,
+        "text": "THAIFEX 2025",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "exhibition-intro-copy",
+        "type": "text",
+        "style": {
+          "width": "full"
+        },
+        "paragraphs": [
+          {
+            "spans": [
+              {
+                "text": "Nam Viet Group is a leading food and beverage exporter in Vietnam, offering a diverse product portfolio with fruit juices as its flagship line."
+              }
+            ]
+          },
+          {
+            "spans": [
+              {
+                "text": "Project: Nam Viet Group Exhibition Booth at THAIFEX 2025 (Thailand) — one of the year's premier food and beverage trade fairs, bringing together distributors, importers, and industry partners nationwide."
+              }
+            ]
+          },
+          {
+            "spans": [
+              {
+                "text": "Booth Dimensions: 9m × 6m (54 m²)",
+                "bold": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "exhibition-views",
+        "type": "image",
+        "assetId": "exhibition-artboard-3",
+        "alt": "Nam Viet Group exhibition booth front and angled views",
+        "fit": "contain",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "exhibition-divider-2",
+        "type": "image",
+        "assetId": "exhibition-divider",
+        "alt": "Nam Viet Group green section divider",
+        "fit": "contain",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "exhibition-key-title",
+        "type": "heading",
+        "level": 2,
+        "text": "KEY DIFFERENTIATOR",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "exhibition-key",
+        "type": "columns",
+        "columns": [
+          [
+            {
+              "id": "exhibition-key-image",
+              "type": "image",
+              "assetId": "exhibition-ex5",
+              "alt": "Close-up of the Nam Viet Group booth centrepiece",
+              "fit": "contain",
+              "style": {
+                "width": "full"
+              }
+            }
+          ],
+          [
+            {
+              "id": "exhibition-key-copy",
+              "type": "text",
+              "style": {
+                "width": "full"
+              },
+              "paragraphs": [
+                {
+                  "spans": [
+                    {
+                      "text": "Key Visual & Brand Positioning:\nThe booth makes a striking impression with colossal beverage cans, instantly communicating the core business to international importers and making it seamless to attract and connect with target clients."
+                    }
+                  ]
+                },
+                {
+                  "spans": [
+                    {
+                      "text": "Design Concept:\nBoasting a unique aesthetic inspired by a futuristic spaceship and an automated mega-factory, the architectural structure powerfully elevates brand presence, showcasing the scale and stature of one of Vietnam's leading enterprises."
+                    }
+                  ]
+                },
+                {
+                  "spans": [
+                    {
+                      "text": "Kinetic Highlights:\nTwo massive front pillars and the central giant can feature continuous rotation, creating a lively, captivating visual experience that outshines conventional static booths."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        ],
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "exhibition-dimensions",
+        "type": "image",
+        "assetId": "exhibition-artboard-5",
+        "alt": "Detailed dimension drawings and overhead render of the booth",
+        "fit": "contain",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "exhibition-onsite",
+        "type": "image",
+        "assetId": "exhibition-artboard-6",
+        "alt": "On-site photos of Nam Viet Group at THAIFEX 2025",
+        "fit": "contain",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "exhibition-thanks-title",
+        "type": "heading",
+        "level": 2,
+        "text": "Thank you for watching",
+        "style": {
+          "width": "full"
+        }
+      },
+      {
+        "id": "exhibition-thanks-copy",
+        "type": "text",
+        "style": {
+          "width": "full"
+        },
+        "paragraphs": [
+          {
+            "spans": [
+              {
+                "text": "If you want to build your own brand, please click the Create button on the left side of the screen."
+              }
+            ]
+          },
+          {
+            "spans": [
+              {
+                "text": "Wishing you good health!"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "media": [
+    {
+      "id": "exhibition-thumbnail",
+      "url": "./public/portfolio/exhibition-booth-1/Thumbnail (2).webp",
+      "alt": "THAIFEX 2025 Nam Viet Group exhibition booth thumbnail",
+      "mime": "image/webp",
+      "width": 301,
+      "height": 301,
+      "sourcePath": "./public/portfolio/exhibition-booth-1/Thumbnail (2).webp",
+      "originalName": "Thumbnail (2).webp",
+      "bytes": 27322,
+      "checksum": "31632bc3edc12cdc1727750747a77db48157317dc45a208ae088916e7553bade",
+      "objectKey": "portfolio/exhibition-booth-1/exhibition-thumbnail-31632bc3edc12cdc.webp"
+    },
+    {
+      "id": "exhibition-artboard-3",
+      "url": "./public/portfolio/exhibition-booth-1/Artboard 3-resized.webp",
+      "alt": "Nam Viet Group exhibition booth front and angled views",
+      "mime": "image/webp",
+      "width": 1350,
+      "height": 1150,
+      "sourcePath": "./public/portfolio/exhibition-booth-1/Artboard 3-resized.webp",
+      "originalName": "Artboard 3-resized.webp",
+      "bytes": 141348,
+      "checksum": "3fa2fc8f716d34b81dbf4ca1d54c558d9e61b62f380979a9b9ef0c63f0bcfa18",
+      "objectKey": "portfolio/exhibition-booth-1/exhibition-artboard-3-3fa2fc8f716d34b8.webp"
+    },
+    {
+      "id": "exhibition-divider",
+      "url": "./public/portfolio/exhibition-booth-1/Artboard 4-resized.webp",
+      "alt": "Nam Viet Group green section divider",
+      "mime": "image/webp",
+      "width": 1350,
+      "height": 57,
+      "sourcePath": "./public/portfolio/exhibition-booth-1/Artboard 4-resized.webp",
+      "originalName": "Artboard 4-resized.webp",
+      "bytes": 3612,
+      "checksum": "2544b5579d76de7b1dc5d8e95bb93a492ac76cfcbe8dc99f79fba2d18116078d",
+      "objectKey": "portfolio/exhibition-booth-1/exhibition-divider-2544b5579d76de7b.webp"
+    },
+    {
+      "id": "exhibition-artboard-5",
+      "url": "./public/portfolio/exhibition-booth-1/Artboard 5-resized.webp",
+      "alt": "Detailed dimension drawings and overhead render of the booth",
+      "mime": "image/webp",
+      "width": 1350,
+      "height": 1748,
+      "sourcePath": "./public/portfolio/exhibition-booth-1/Artboard 5-resized.webp",
+      "originalName": "Artboard 5-resized.webp",
+      "bytes": 146970,
+      "checksum": "bd47bf7c9d1542674a22dd3970035730271ae0cebe8d216e2c5df29457ff4d8d",
+      "objectKey": "portfolio/exhibition-booth-1/exhibition-artboard-5-bd47bf7c9d154267.webp"
+    },
+    {
+      "id": "exhibition-artboard-6",
+      "url": "./public/portfolio/exhibition-booth-1/Artboard 6-resized.webp",
+      "alt": "On-site photos of Nam Viet Group at THAIFEX 2025",
+      "mime": "image/webp",
+      "width": 1350,
+      "height": 708,
+      "sourcePath": "./public/portfolio/exhibition-booth-1/Artboard 6-resized.webp",
+      "originalName": "Artboard 6-resized.webp",
+      "bytes": 253220,
+      "checksum": "2de53d7dbd38d99f74cc766d6fe2563451d58bd640e041b0829fff268b08570c",
+      "objectKey": "portfolio/exhibition-booth-1/exhibition-artboard-6-2de53d7dbd38d99f.webp"
+    },
+    {
+      "id": "exhibition-ex5",
+      "url": "./public/portfolio/exhibition-booth-1/ex5-resized.webp",
+      "alt": "Close-up of the Nam Viet Group booth centrepiece",
+      "mime": "image/webp",
+      "width": 1350,
+      "height": 1350,
+      "sourcePath": "./public/portfolio/exhibition-booth-1/ex5-resized.webp",
+      "originalName": "ex5-resized.webp",
+      "bytes": 187494,
+      "checksum": "5b6c9b8b9f6e54ce9416f8ea9cbdb683007cbf77ee11004e31507d71b4eadbe9",
+      "objectKey": "portfolio/exhibition-booth-1/exhibition-ex5-5b6c9b8b9f6e54ce.webp"
+    },
+    {
+      "id": "exhibition-ex6",
+      "url": "./public/portfolio/exhibition-booth-1/ex6-resized.webp",
+      "alt": "Nam Viet Group exhibition booth perspective render",
+      "mime": "image/webp",
+      "width": 1350,
+      "height": 759,
+      "sourcePath": "./public/portfolio/exhibition-booth-1/ex6-resized.webp",
+      "originalName": "ex6-resized.webp",
+      "bytes": 149790,
+      "checksum": "f6ac359b9e347525a1d74c1d525f81bd2f32d02a4322ffb72833561ccaa25be1",
+      "objectKey": "portfolio/exhibition-booth-1/exhibition-ex6-f6ac359b9e347525.webp"
+    }
+  ]
+}

@@ -18,6 +18,24 @@
 .portfolio-artboard > [data-block-id="uniform-thanks-copy"] { padding: 0 20px clamp(36px, 5cqw, 72px); text-align: center; font-size: clamp(16px, 1.7cqw, 24px); line-height: 1.3; }
 .portfolio-artboard > [data-block-id="quencha-thanks-copy"] p + p,
 .portfolio-artboard > [data-block-id="uniform-thanks-copy"] p + p { margin-top: 0; }
+.portfolio-artboard > [data-block-id="exhibition-intro-title"],
+.portfolio-artboard > [data-block-id="exhibition-key-title"],
+.portfolio-artboard > [data-block-id="exhibition-thanks-title"] { padding: clamp(28px, 4.2cqw, 60px) 20px 16px; text-align: center; font-size: clamp(26px, 5cqw, 70px); font-weight: 850; line-height: 1.05; letter-spacing: -.025em; }
+.portfolio-artboard > [data-block-id="exhibition-intro-copy"],
+.portfolio-artboard > [data-block-id="exhibition-thanks-copy"] { padding: 0 clamp(20px, 4cqw, 60px) clamp(28px, 5cqw, 70px); text-align: center; font-size: clamp(16px, 1.7cqw, 24px); line-height: 1.3; }
+.portfolio-artboard > [data-block-id="exhibition-intro-copy"] p + p,
+.portfolio-artboard > [data-block-id="exhibition-thanks-copy"] p + p { margin-top: 0; }
+.portfolio-artboard > [data-block-id="exhibition-key-title"] { padding-bottom: clamp(20px, 3cqw, 58px); font-size: clamp(26px, 4cqw, 78px); }
+/* Nested blocks need the same artboard sizing and ink in both viewers. */
+.portfolio-artboard > [data-block-id="exhibition-key"] { max-width: none; padding: 0 clamp(16px, 2.5cqw, 48px) clamp(28px, 3cqw, 58px); gap: clamp(16px, 2cqw, 38px); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.portfolio-artboard > [data-block-id="exhibition-key"] :is(.pf-article-column, .admin-preview-column) { display: grid; align-content: start; }
+.portfolio-artboard [data-block-id="exhibition-key-copy"] { max-width: none; color: #222; font-size: clamp(16px, 1.9cqw, 36px); font-weight: 400; line-height: 1.25; white-space: pre-line; }
+.portfolio-artboard [data-block-id="exhibition-key-copy"] p + p { margin-top: .9em; }
+.portfolio-artboard [data-block-id="exhibition-key-image"] { max-width: none; margin: 0; border: 0; border-radius: clamp(12px, 2.5cqw, 48px); background: transparent; }
+.portfolio-artboard [data-block-id="exhibition-key-image"] img { display: block; width: 100%; height: auto; max-height: none; }
+@container (max-width: 600px) {
+  .portfolio-artboard > [data-block-id="exhibition-key"] { grid-template-columns: 1fr; gap: 22px; }
+}
 .pf-case-header-artboard { position: absolute; width: 1px; height: 1px; margin: 0; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .admin-preview-frame:has(.portfolio-artboard) > article { padding: 0; background: #fff; }
 .admin-preview-frame:has(.portfolio-artboard) .admin-preview-project-header { display: none; }

@@ -14,6 +14,20 @@ local D1/R2 stores; replays preserve later edits and unpublished status. It uses
 the same local-only importer as Quencha and leaves existing content intact.
 No remote deployment is performed.
 
+Exhibition Booth 1 is the THAIFEX 2025 3D case study. It uses the supplied
+Nam Viet Group WebP artboards in a continuous presentation with editable
+introduction, key differentiator and closing blocks.
+
+- `app/portfolio/content/exhibition-booth-1.json`: the authored case-study blocks.
+- `app/portfolio/content/exhibition-booth-1-media.json`: the seven supplied asset descriptors.
+- `public/portfolio/exhibition-booth-1/`: the original WebP artwork.
+
+Prepare or import it with `npm run content:exhibition-booth-1:prepare` or
+`npm run content:exhibition-booth-1:local`. The local import backs up both D1
+stores, uploads immutable media to both local R2 stores, and moves the three
+temporary projects `Vinut Coco Boba Label`, `Coco Boba — Tini World`, and the
+old `Nam Viet Group — Exhibition Booth` to recoverable trash.
+
 Quencha Beverage is the first Brand entry in the local portfolio registry. Its
 presentation follows the supplied template using the eight original WebP artworks
 and the supplied watermelon thumbnail. Images retain their original bytes and

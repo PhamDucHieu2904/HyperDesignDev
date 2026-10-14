@@ -58,6 +58,11 @@ export async function prepareAuthoredImport(options) {
   const searchText = contracts.normalizeSearchText([metadata.title, metadata.shortTitle, metadata.subtitle, ...metadata.tags, ...metadata.tools].join(" "));
   sql.push(`INSERT INTO public_projects (project_id, revision_id, category_id, title, short_title, subtitle, thumbnail_asset_id, sort_order, is_featured, search_text, content_state, published_at) SELECT id, ${q(revisionId)}, ${q(metadata.categoryId)}, ${q(metadata.title)}, ${q(metadata.shortTitle)}, ${q(metadata.subtitle)}, ${q(metadata.thumbnailAssetId)}, ${metadata.sortOrder}, ${metadata.isFeatured ? 1 : 0}, ${q(searchText)}, 'ready', ${q(createdAt)} FROM projects WHERE ${initialDraft} AND EXISTS (SELECT 1 FROM project_revisions WHERE id = ${q(revisionId)}) ON CONFLICT(project_id) DO NOTHING;`);
   sql.push(`INSERT INTO audit_events (id, actor_sub, action, entity_type, entity_id, request_id, detail_json, created_at) SELECT ${q(`audit-${assetDirectory}-v1`)}, ${q(actor)}, 'project.publish', 'project', id, ${q(options.requestId ?? `${assetDirectory}-collection-v1`)}, ${q(JSON.stringify({ revisionId, source: importSource }))}, ${q(createdAt)} FROM projects WHERE ${initialDraft} ON CONFLICT(id) DO NOTHING;`);
+  for (const retiredId of options.retireProjectIds ?? []) {
+    sql.push(`UPDATE projects SET deleted_at = ${q(createdAt)}, updated_at = ${q(createdAt)}, draft_version = draft_version + 1 WHERE id = ${q(retiredId)} AND deleted_at IS NULL;`);
+    sql.push(`DELETE FROM public_projects WHERE project_id = ${q(retiredId)};`);
+    sql.push(`INSERT INTO audit_events (id, actor_sub, action, entity_type, entity_id, request_id, detail_json, created_at) VALUES (${q(`audit-retire-${retiredId}`)}, ${q(actor)}, 'project.trash', 'project', ${q(retiredId)}, ${q(options.requestId ?? `${assetDirectory}-collection-v1`)}, ${q(JSON.stringify({ source: importSource, reason: "Replaced by Exhibition Booth 1" }))}, ${q(createdAt)}) ON CONFLICT(id) DO NOTHING;`);
+  }
   return { content: { id: project.id, slug: projectId, revisionId, createdAt, metadata: metadataValidation.value, document: documentValidation.value, media }, sql: sql.join("\n") + "\n" };
 }
 

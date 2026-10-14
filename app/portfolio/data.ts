@@ -1,4 +1,6 @@
 import type { ArticleDocument, MediaDescriptor } from "../../shared/contracts";
+import exhibitionDocument from "./content/exhibition-booth-1.json";
+import exhibitionMedia from "./content/exhibition-booth-1-media.json";
 import labelLabDocument from "./content/label-lab.json";
 import quenchaDocument from "./content/quencha.json";
 import quenchaMedia from "./content/quencha-media.json";
@@ -26,27 +28,6 @@ export const categoryDescriptions: Record<Filter, string> = {
   app: "Desktop and mobile tools that simplify operational work.",
 };
 
-const labelMedia = {
-  src: "./public/vinut-coco-boba-label.webp",
-  alt: "Vinut Coco Boba coconut milk tea label artwork and print production sheet",
-  width: 741,
-  height: 680,
-  fit: "contain" as const,
-};
-const posterMedia = {
-  src: "./public/coco-boba-poster.webp",
-  alt: "Coco Boba Tini World campaign poster with a coconut milk tea can and miniature storefront",
-  width: 484,
-  height: 684,
-  fit: "cover" as const,
-};
-const boothMedia = {
-  src: "./public/nam-viet-group-booth.webp",
-  alt: "Nam Viet Group exhibition booth concept with beverage displays and green branding",
-  width: 553,
-  height: 553,
-  fit: "cover" as const,
-};
 const placeholderMedia = {
   src: "./public/portfolio-placeholder.svg",
   alt: "Temporary portfolio project placeholder",
@@ -129,37 +110,6 @@ export const portfolioProjects: PortfolioProject[] = [
     media: quenchaMedia,
   },
   {
-    id: "vinut-coco-boba-label",
-    title: "Vinut Coco Boba — Label System",
-    shortTitle: "Coco Boba Label",
-    summary: "A production-ready label system balancing a playful character world with dense export information.",
-    primaryCategory: "illustrator",
-    discipline: "design",
-    tags: ["packaging", "label", "vector", "print", "coco boba", "vinut"],
-    status: "published",
-    order: 1,
-    thumbnail: labelMedia,
-    cover: labelMedia,
-    role: "Packaging & label design",
-    year: "Selected work",
-    tools: ["Adobe Illustrator", "Print production"],
-    sections: [
-      {
-        id: "visual-system",
-        eyebrow: "01 / Visual system",
-        title: "One label, many layers of information",
-        copy: "The composition gives the character and Coco Boba name a clear center while nutritional, legal and production information remain organized around it.",
-        media: labelMedia,
-      },
-      {
-        id: "production",
-        eyebrow: "02 / Production",
-        title: "Prepared for real packaging work",
-        copy: "Color channels, dimensions, print status and artwork variants are presented as part of the working file rather than hidden behind a decorative mockup.",
-      },
-    ],
-  },
-  {
     id: "vinut-corporate-uniform",
     title: "Vinut — Corporate Uniform Collection",
     shortTitle: "Corporate Uniform",
@@ -181,66 +131,25 @@ export const portfolioProjects: PortfolioProject[] = [
     media: uniformMedia,
   },
   {
-    id: "coco-boba-tini-world",
-    title: "Coco Boba — Tini World",
-    shortTitle: "Tini World",
-    summary: "A bright product campaign that turns the beverage can into the center of a miniature brand world.",
-    primaryCategory: "photoshop",
-    discipline: "design",
-    tags: ["photoshop", "campaign", "poster", "compositing", "beverage", "coco boba"],
-    status: "published",
-    order: 2,
-    thumbnail: posterMedia,
-    cover: posterMedia,
-    role: "Campaign visual & compositing",
-    year: "2024",
-    tools: ["Adobe Photoshop", "Art direction"],
-    sections: [
-      {
-        id: "campaign-world",
-        eyebrow: "01 / Campaign world",
-        title: "A product large enough to become a place",
-        copy: "The can anchors the scene while storefronts, characters and small details build a playful world around the product without losing brand recognition.",
-        media: posterMedia,
-      },
-      {
-        id: "hierarchy",
-        eyebrow: "02 / Composition",
-        title: "Fast recognition from top to bottom",
-        copy: "Launch messaging leads into the hero can, then the eye lands on the product family and milk-tea proposition at the bottom of the poster.",
-      },
-    ],
-  },
-  {
-    id: "nam-viet-exhibition",
-    title: "Nam Viet Group — Exhibition Booth",
-    shortTitle: "Exhibition Booth",
-    summary: "A product-led exhibition environment designed to present a broad beverage portfolio from one clear viewpoint.",
+    id: "exhibition-booth-1",
+    title: "Exhibition Booth 1 - THAIFEX 2025",
+    shortTitle: "Exhibition Booth 1",
+    summary: "A futuristic Nam Viet Group exhibition booth designed for THAIFEX 2025, combining kinetic product displays with a clear visitor experience.",
     primaryCategory: "blender",
     discipline: "design",
-    tags: ["3d", "blender", "booth", "exhibition", "beverage", "nam viet"],
+    tags: ["3d", "blender", "booth", "exhibition", "thaifex", "nam viet", "spatial design"],
     status: "published",
     order: 3,
-    thumbnail: boothMedia,
-    cover: boothMedia,
-    role: "Exhibition environment",
-    year: "Selected work",
-    tools: ["3D visualization", "Spatial design"],
-    sections: [
-      {
-        id: "space",
-        eyebrow: "01 / Environment",
-        title: "A compact stage for a large product family",
-        copy: "The booth uses a strong green-and-white silhouette, illuminated product walls and a clear central counter to stay recognizable across a busy exhibition floor.",
-        media: boothMedia,
-      },
-      {
-        id: "navigation",
-        eyebrow: "02 / Visitor flow",
-        title: "Products remain visible from the aisle",
-        copy: "Large campaign graphics establish the brand at a distance while lower displays bring physical products into reach as visitors approach.",
-      },
-    ],
+    thumbnail: { src: exhibitionMedia[0].url, alt: exhibitionMedia[0].alt, width: 301, height: 301, fit: "cover" },
+    cover: { src: exhibitionMedia[6].url, alt: exhibitionMedia[6].alt, width: 1350, height: 759, fit: "contain" },
+    role: "Exhibition environment & 3D visualization",
+    year: "2025",
+    tools: ["Blender", "3D visualization", "Spatial design"],
+    sections: [],
+    revisionId: "exhibition-booth-1-revision-v1",
+    contentState: "ready",
+    document: exhibitionDocument as ArticleDocument,
+    media: exhibitionMedia,
   },
   {
     id: "game-systems-preview",
